@@ -1,0 +1,156 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sample Web Page</title>
+<style>
+
+    #grad {
+        background-image: linear-gradient(blue, white);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .column {
+      float: left;
+      width: 20.0%;
+      padding: 5px;
+    }
+
+    .left_column {
+      float: left;
+      width: 80.0%;
+      padding: 5px;
+    }
+
+    .right_column {
+      float: right;
+      width: 20.0%;
+      padding: 5px;
+    }
+
+    /* Clearfix (clear floats) */
+    .row::after {
+      content: "";
+      clear: both;
+      display: table;
+    }
+
+    .page_title {
+        font-size: 40px;
+        color: white;
+    }
+
+    .tag_line {
+        font-size: 20px;
+        font-style: italic;
+        color: white;
+    }
+
+    footer {
+        position: relative;
+        height: 80px;
+        width: 100%;
+        background-color: #9b9999;
+    }
+
+    p.copyright {
+        position: absolute;
+        width: 100%;
+        color: black;
+        text-align: center;
+        bottom:0;
+    }
+
+</style>
+</head>
+<body>
+
+<div id="grad">
+
+    <p class="page_title">Welcome<br>To Xanadu KINK</p>
+
+    <div class="row">
+        <div class="left_column" vertical-align="top" align="left">
+            <p class="tag_line">Where Experience and Education is honored, and every year is a kinky one.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="column" vertical-align="middle" align="center">
+            <a href="About.html"><img src="assets/About.png" alt="About Us" width="242" height="242"/></a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="Bios.html"><img src="assets/Bios.png" alt="Bios" width="242" height="242" /></a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="HOX.html"><img src="assets/HOX.png" alt="House of Xanadu" width="242" height="242" /></a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="PET.html"><img src="assets/PET.png" alt="Power Exchange Together" width="242" height="242" /></a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="KDR.html"><img src="assets/KDR.png" alt="Kink Doesn&rsquo;t Retire" width="242" height="242" /></a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column" vertical-align="middle" align="center">
+            <a href="About.html">About</a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="Bios.html">Bios</a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="HOX.html">House of Xanadu</a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="PET.html">Power Exchange Together</a>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <a href="KDR.html">Kink Doesn&rsquo;t Retire</a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column" vertical-align="middle" align="center">
+            <p></p>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <p></p>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <p>Education</p>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <p>Community</p>
+        </div>
+        <div class="column" vertical-align="middle" align="center">
+            <p>Podcast</p>
+        </div>
+    </div>
+
+    <footer>
+        <div class="row">
+            <div class="left_column" vertical-align="top" align="left">
+                <a href="ContactUs.com">Contact US</a>
+            </div>
+            <div class="right_column" vertical-align="top" align="right">
+                <a href="404.html"><img src="assets/facebook.png" alt="Facebook" width="32" height="32" /></a>
+                <a href="404.html"><img src="assets/x.jpeg" alt="X" width="32" height="32" /></a>
+                <a href="404.html"><img src="assets/instagram.png" alt="instagram" width="32" height="32" /></a>
+                <a href="https://fetlife.com/Xanadu_Kink"><img src="assets/fetlife.png" alt="Fetlife" width="32" height="32" /></a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column" vertical-align="top" align="center">
+                <p class="copyright">© 2025 XanaduKink.com</p>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
