@@ -6,12 +6,18 @@
   box-sizing: border-box;
 }
 
-.column {
-  float: left;
-  width: 20.0%;
-  padding: 5px;
-}
+.cell {
+    float: left;
+    width: 20.0%;
+    padding: 5px;
+  }
 
+.column {
+    float: left;
+    width: 20.0%;
+    padding: 5px;
+  }
+    
 .left_column {
   float: left;
   width: 80.0%;
@@ -99,6 +105,61 @@ body {
 }
 
 .small_image {
-    width: 222px;
-    height: 222px;
+    max-width:100%;
+    max-height:100%;
 }
+
+/* ...existing code... */
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+  
+    .cell, .column, .left_column, .right_column, .center_text_column, .left_text_column, .right_text_column {
+      float: none;
+      width: 100%;
+      padding: 10px;
+      text-align: center;
+    }
+  
+    .small_image {
+      width: 80px;
+      height: auto;
+    }
+  
+    .page_title {
+      font-size: 30px;
+    }
+  
+    .tag_line, .text, .column_title {
+      font-size: 16px;
+    }
+  
+    footer {
+      height: auto;
+      padding: 10px;
+    }
+  
+    p.copyright {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 480px) {
+    .page_title {
+      font-size: 24px;
+    }
+  
+    .tag_line, .text, .column_title {
+      font-size: 14px;
+    }
+  
+    .small_image {
+      width: 60px;
+      height: auto;
+    }
+  }
