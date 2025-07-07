@@ -109,6 +109,26 @@ body {
     max-height:100%;
 }
 
+.black-background-link:link {
+  background-color: black;
+  color: lightblue;
+}
+
+.black-background-link:visited {
+  background-color: black; /* Example for visited links */
+  color: lightblue;
+}
+
+.black-background-link:hover {
+  background-color: black; /* Example for hover state */
+  color: white;
+}
+
+.black-background-link:active {
+  background-color: black; /* Example for active state */
+  color: red;
+}
+
 /* ...existing code... */
 
 /* Responsive Design */
