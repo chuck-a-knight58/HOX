@@ -111,22 +111,22 @@ body {
 
 .black-background-link:link {
   background-color: black;
-  color: lightblue;
+  color: white;
 }
 
 .black-background-link:visited {
   background-color: black; /* Example for visited links */
-  color: lightblue;
+  color: lightcoral;
 }
 
 .black-background-link:hover {
   background-color: black; /* Example for hover state */
-  color: white;
+  color: red;
 }
 
 .black-background-link:active {
   background-color: black; /* Example for active state */
-  color: red;
+  color: yellow;
 }
 
 /* ...existing code... */
