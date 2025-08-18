@@ -94,6 +94,12 @@ p.copyright {
     color: white;
 }
 
+.red-text {
+    font-size: 20px;
+    font-style: italic;
+    color: red;
+}
+
 .column_title {
     font-size: 20px;
     font-style: italic;
@@ -111,7 +117,7 @@ body {
 
 .black-background-link:link {
   background-color: black;
-  color: white;
+  color: red;
 }
 
 .black-background-link:visited {
@@ -189,4 +195,5 @@ body {
       width: 60px;
       height: auto;
     }
+
   }
