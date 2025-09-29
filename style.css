@@ -106,6 +106,20 @@ p.copyright {
     color: red;
 }
 
+.thin-header {
+    font-size: 20px;
+    font-style: italic;
+    color: red;
+    margin-bottom: 0;
+}
+
+.thin-p {
+    font-size: 20px;
+    font-style: italic;
+    color: white;
+    margin-top: 0;
+}
+
 .column_title {
     font-size: 20px;
     font-style: italic;
