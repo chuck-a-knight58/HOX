@@ -20,6 +20,7 @@ for album in albums:
     album_path = os.path.join(directory_path, album)
 
     files = os.listdir(album_path)
+    files.sort()
 
     for file in files:
 
