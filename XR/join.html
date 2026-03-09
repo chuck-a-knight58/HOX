@@ -1,0 +1,194 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Join">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
+<title>Xanadu Reserve</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+<link rel="canonical" href="https://www.xanadureserve.com/">
+</head>
+
+<body background='black' style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <p class="page_title">Join Xanadu Reserve</p>
+
+        <div style="max-width: 700px; margin: 30px auto; padding: 20px;">
+            <h2 style="text-align: center; border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Membership Request</h2>
+
+            <form id="membershipForm" onsubmit="return submitMembershipForm(event);" style="display: flex; flex-direction: column; gap: 15px;">
+
+                <label>Full Name:
+                    <input type="text" name="full_name" required
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>Preferred Name / Nickname:
+                    <input type="text" name="preferred_name"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>FetLife Name:
+                    <input type="text" name="fetlife_name"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>Email Address:
+                    <input type="email" name="email" required
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>Phone Number:
+                    <input type="tel" name="phone"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>Age (21+ required):
+                    <input type="number" name="age" min="21" required
+                        style="width: 100px; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                </label>
+
+                <fieldset style="border: 1px solid goldenrod; padding: 15px;">
+                    <legend>Have you attended a High Protocol event with us before?</legend>
+                    <label style="margin-right: 20px;"><input type="radio" name="attended_before" value="Yes"> Yes</label>
+                    <label><input type="radio" name="attended_before" value="No"> No</label>
+                </fieldset>
+
+                <fieldset style="border: 1px solid goldenrod; padding: 15px;">
+                    <legend>Experience with BDSM/kink:</legend>
+                    <label style="margin-right: 20px;"><input type="radio" name="experience" value="Beginner"> Beginner</label>
+                    <label style="margin-right: 20px;"><input type="radio" name="experience" value="Intermediate"> Intermediate</label>
+                    <label><input type="radio" name="experience" value="Advanced"> Advanced</label>
+                </fieldset>
+
+                <fieldset style="border: 1px solid goldenrod; padding: 15px;">
+                    <legend>Roles you identify with (select all that apply):</legend>
+                    <label style="margin-right: 20px;"><input type="checkbox" name="roles" value="Dominant"> Dominant</label>
+                    <label style="margin-right: 20px;"><input type="checkbox" name="roles" value="Submissive"> Submissive</label>
+                    <label style="margin-right: 20px;"><input type="checkbox" name="roles" value="Switch"> Switch</label>
+                    <label style="margin-right: 10px;"><input type="checkbox" name="roles" value="Other" id="roleOtherCheckbox" onchange="document.getElementById('roleOtherText').disabled = !this.checked;"> Other:</label>
+                    <input type="text" name="role_other" id="roleOtherText" disabled placeholder="Please specify"
+                        style="width: 200px; padding: 5px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                </fieldset>
+
+                <label>Dietary Restrictions / Allergies:
+                    <textarea name="dietary" rows="3"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
+                </label>
+
+                <label>What would you add to the Xanadu Reserve community?
+                    <textarea name="community_contribution" rows="4"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
+                </label>
+
+                <label>What does elegance mean to you?
+                    <textarea name="elegance_meaning" rows="4"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
+                </label>
+
+                <label>Additional Notes / Accessibility Needs:
+                    <textarea name="notes" rows="3"
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
+                </label>
+
+                <label>Today's Date:
+                    <input type="date" name="todays_date" id="todaysDate" required
+                        style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                </label>
+
+                <div style="text-align: center; margin-top: 10px;">
+                    <button type="submit"
+                        style="padding: 12px 40px; background: goldenrod; color: black; border: none; font-size: 16px; font-weight: bold; cursor: pointer;">
+                        Submit Registration
+                    </button>
+                </div>
+
+                <p id="formMessage" style="text-align: center; display: none;"></p>
+
+            </form>
+        </div>
+
+        <script>
+            // Auto-fill today's date
+            document.getElementById('todaysDate').valueAsDate = new Date();
+
+            function submitMembershipForm(event) {
+                event.preventDefault();
+
+                var form = document.getElementById('membershipForm');
+                var formData = new FormData(form);
+
+                // Validate age
+                var age = parseInt(formData.get('age'));
+                if (age < 21) {
+                    showMessage('You must be 21 or older to register.', 'red');
+                    return false;
+                }
+
+                // Gather selected roles
+                var roles = [];
+                document.querySelectorAll('input[name="roles"]:checked').forEach(function(cb) {
+                    roles.push(cb.value);
+                });
+                var roleOther = formData.get('role_other');
+                if (roles.indexOf('Other') !== -1 && roleOther) {
+                    roles[roles.indexOf('Other')] = 'Other: ' + roleOther;
+                }
+
+                // Build email body as JSON
+                var data = {
+                    full_name: formData.get('full_name') || '',
+                    preferred_name: formData.get('preferred_name') || '',
+                    fetlife_name: formData.get('fetlife_name') || '',
+                    email: formData.get('email') || '',
+                    phone: formData.get('phone') || '',
+                    age: formData.get('age') || '',
+                    attended_before: formData.get('attended_before') || 'Not specified',
+                    experience: formData.get('experience') || 'Not specified',
+                    roles: roles.length > 0 ? roles : ['Not specified'],
+                    dietary: formData.get('dietary') || 'None',
+                    community_contribution: formData.get('community_contribution') || 'None',
+                    elegance_meaning: formData.get('elegance_meaning') || 'None',
+                    notes: formData.get('notes') || 'None',
+                    todays_date: formData.get('todays_date') || ''
+                };
+
+                var body = JSON.stringify(data, null, 2);
+
+                var subject = 'Xanadu Reserve Membership Registration - ' + formData.get('full_name');
+
+                // Open mailto link
+                var mailtoLink = 'mailto:XanaduKink@gmail.com'
+                    + '?subject=' + encodeURIComponent(subject)
+                    + '&body=' + encodeURIComponent(body);
+
+                window.location.href = mailtoLink;
+
+                showMessage('Opening your email client to send the registration...', 'lightgreen');
+                return false;
+            }
+
+            function showMessage(msg, color) {
+                var el = document.getElementById('formMessage');
+                el.textContent = msg;
+                el.style.color = color;
+                el.style.display = 'block';
+            }
+        </script>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+        </script>
+
+    </div>
+
+</body>
+</html>
