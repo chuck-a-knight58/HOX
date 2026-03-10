@@ -3,7 +3,7 @@
 <head>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Membership Request Form">
+<META name="description" content="Xanadu Reserve Attendee Information Form">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
@@ -18,12 +18,22 @@
 
     <div>
 
-        <p class="page_title">Xanadu Reserve Membership Request Form</p>
+        <p class="page_title">Xanadu Reserve Attendee Information Form</p>
 
         <div style="max-width: 700px; margin: 30px auto; padding: 20px;">
-            <h2 style="text-align: center; border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Membership Request Form</h2>
+            <h2 style="text-align: center; border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Attendee Information Form</h2>
 
-            <form id="membershipRequestForm" onsubmit="return submitMembershipRequestForm(event);" style="display: flex; flex-direction: column; gap: 15px;">
+            <form id="attendeeInformationForm" onsubmit="return submitAttendeeInformationForm(event);" style="display: flex; flex-direction: column; gap: 15px;">
+
+                <label>Event Name:
+                    <input type="text" name="event_name" required
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>Event Date:
+                    <input type="date" name="event_date" required
+                        style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                </label>
 
                 <label>Full Name:
                     <input type="text" name="full_name" required
@@ -78,11 +88,6 @@
                         style="width: 200px; padding: 5px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
                 </fieldset>
 
-                <label>What would you add to the Xanadu Reserve community?
-                    <textarea name="community_contribution" rows="4"
-                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
-                </label>
-
                 <label>What does elegance mean to you?
                     <textarea name="elegance_meaning" rows="4"
                         style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box; resize: vertical;"></textarea>
@@ -106,7 +111,7 @@
                 <div style="text-align: center; margin-top: 10px;">
                     <button type="submit"
                         style="padding: 12px 40px; background: goldenrod; color: black; border: none; font-size: 16px; font-weight: bold; cursor: pointer;">
-                        Submit Registration
+                        Submit Information
                     </button>
                 </div>
 
@@ -119,10 +124,23 @@
             // Auto-fill today's date
             document.getElementById('todaysDate').valueAsDate = new Date();
 
-            function submitMembershipRequestForm(event) {
+            // Pre-fill event name and date from URL search params
+            var params = new URLSearchParams(window.location.search);
+            if (params.get('event_name')) {
+                var nameInput = document.querySelector('input[name="event_name"]');
+                nameInput.value = params.get('event_name');
+                nameInput.readOnly = true;
+            }
+            if (params.get('event_date')) {
+                var dateInput = document.querySelector('input[name="event_date"]');
+                dateInput.value = params.get('event_date');
+                dateInput.readOnly = true;
+            }
+
+            function submitAttendeeInformationForm(event) {
                 event.preventDefault();
 
-                var form = document.getElementById('membershipRequestForm');
+                var form = document.getElementById('attendeeInformationForm');
                 var formData = new FormData(form);
 
                 // Validate age
@@ -144,6 +162,8 @@
 
                 // Build email body as JSON
                 var data = {
+                    event_name: formData.get('event_name') || '',
+                    event_date: formData.get('event_date') || '',
                     full_name: formData.get('full_name') || '',
                     preferred_name: formData.get('preferred_name') || '',
                     fetlife_name: formData.get('fetlife_name') || '',
@@ -154,7 +174,6 @@
                     experience: formData.get('experience') || 'Not specified',
                     roles: roles.length > 0 ? roles : ['Not specified'],
                     dietary: formData.get('dietary') || 'None',
-                    community_contribution: formData.get('community_contribution') || 'None',
                     elegance_meaning: formData.get('elegance_meaning') || 'None',
                     notes: formData.get('notes') || 'None',
                     todays_date: formData.get('todays_date') || ''
@@ -162,7 +181,7 @@
 
                 var body = JSON.stringify(data, null, 2);
 
-                var subject = 'Xanadu Reserve Membership Registration - ' + formData.get('full_name');
+                var subject = 'Xanadu Reserve Attendee Information - ' + formData.get('event_name') + ' - ' + formData.get('full_name');
 
                 // Open mailto link
                 var mailtoLink = 'mailto:XanaduKink@gmail.com'
@@ -171,7 +190,7 @@
 
                 window.location.href = mailtoLink;
 
-                showMessage('Opening your email client to send the registration...', 'lightgreen');
+                showMessage('Opening your email client to send the information...', 'lightgreen');
                 return false;
             }
 
