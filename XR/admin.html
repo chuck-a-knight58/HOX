@@ -1,0 +1,354 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="https://XanaduKink.com/XR/">
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Admin">
+<meta name="robots" content="noindex, nofollow">
+<meta name="rating" content="adult">
+<title>Xanadu Reserve - Admin</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<style>
+    .admin-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    .app-card {
+        border: 1px solid goldenrod;
+        padding: 20px;
+        margin-bottom: 20px;
+        background: #111;
+    }
+    .app-card h3 {
+        margin-top: 0;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 8px;
+    }
+    .app-field {
+        margin: 6px 0;
+    }
+    .app-field strong {
+        display: inline-block;
+        min-width: 200px;
+    }
+    .app-actions {
+        margin-top: 15px;
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .btn-approve {
+        padding: 8px 24px;
+        background: #2e7d32;
+        color: white;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-approve:hover { background: #1b5e20; }
+    .btn-reject {
+        padding: 8px 24px;
+        background: #c62828;
+        color: white;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-reject:hover { background: #8e0000; }
+    .status-badge {
+        display: inline-block;
+        padding: 3px 10px;
+        font-size: 12px;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+    .status-pending { background: #e65100; color: white; }
+    .status-approved { background: #2e7d32; color: white; }
+    .status-rejected { background: #c62828; color: white; }
+    .tab-bar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 10px;
+    }
+    .tab-btn {
+        padding: 8px 20px;
+        background: none;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        cursor: pointer;
+        font-size: 14px;
+    }
+    .tab-btn.active {
+        background: goldenrod;
+        color: black;
+        font-weight: bold;
+    }
+    .tab-btn:hover:not(.active) {
+        background: #333;
+    }
+    #admin-message {
+        text-align: center;
+        padding: 10px;
+        display: none;
+        margin-bottom: 15px;
+    }
+    #access-denied, #loading-msg {
+        text-align: center;
+        padding: 40px 20px;
+    }
+</style>
+</head>
+
+<body background='black' style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <p class="page_title">Admin - Member Management</p>
+
+        <div id="loading-msg">Loading...</div>
+
+        <div id="access-denied" style="display: none;">
+            <h2>Access Denied</h2>
+            <p>You must be logged in as an admin to view this page.</p>
+            <p><a href="login.html">Login</a></p>
+        </div>
+
+        <div id="admin-content" class="admin-container" style="display: none;">
+
+            <div id="admin-message"></div>
+
+            <div class="tab-bar">
+                <button class="tab-btn active" onclick="switchTab('pending')">Pending</button>
+                <button class="tab-btn" onclick="switchTab('approved')">Approved</button>
+                <button class="tab-btn" onclick="switchTab('rejected')">Rejected</button>
+            </div>
+
+            <div id="applications-list"></div>
+
+        </div>
+
+        <script>
+            // -----------------------------------------------------------
+            // Admin emails — add your admin email addresses here
+            // -----------------------------------------------------------
+            var ADMIN_EMAILS = [
+                'chuck@xanadukink.com',
+                'chuck.a.knight@gmail.com',
+                'l.knight@me.com'
+            ];
+
+            var currentTab = 'pending';
+
+            // ---- Auth gate ----
+            auth.onAuthStateChanged(function (user) {
+                document.getElementById('loading-msg').style.display = 'none';
+
+                if (!user || ADMIN_EMAILS.indexOf(user.email) === -1) {
+                    document.getElementById('access-denied').style.display = 'block';
+                    document.getElementById('admin-content').style.display = 'none';
+                    return;
+                }
+
+                document.getElementById('admin-content').style.display = 'block';
+                loadApplications('pending');
+            });
+
+            // ---- Tab switching ----
+            function switchTab(status) {
+                currentTab = status;
+                var btns = document.querySelectorAll('.tab-btn');
+                btns.forEach(function (btn) {
+                    btn.classList.remove('active');
+                    if (btn.textContent.toLowerCase() === status) {
+                        btn.classList.add('active');
+                    }
+                });
+                loadApplications(status);
+            }
+
+            // ---- Load applications ----
+            function loadApplications(status) {
+                var listEl = document.getElementById('applications-list');
+                listEl.innerHTML = '<p style="text-align:center;">Loading...</p>';
+
+                db.collection('applications')
+                    .where('status', '==', status)
+                    .orderBy('submittedAt', 'desc')
+                    .get()
+                    .then(function (snapshot) {
+                        if (snapshot.empty) {
+                            listEl.innerHTML = '<p style="text-align:center;">No ' + status + ' applications.</p>';
+                            return;
+                        }
+
+                        var html = '';
+                        snapshot.forEach(function (doc) {
+                            var d = doc.data();
+                            var submitted = d.submittedAt ? d.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                            var roles = Array.isArray(d.roles) ? d.roles.join(', ') : (d.roles || 'N/A');
+
+                            html += '<div class="app-card">';
+                            html += '<h3>' + escapeHtml(d.full_name || 'No Name') + ' <span class="status-badge status-' + status + '">' + status + '</span></h3>';
+                            html += field('Email', d.email);
+                            html += field('Preferred Name', d.preferred_name);
+                            html += field('FetLife Name', d.fetlife_name);
+                            html += field('Phone', d.phone);
+                            html += field('Age', d.age);
+                            html += field('Attended Before', d.attended_before);
+                            html += field('Experience', d.experience);
+                            html += field('Roles', roles);
+                            html += field('Community Contribution', d.community_contribution);
+                            html += field('Elegance Meaning', d.elegance_meaning);
+                            html += field('Dietary', d.dietary);
+                            html += field('Notes', d.notes);
+                            html += field('Submitted', submitted);
+
+                            if (status === 'pending') {
+                                html += '<div class="app-actions">';
+                                html += '<button class="btn-approve" onclick="approveApplication(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve &amp; Create Account</button>';
+                                html += '<button class="btn-reject" onclick="rejectApplication(\'' + doc.id + '\')">Reject</button>';
+                                html += '</div>';
+                            }
+
+                            html += '</div>';
+                        });
+
+                        listEl.innerHTML = html;
+                    })
+                    .catch(function (error) {
+                        listEl.innerHTML = '<p style="color: #ff6b6b; text-align:center;">Error loading applications: ' + escapeHtml(error.message) + '</p>';
+                    });
+            }
+
+            function field(label, value) {
+                return '<div class="app-field"><strong>' + escapeHtml(label) + ':</strong> ' + escapeHtml(value || 'N/A') + '</div>';
+            }
+
+            // ---- Approve: create Firebase Auth account ----
+            function approveApplication(docId, email, displayName) {
+                if (!confirm('Approve ' + displayName + ' and create their login account?')) return;
+
+                // Generate a temporary password
+                var tempPassword = generateTempPassword();
+
+                // Use a secondary Firebase app so we don't sign out the admin
+                var secondaryApp;
+                try {
+                    secondaryApp = firebase.app('secondary');
+                } catch (e) {
+                    secondaryApp = firebase.initializeApp(firebaseConfig, 'secondary');
+                }
+
+                var secondaryAuth = secondaryApp.auth();
+
+                secondaryAuth.createUserWithEmailAndPassword(email, tempPassword)
+                    .then(function (userCredential) {
+                        // Set display name
+                        return userCredential.user.updateProfile({ displayName: displayName })
+                            .then(function () {
+                                return secondaryAuth.signOut();
+                            })
+                            .then(function () {
+                                // Update application status in Firestore
+                                return db.collection('applications').doc(docId).update({
+                                    status: 'approved',
+                                    approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                    approvedBy: auth.currentUser.email,
+                                    authUid: userCredential.user.uid
+                                });
+                            });
+                    })
+                    .then(function () {
+                        showAdminMessage('Approved! Account created for ' + displayName + '. Temporary password: ' + tempPassword, 'lightgreen');
+                        // Send password reset so they can set their own password
+                        auth.sendPasswordResetEmail(email);
+                        loadApplications(currentTab);
+                    })
+                    .catch(function (error) {
+                        if (error.code === 'auth/email-already-in-use') {
+                            // Account already exists — just approve the application
+                            db.collection('applications').doc(docId).update({
+                                status: 'approved',
+                                approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                                approvedBy: auth.currentUser.email
+                            }).then(function () {
+                                showAdminMessage('Approved! (Account already existed for ' + email + ')', '#ffcc00');
+                                loadApplications(currentTab);
+                            });
+                        } else {
+                            showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                        }
+                    });
+            }
+
+            // ---- Reject ----
+            function rejectApplication(docId) {
+                if (!confirm('Reject this application?')) return;
+
+                db.collection('applications').doc(docId).update({
+                    status: 'rejected',
+                    rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    rejectedBy: auth.currentUser.email
+                })
+                .then(function () {
+                    showAdminMessage('Application rejected.', '#ffcc00');
+                    loadApplications(currentTab);
+                })
+                .catch(function (error) {
+                    showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                });
+            }
+
+            // ---- Helpers ----
+            function generateTempPassword() {
+                var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$';
+                var password = '';
+                for (var i = 0; i < 12; i++) {
+                    password += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                return password;
+            }
+
+            function escapeHtml(str) {
+                if (str == null) return '';
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+
+            function escapeAttr(str) {
+                if (str == null) return '';
+                return String(str).replace(/'/g, "\\'").replace(/"/g, '\\"');
+            }
+
+            function showAdminMessage(msg, color) {
+                var el = document.getElementById('admin-message');
+                el.textContent = msg;
+                el.style.color = color;
+                el.style.display = 'block';
+                setTimeout(function () { el.style.display = 'none'; }, 15000);
+            }
+        </script>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+            initAuthUI();
+        </script>
+
+    </div>
+
+</body>
+</html>

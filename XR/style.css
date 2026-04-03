@@ -105,6 +105,13 @@ a:hover {
     text-align: left;
 }
 
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 10px;
+}
+
 .page_title {
     padding-left: 10px;
 }

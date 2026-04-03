@@ -1,6 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
+<base href="https://XanaduKink.com/XR/">
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
 <META name="description" content="Xanadu Reserve">
@@ -11,7 +12,6 @@
 <title>Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
-<link rel="canonical" href="https://www.xanadureserve.com/">
 
 <!-- Firebase SDKs -->
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
@@ -24,17 +24,19 @@
 
     <div>
 
-        <p class="page_title">Welcome to Xanadu Reserve</p>
+        <div class="page-header">
+            <p class="page_title">Welcome to Xanadu Reserve</p>
+            <span class="auth-nav">
+                <span id="auth-user-name" style="display:none;"></span>
+                <a id="auth-link" href="login.html">Login</a>
+            </span>
+        </div>
 
         <nav class="navbar">
             <a href="about.html">About</a>
             <a href="events.html">Events</a>
             <a href="members_benefits.html">Membership Benefits</a>
             <a href="join.html">Join</a>
-            <span class="auth-nav">
-                <span id="auth-user-name" style="display:none;"></span>
-                <a id="auth-link" href="login.html">Login</a>
-            </span>
         </nav>
 
         <div>
