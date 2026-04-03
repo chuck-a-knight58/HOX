@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="../../style.css">
 <script type="text/javascript" src="../../utils.js"></script>
 <link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="../../firebase-config.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
@@ -21,28 +27,34 @@
         <div class="row">
             <div class="cell" vertical-align="middle" align="center">
                 <img class="mediumish_image" src="KinkyHPDinner.png" alt="XR Events" />
-                <a href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a><br>
-                Promo Code Needed<br>
+                September 19, 2026<br>
+                Xanadu Reserve & Club InnThrall Members Only<br>
+                <br>
+                $300, $150 deposit to reserve your spot, <br>
+                balance due 30 days prior to event<br>
+                Price does not include Forbidden ticket tax & fees<br>
+                <br>
+                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a><br>
+                <br>
+                Location Disclosed on Ticket<br>
                 Dress Code: Black Tie Optional<br>
             </div>
 
             <div class="cell" vertical-align="middle" align="center">
                 <br>
-                September 26, 2026<br>
-                Members Only<br>
-                A Kinky High Protocol Dinner<br>
+                A Velvet Harvest Soirée<br>
                 <p class="column_text">
-                Step into an evening where ritual, elegance, and intentional connection take center stage. This members-only Xanadu Reserve High Protocol Dinner is designed for those who appreciate the beauty of structure, refined etiquette, and the artistry of a carefully orchestrated experience.<br>
-                <br>
-                This intimate gathering is reserved exclusively for Xanadu Reserve members, ensuring a trusted environment where standards are elevated, expectations are understood, and the experience can unfold with depth and authenticity.<br>
-                <br>
-                ✨ Members-Only Experience<br>
-                ✨ Brief video training for those who need a refresher<br>
-                ✨ Curated Multi-Course Dinner<br>
-                ✨ Immersive High Protocol Rituals<br>
-                ✨ Elegant Atmosphere & Intentional Connection<br>
-                <br>
-                An evening of structure, beauty, and elevated kink, where dining becomes ceremony and presence becomes art.<br>
+                    As the season turns and early autumn settles in, you are invited into an evening where elegance deepens and every detail is intentionally orchestrated.<br>
+                    <br>
+                    A Velvet Harvest Soirée is an experience for those who appreciate refinement, ritual, and indulgence.<br>
+                    <br>
+                    The evening begins with a structured High Protocol 5-course dinner, where service becomes ceremony and presence becomes power. Live performers weave artistry throughout, blending elegance with expression.<br>
+                    <br>
+                    As dinner concludes, the atmosphere softens into a refined lounge with optional cigar service.<br>
+                    <br>
+                    The night culminates in a BDSM play party within an 800 ft² dungeon and Olympic-size pool.<br>
+                    <br>
+                    This is not simply an event—it is a progression of experience.
                 </p>
             </div>
         </div>
@@ -50,6 +62,7 @@
         <div w3-include-html="../../footer.html"></div>
         <script>
             includeHTML();
+            initAuthUI();
         </script>
 
     </div>

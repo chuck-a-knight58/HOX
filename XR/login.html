@@ -1,0 +1,157 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Login">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
+<title>Xanadu Reserve - Login</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+<link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+
+<body background='black' style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <p class="page_title">Xanadu Reserve</p>
+
+        <div style="max-width: 450px; margin: 30px auto; padding: 20px;">
+
+            <!-- Login Form -->
+            <div id="login-section">
+                <h2 style="text-align: center; border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Member Login</h2>
+
+                <form id="loginForm" onsubmit="return handleLogin(event);" style="display: flex; flex-direction: column; gap: 15px;">
+
+                    <label>Email Address:
+                        <input type="email" id="loginEmail" required
+                            style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                    </label>
+
+                    <label>Password:
+                        <input type="password" id="loginPassword" required minlength="6"
+                            style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                    </label>
+
+                    <div style="text-align: center; margin-top: 10px;">
+                        <button type="submit" class="btn-gold">Login</button>
+                    </div>
+
+                    <p id="loginMessage" class="auth-message"></p>
+                </form>
+
+                <p style="text-align: center; margin-top: 20px;">
+                    Not a member? <a href="join.html">Apply for membership</a>
+                </p>
+                <p style="text-align: center;">
+                    <a href="#" onclick="handlePasswordReset(); return false;">Forgot password?</a>
+                </p>
+            </div>
+
+            <!-- Logged-in state -->
+            <div id="loggedIn-section" style="display: none; text-align: center;">
+                <h2 style="border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Welcome Back</h2>
+                <p>You are logged in as <strong id="loggedInName"></strong>.</p>
+                <p style="margin-top: 20px;">
+                    <a href="members_benefits.html">View Membership Benefits</a> |
+                    <a href="events.html">Browse Events</a>
+                </p>
+                <div style="margin-top: 20px;">
+                    <button class="btn-gold" onclick="auth.signOut();">Logout</button>
+                </div>
+            </div>
+
+        </div>
+
+        <script>
+            function showAuthMessage(elementId, msg, color) {
+                var el = document.getElementById(elementId);
+                el.textContent = msg;
+                el.style.color = color;
+                el.style.display = 'block';
+            }
+
+            function getFriendlyError(error) {
+                switch (error.code) {
+                    case 'auth/user-not-found':
+                    case 'auth/invalid-credential':
+                        return 'Invalid email or password.';
+                    case 'auth/wrong-password':
+                        return 'Invalid email or password.';
+                    case 'auth/email-already-in-use':
+                        return 'An account with this email already exists.';
+                    case 'auth/weak-password':
+                        return 'Password must be at least 6 characters.';
+                    case 'auth/too-many-requests':
+                        return 'Too many attempts. Please try again later.';
+                    default:
+                        return error.message;
+                }
+            }
+
+            function handleLogin(event) {
+                event.preventDefault();
+                var email = document.getElementById('loginEmail').value;
+                var password = document.getElementById('loginPassword').value;
+
+                auth.signInWithEmailAndPassword(email, password)
+                    .then(function () {
+                        window.location.href = 'index.html';
+                    })
+                    .catch(function (error) {
+                        showAuthMessage('loginMessage', getFriendlyError(error), '#ff6b6b');
+                    });
+
+                return false;
+            }
+
+            function handlePasswordReset() {
+                var email = document.getElementById('loginEmail').value;
+                if (!email) {
+                    showAuthMessage('loginMessage', 'Enter your email address above, then click "Forgot password?"', '#ffcc00');
+                    return;
+                }
+                auth.sendPasswordResetEmail(email)
+                    .then(function () {
+                        showAuthMessage('loginMessage', 'Password reset email sent. Check your inbox.', 'lightgreen');
+                    })
+                    .catch(function (error) {
+                        showAuthMessage('loginMessage', getFriendlyError(error), '#ff6b6b');
+                    });
+            }
+
+            // Show/hide sections based on auth state
+            auth.onAuthStateChanged(function (user) {
+                var loginSection = document.getElementById('login-section');
+                var loggedInSection = document.getElementById('loggedIn-section');
+
+                if (user) {
+                    loginSection.style.display = 'none';
+                    loggedInSection.style.display = 'block';
+                    document.getElementById('loggedInName').textContent = user.displayName || user.email;
+                } else {
+                    loginSection.style.display = 'block';
+                    loggedInSection.style.display = 'none';
+                }
+            });
+        </script>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+        </script>
+
+    </div>
+
+</body>
+</html>

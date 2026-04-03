@@ -133,4 +133,42 @@ footer {
   padding: 5px;
   text-align: right;
 }
+
+/* Auth UI */
+.btn-gold {
+  padding: 12px 40px;
+  background: goldenrod;
+  color: black;
+  border: none;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-gold:hover {
+  background: #c8960e;
+}
+
+.auth-message {
+  text-align: center;
+  display: none;
+}
+
+.auth-nav {
+  display: inline;
+  margin-left: 10px;
+}
+
+.auth-nav span {
+  color: goldenrod;
+  font-size: 0.9em;
+  margin-right: 10px;
+}
+
+#login-prompt {
+  text-align: center;
+  padding: 40px 20px;
+}
+
+/* auth-required links: always visible, but redirect to login when logged out */
  

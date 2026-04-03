@@ -12,13 +12,25 @@
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 <link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
 
     <div>
 
-        <div class="row">
+        <!-- Login prompt for unauthenticated users -->
+        <div id="login-prompt" style="display: none; text-align: center; padding: 40px 20px;">
+            <h2 style="border-bottom: 1px solid goldenrod; padding-bottom: 10px;">Membership Benefits</h2>
+            <p>Please <a href="login.html">login or create an account</a> to view membership benefits.</p>
+        </div>
+
+        <div id="auth-gated" style="display: none;" class="row">
             <div class="cell" vertical-align="middle" align="center">
                 <p class="column_text">
                 <strong>Xanadu Reserve Membership</strong><br>
@@ -53,6 +65,7 @@
         <div w3-include-html="footer.html"></div>
         <script>
             includeHTML();
+            initAuthUI();
         </script>
         
     </div>

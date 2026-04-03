@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 <link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
@@ -122,6 +128,7 @@
             function submitMembershipRequestForm(event) {
                 event.preventDefault();
 
+                var user = auth.currentUser;
                 var form = document.getElementById('membershipRequestForm');
                 var formData = new FormData(form);
 
@@ -142,8 +149,8 @@
                     roles[roles.indexOf('Other')] = 'Other: ' + roleOther;
                 }
 
-                // Build email body as JSON
                 var data = {
+                    userId: user ? user.uid : null,
                     full_name: formData.get('full_name') || '',
                     preferred_name: formData.get('preferred_name') || '',
                     fetlife_name: formData.get('fetlife_name') || '',
@@ -157,21 +164,21 @@
                     community_contribution: formData.get('community_contribution') || 'None',
                     elegance_meaning: formData.get('elegance_meaning') || 'None',
                     notes: formData.get('notes') || 'None',
-                    todays_date: formData.get('todays_date') || ''
+                    status: 'pending',
+                    submittedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
-                var body = JSON.stringify(data, null, 2);
+                // Save to Firestore
+                db.collection('applications').add(data)
+                    .then(function () {
+                        showMessage('Your membership request has been submitted! We will review it and get back to you.', 'lightgreen');
+                        form.reset();
+                        document.getElementById('todaysDate').valueAsDate = new Date();
+                    })
+                    .catch(function (error) {
+                        showMessage('Error submitting request: ' + error.message, 'red');
+                    });
 
-                var subject = 'Xanadu Reserve Membership Registration - ' + formData.get('full_name');
-
-                // Open mailto link
-                var mailtoLink = 'mailto:XanaduKink@gmail.com'
-                    + '?subject=' + encodeURIComponent(subject)
-                    + '&body=' + encodeURIComponent(body);
-
-                window.location.href = mailtoLink;
-
-                showMessage('Opening your email client to send the registration...', 'lightgreen');
                 return false;
             }
 
@@ -181,11 +188,28 @@
                 el.style.color = color;
                 el.style.display = 'block';
             }
+
+            // Pre-fill email from logged-in user
+            auth.onAuthStateChanged(function (user) {
+                if (user) {
+                    var emailField = document.querySelector('input[name="email"]');
+                    if (emailField && !emailField.value) {
+                        emailField.value = user.email;
+                    }
+                    var nameField = document.querySelector('input[name="full_name"]');
+                    if (nameField && !nameField.value && user.displayName) {
+                        nameField.value = user.displayName;
+                    }
+                }
+            });
+
+            initAuthUI();
         </script>
 
         <div w3-include-html="footer.html"></div>
         <script>
             includeHTML();
+            initAuthUI();
         </script>
 
     </div>

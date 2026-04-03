@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 <link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
@@ -74,7 +80,7 @@
                 Xanadu Reserve & Club InnThrall Members Only<br>
                 <br>
                 <a href="events/PoolParty/">More info</a><br>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/982abf23ed">Tickets</a>
+                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/982abf23ed">Tickets</a>
                 <p></p>
             </div>
 
@@ -83,8 +89,8 @@
                 <br>
                 Xanadu Reserve<br>
                 Cocktail Party<br>
-                Date TBD<br>
-                Time TBD<br>
+                August 1st, 2026<br>
+                6:30pm - 9:00pm<br>
                 Members & Non-Members<br>
                 <br>
                 <a href="events/CocktailParty2/">More info</a><br>
@@ -103,7 +109,7 @@
                 Xanadu Reserve & Club InnThrall Members Only<br>
                 <br>
                 <a href="events/KinkyHPDinner/">More info</a><br>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a>
+                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a>
                 <p></p>
             </div>
         </div>
@@ -111,8 +117,9 @@
         <div w3-include-html="footer.html"></div>
         <script>
             includeHTML();
+            initAuthUI();
         </script>
-        
+
     </div>
 
 </body>

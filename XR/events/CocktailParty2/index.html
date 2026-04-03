@@ -12,6 +12,12 @@
 <link rel="stylesheet" href="../../style.css">
 <script type="text/javascript" src="../../utils.js"></script>
 <link rel="canonical" href="https://www.xanadureserve.com/">
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="../../firebase-config.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
@@ -36,7 +42,7 @@
             <div class="cell" vertical-align="middle" align="center">
                 Xanadu Reserve<br>
                 Cocktail Party<br>
-                July 18th, 2026<br>
+                August 1st, 2026<br>
                 6:30pm to 9:00pm<br>
                 Members & Non-Members<br>
                 <p class="column_text">
@@ -56,6 +62,7 @@
         <div w3-include-html="../../footer.html"></div>
         <script>
             includeHTML();
+            initAuthUI();
         </script>
 
     </div>
