@@ -18,3 +18,10 @@ If the applicant already has an account, it just approves the application withou
 
 The page is marked noindex, nofollow so search engines won't find it, and there's no link to it in the nav — you access it directly at /admin.html.
 
+# Memeberships
+
+Link for payments for Couples and Single Males
+https://square.link/u/uXUYkS2P
+
+Link for payments for Single Females
+https://square.link/u/szU85DUy
