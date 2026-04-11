@@ -56,9 +56,9 @@
                         style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
                 </label>
 
-                <label>Age (21+ required):
-                    <input type="number" name="age" min="21" required
-                        style="width: 100px; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                <label>Date of Birth (must be 21+):
+                    <input type="date" name="birthday" required
+                        style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
                 </label>
 
                 <fieldset style="border: 1px solid goldenrod; padding: 15px;">
@@ -132,9 +132,15 @@
                 var form = document.getElementById('membershipRequestForm');
                 var formData = new FormData(form);
 
-                // Validate age
-                var age = parseInt(formData.get('age'));
-                if (age < 21) {
+                // Validate age from birthday
+                var birthday = new Date(formData.get('birthday'));
+                var today = new Date();
+                var age = today.getFullYear() - birthday.getFullYear();
+                var m = today.getMonth() - birthday.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+                    age--;
+                }
+                if (isNaN(age) || age < 21) {
                     showMessage('You must be 21 or older to register.', 'red');
                     return false;
                 }
@@ -156,7 +162,7 @@
                     fetlife_name: formData.get('fetlife_name') || '',
                     email: formData.get('email') || '',
                     phone: formData.get('phone') || '',
-                    age: formData.get('age') || '',
+                    birthday: formData.get('birthday') || '',
                     attended_before: formData.get('attended_before') || 'Not specified',
                     experience: formData.get('experience') || 'Not specified',
                     roles: roles.length > 0 ? roles : ['Not specified'],
