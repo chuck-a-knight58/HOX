@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<base href="https://XanaduKink.com/XR/">
+<base href="https://XanaduKink.com/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
 <META name="description" content="Xanadu Reserve Login">
@@ -134,14 +134,17 @@
             auth.onAuthStateChanged(function (user) {
                 var loginSection = document.getElementById('login-section');
                 var loggedInSection = document.getElementById('loggedIn-section');
+                var memberBanner = document.getElementById('memberBanner');
 
                 if (user) {
                     loginSection.style.display = 'none';
                     loggedInSection.style.display = 'block';
+                    memberBanner.style.display = 'block';
                     document.getElementById('loggedInName').textContent = user.displayName || user.email;
                 } else {
                     loginSection.style.display = 'block';
                     loggedInSection.style.display = 'none';
+                    memberBanner.style.display = 'none';
                 }
             });
         </script>
