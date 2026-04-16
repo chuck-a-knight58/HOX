@@ -103,7 +103,7 @@ const EVENTS_DATA = [
         audience: 'Members & Non-Members',
         image: 'CocktailParty_1.png',
         detailPage: 'CocktailParty.html',
-        ticketUrl: '',
+        ticketUrl: 'https://forbiddentickets.com/events/xanadu-kink/1079e35fa9?token=35ff0300d57eb2b5a878b25f3ceb304db276fdb5',
         authRequired: false
     },
     {
