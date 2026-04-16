@@ -18,6 +18,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<script src="events-data.js"></script>
 </head>
 
 <body background='black' style="color: rgb(171, 119, 14);">
@@ -26,93 +27,358 @@
 
         <p class="page_title">Xanadu Reserve Events</p>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="CocktailParty1.html"><img class="small_image" src="assets/CocktailParty1_1.png" alt="XR Events" /></a>
-                <br>
-                Xanadu Reserve<br>
-                Cocktail Party<br>
-                April 10th, 2026<br>
-                6:30pm - 9:00pm<br>
-                Members & Non-Members<br>
-                <br>
-                <a href="CocktailParty1.html">More info</a><br>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/2026-04-10-xanadu-reserve-cocktail-party">Tickets</a>
-                <p></p>
-            </div>
+        <style>
+            .calendar-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+                gap: 20px;
+                max-width: 1100px;
+                margin: 20px auto 40px auto;
+                padding: 0 20px;
+            }
+            .calendar-month {
+                border: 1px solid goldenrod;
+                padding: 10px;
+                background: #111;
+            }
+            .calendar-month-title {
+                text-align: center;
+                font-weight: bold;
+                margin-bottom: 8px;
+                border-bottom: 1px solid goldenrod;
+                padding-bottom: 6px;
+            }
+            .calendar-weekdays, .calendar-days {
+                display: grid;
+                grid-template-columns: repeat(7, 1fr);
+                gap: 2px;
+            }
+            .calendar-weekdays div {
+                text-align: center;
+                font-size: 0.75em;
+                opacity: 0.7;
+                padding: 4px 0;
+            }
+            .calendar-days div {
+                text-align: center;
+                padding: 6px 0;
+                font-size: 0.85em;
+            }
+            .calendar-day-event {
+                background: goldenrod;
+                border-radius: 3px;
+            }
+            .calendar-day-event a {
+                color: black;
+                text-decoration: none;
+                font-weight: bold;
+                display: block;
+                width: 100%;
+                height: 100%;
+            }
+            .calendar-day-event a:hover {
+                color: #1a1a1a;
+            }
+            .event-popup {
+                position: absolute;
+                display: none;
+                z-index: 1000;
+                width: 260px;
+                background: #1a1a1a;
+                color: goldenrod;
+                border: 1px solid goldenrod;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+                padding: 12px;
+                font-size: 0.85em;
+                pointer-events: none;
+            }
+            .event-popup img {
+                width: 100%;
+                height: auto;
+                display: block;
+                margin-bottom: 8px;
+            }
+            .event-popup .ep-title {
+                font-weight: bold;
+                font-size: 1.05em;
+                margin-bottom: 4px;
+            }
+            .event-popup .ep-subtitle {
+                font-style: italic;
+                opacity: 0.85;
+                margin-bottom: 4px;
+            }
+            .event-popup .ep-meta {
+                margin: 2px 0;
+            }
+            .calendar-legend {
+                text-align: center;
+                margin: -20px auto 30px auto;
+                font-size: 0.9em;
+            }
+            .legend-swatch {
+                display: inline-block;
+                width: 14px;
+                height: 14px;
+                margin-right: 6px;
+                border-radius: 3px;
+                vertical-align: middle;
+            }
+            .view-toggle {
+                text-align: center;
+                margin: 20px auto 10px auto;
+            }
+            .view-toggle button {
+                padding: 8px 20px;
+                background: transparent;
+                color: goldenrod;
+                border: 1px solid goldenrod;
+                cursor: pointer;
+                font-size: 14px;
+                font-family: inherit;
+            }
+            .view-toggle button:first-child {
+                border-radius: 4px 0 0 4px;
+                border-right: none;
+            }
+            .view-toggle button:last-child {
+                border-radius: 0 4px 4px 0;
+            }
+            .view-toggle button.active {
+                background: goldenrod;
+                color: black;
+                font-weight: bold;
+            }
+        </style>
 
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="RoyalAfternoonTea.html"><img class="small_image" src="assets/RoyalAfternoonTea1.png" alt="XR Events" /></a>
-                    <br>
-                Xanadu Reserve<br>
-                Royal Afternoon Tea<br>
-                May 16th, 2026<br>
-                1:00pm - 4:00pm<br>
-                Members & Non-Members<br>
-                <br>
-                <a href="RoyalAfternoonTea.html">More info</a><br>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/7ed08c0096">Tickets</a>
-                <p></p>
-            </div>
-
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="HPDinner_StarryNightInParis.html"><img class="small_image" src="assets/HPDinner_StarryNightInParis.png" alt="XR Events" /></a>
-                <br>
-                Xanadu Reserve<br>
-                Starry Night In Paris<br>
-                1-day High Protocol Intensive<br>
-                June 13th, 2026<br>
-                9:30am - 9:30pm<br>
-                Members & Non-Members<br>
-                <br>
-                <a href="HPDinner_StarryNightInParis.html">More info</a><br>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/35828f6ea1">Tickets</a>
-                <p></p>
-            </div>
-
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="PoolParty.html"><img class="small_image" src="assets/PoolParty.png" alt="XR Events" /></a>
-                <br>
-                Xanadu Reserve<br>
-                Enchanted Waters Pool Party<br>
-                July 19th, 2026<br>
-                3:00pm - 7:00pm<br>
-                Xanadu Reserve & Club InnThrall Members Only<br>
-                <br>
-                <a href="PoolParty.html">More info</a><br>
-                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/982abf23ed">Tickets</a>
-                <p></p>
-            </div>
-
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="CocktailParty2.html"><img class="small_image" src="assets/CocktailParty2_1.png" alt="XR Events" /></a>
-                <br>
-                Xanadu Reserve<br>
-                Cocktail Party<br>
-                August 1st, 2026<br>
-                6:30pm - 9:00pm<br>
-                Members & Non-Members<br>
-                <br>
-                <a href="CocktailParty2.html">More info</a><br>
-                <a href="https://xanadukink.com/404.shtml">Tickets</a>
-                <p></p>
-            </div>
-
-            <div class="cell" vertical-align="middle" align="center">
-                <a href="KinkyHPDinner.html"><img class="small_image" src="assets/KinkyHPDinner.png" alt="XR Events" /></a>
-                <br>
-                Xanadu Reserve<br>
-                A Velvet Harvest Soirée<br>
-                A Kinky High Protocol Event<br>
-                Sept 19th, 2026<br>
-                5:00pm - 1:00am<br>
-                Xanadu Reserve & Club InnThrall Members Only<br>
-                <br>
-                <a href="KinkyHPDinner.html">More info</a><br>
-                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a>
-                <p></p>
-            </div>
+        <div class="view-toggle">
+            <button id="btn-view-calendar" class="active" onclick="setEventsView('calendar')">Calendar</button>
+            <button id="btn-view-list" onclick="setEventsView('list')">List</button>
         </div>
+
+        <div id="calendar-view" class="calendar-grid"></div>
+
+        <div id="event-popup" class="event-popup"></div>
+
+        <div id="event-cards" class="row" style="display: none;"></div>
+
+        <script>
+            function setEventsView(mode) {
+                var calEl = document.getElementById('calendar-view');
+                var legendEl = document.querySelector('.calendar-legend');
+                var cardsEl = document.getElementById('event-cards');
+                var btnCal = document.getElementById('btn-view-calendar');
+                var btnList = document.getElementById('btn-view-list');
+
+                if (mode === 'list') {
+                    calEl.style.display = 'none';
+                    if (legendEl) legendEl.style.display = 'none';
+                    cardsEl.style.display = '';
+                    btnCal.classList.remove('active');
+                    btnList.classList.add('active');
+                } else {
+                    calEl.style.display = '';
+                    if (legendEl) legendEl.style.display = '';
+                    cardsEl.style.display = 'none';
+                    btnCal.classList.add('active');
+                    btnList.classList.remove('active');
+                }
+                try { localStorage.setItem('eventsView', mode); } catch (e) {}
+            }
+
+            // Restore saved preference on load
+            (function () {
+                try {
+                    var saved = localStorage.getItem('eventsView');
+                    if (saved === 'list') {
+                        // Defer until renderer has built the legend element
+                        setTimeout(function () { setEventsView('list'); }, 0);
+                    }
+                } catch (e) {}
+            })();
+        </script>
+
+        <script>
+            (function () {
+                var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+                var weekdays = ['S','M','T','W','T','F','S'];
+
+                function escapeHtml(s) {
+                    return String(s == null ? '' : s)
+                        .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                }
+
+                function ordinal(n) {
+                    var s = ['th', 'st', 'nd', 'rd'];
+                    var v = n % 100;
+                    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+                }
+
+                function formatDate(iso) {
+                    var d = new Date(iso + 'T00:00:00');
+                    return monthNames[d.getMonth()] + ' ' + ordinal(d.getDate()) + ', ' + d.getFullYear();
+                }
+
+                // ---- Series color assignment ----
+                // Goldenrod is reserved for Xanadu Reserve; other series get colors
+                // from the fallback palette in first-seen order.
+                var SERIES_COLORS = {
+                    'Xanadu Reserve': 'goldenrod',
+                    'Power Exchange Together': '#d9534f'
+                };
+                var FALLBACK_PALETTE = ['#5fb3a1', '#c98ad6', '#e8a3a3', '#7fb3d5', '#a3d977', '#f0a868'];
+                var assignedColors = {};
+                var paletteIndex = 0;
+                function colorForSeries(series) {
+                    if (SERIES_COLORS[series]) return SERIES_COLORS[series];
+                    if (!assignedColors[series]) {
+                        assignedColors[series] = FALLBACK_PALETTE[paletteIndex % FALLBACK_PALETTE.length];
+                        paletteIndex++;
+                    }
+                    return assignedColors[series];
+                }
+
+                // ---- Calendar view ----
+                var byMonth = {};
+                EVENTS_DATA.forEach(function (e) {
+                    var parts = e.date.split('-');
+                    var key = parts[0] + '-' + parts[1];
+                    if (!byMonth[key]) byMonth[key] = [];
+                    byMonth[key].push({ day: parseInt(parts[2], 10), eventId: e.id });
+                });
+
+                var calendarEl = document.getElementById('calendar-view');
+                Object.keys(byMonth).sort().forEach(function (key) {
+                    var year = parseInt(key.split('-')[0], 10);
+                    var month = parseInt(key.split('-')[1], 10) - 1;
+                    var firstDay = new Date(year, month, 1).getDay();
+                    var daysInMonth = new Date(year, month + 1, 0).getDate();
+                    var eventMap = {};
+                    byMonth[key].forEach(function (e) { eventMap[e.day] = e; });
+
+                    var html = '<div class="calendar-month">';
+                    html += '<div class="calendar-month-title">' + monthNames[month] + ' ' + year + '</div>';
+                    html += '<div class="calendar-weekdays">';
+                    weekdays.forEach(function (w) { html += '<div>' + w + '</div>'; });
+                    html += '</div><div class="calendar-days">';
+                    for (var i = 0; i < firstDay; i++) html += '<div></div>';
+                    for (var d = 1; d <= daysInMonth; d++) {
+                        if (eventMap[d]) {
+                            var ev = getEventById(eventMap[d].eventId);
+                            var bg = colorForSeries(ev.series);
+                            html += '<div class="calendar-day-event" data-event-id="' + escapeHtml(eventMap[d].eventId) + '" style="background:' + bg + ';"><a href="' + escapeHtml(ev.detailPage) + '">' + d + '</a></div>';
+                        } else {
+                            html += '<div>' + d + '</div>';
+                        }
+                    }
+                    html += '</div></div>';
+                    calendarEl.insertAdjacentHTML('beforeend', html);
+                });
+
+                // ---- Legend ----
+                var seriesSeen = {};
+                var legendItems = [];
+                EVENTS_DATA.forEach(function (e) {
+                    if (!seriesSeen[e.series]) {
+                        seriesSeen[e.series] = true;
+                        legendItems.push({ series: e.series, color: colorForSeries(e.series) });
+                    }
+                });
+                if (legendItems.length > 1) {
+                    var legendHtml = '<div class="calendar-legend">';
+                    legendItems.forEach(function (item) {
+                        legendHtml += '<span class="legend-swatch" style="background:' + item.color + ';"></span>' + escapeHtml(item.series) + '&nbsp;&nbsp;';
+                    });
+                    legendHtml += '</div>';
+                    calendarEl.insertAdjacentHTML('afterend', legendHtml);
+                }
+
+                // ---- Hover popup ----
+                var popup = document.getElementById('event-popup');
+
+                function getEventById(id) {
+                    for (var i = 0; i < EVENTS_DATA.length; i++) {
+                        if (EVENTS_DATA[i].id === id) return EVENTS_DATA[i];
+                    }
+                    return null;
+                }
+
+                function showPopup(cell) {
+                    var ev = getEventById(cell.getAttribute('data-event-id'));
+                    if (!ev) return;
+                    var subtitle = ev.subtitle ? '<div class="ep-subtitle">' + escapeHtml(ev.subtitle) + '</div>' : '';
+                    popup.innerHTML =
+                        '<img src="assets/' + escapeHtml(ev.image) + '" alt="">' +
+                        '<div class="ep-title">' + escapeHtml(ev.name) + '</div>' +
+                        subtitle +
+                        '<div class="ep-meta">' + escapeHtml(formatDate(ev.date)) + '</div>' +
+                        '<div class="ep-meta">' + escapeHtml(ev.time) + '</div>' +
+                        '<div class="ep-meta">' + escapeHtml(ev.audience) + '</div>';
+                    popup.style.display = 'block';
+
+                    var rect = cell.getBoundingClientRect();
+                    var popupWidth = popup.offsetWidth;
+                    var popupHeight = popup.offsetHeight;
+                    var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
+                    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+                    var left = rect.left + scrollX + (rect.width / 2) - (popupWidth / 2);
+                    var top = rect.bottom + scrollY + 6;
+
+                    // Keep within viewport horizontally
+                    var maxLeft = scrollX + document.documentElement.clientWidth - popupWidth - 8;
+                    if (left < scrollX + 8) left = scrollX + 8;
+                    if (left > maxLeft) left = maxLeft;
+
+                    // Flip above the cell if there isn't room below
+                    if (rect.bottom + popupHeight + 12 > document.documentElement.clientHeight) {
+                        top = rect.top + scrollY - popupHeight - 6;
+                    }
+
+                    popup.style.left = left + 'px';
+                    popup.style.top = top + 'px';
+                }
+
+                function hidePopup() {
+                    popup.style.display = 'none';
+                }
+
+                calendarEl.addEventListener('mouseover', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell) showPopup(cell);
+                });
+                calendarEl.addEventListener('mouseout', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell && !cell.contains(e.relatedTarget)) hidePopup();
+                });
+
+                // ---- Card grid (Xanadu Reserve only, sorted chronologically) ----
+                var cardsEl = document.getElementById('event-cards');
+                var sortedEvents = EVENTS_DATA
+                    .filter(function (e) { return e.series === 'Xanadu Reserve'; })
+                    .sort(function (a, b) {
+                        return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+                    });
+                sortedEvents.forEach(function (e) {
+                    var subtitle = e.subtitle ? escapeHtml(e.subtitle) + '<br>' : '';
+                    var ticketClass = e.authRequired ? ' class="auth-required"' : '';
+                    var html = '<div class="cell" vertical-align="middle" align="center">';
+                    html += '<a href="' + escapeHtml(e.detailPage) + '"><img class="small_image" src="assets/' + escapeHtml(e.image) + '" alt="XR Events" /></a><br>';
+                    html += escapeHtml(e.series) + '<br>';
+                    html += escapeHtml(e.name) + '<br>';
+                    html += subtitle;
+                    html += escapeHtml(formatDate(e.date)) + '<br>';
+                    html += escapeHtml(e.time) + '<br>';
+                    html += escapeHtml(e.audience) + '<br>';
+                    html += '<br>';
+                    html += '<a href="' + escapeHtml(e.detailPage) + '">More info</a><br>';
+                    html += '<a' + ticketClass + ' href="' + escapeHtml(e.ticketUrl) + '">Tickets</a>';
+                    html += '<p></p></div>';
+                    cardsEl.insertAdjacentHTML('beforeend', html);
+                });
+            })();
+        </script>
 
         <div w3-include-html="footer.html"></div>
         <script>
