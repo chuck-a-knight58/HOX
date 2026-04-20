@@ -100,6 +100,24 @@
     .tab-btn:hover:not(.active) {
         background: #333;
     }
+    .admin-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    .btn-export {
+        padding: 8px 20px;
+        background: goldenrod;
+        color: black;
+        border: 1px solid goldenrod;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-export:hover { background: #c8960e; }
+    .btn-export:disabled { opacity: 0.6; cursor: not-allowed; }
     #admin-message {
         text-align: center;
         padding: 10px;
@@ -130,6 +148,11 @@
         <div id="admin-content" class="admin-container" style="display: none;">
 
             <div id="admin-message"></div>
+
+            <div class="admin-toolbar">
+                <button id="export-members-btn" class="btn-export" onclick="exportMembersCsv()">Export Members (CSV)</button>
+                <button id="export-newsletter-btn" class="btn-export" onclick="exportNewsletterCsv()">Export Newsletter Subscribers (CSV)</button>
+            </div>
 
             <div class="tab-bar">
                 <button class="tab-btn active" onclick="switchTab('pending')">Pending</button>
@@ -339,6 +362,140 @@
                 el.style.color = color;
                 el.style.display = 'block';
                 setTimeout(function () { el.style.display = 'none'; }, 15000);
+            }
+
+            // ---- Export approved members as CSV ----
+            function exportMembersCsv() {
+                var btn = document.getElementById('export-members-btn');
+                btn.disabled = true;
+                var originalText = btn.textContent;
+                btn.textContent = 'Exporting...';
+
+                db.collection('applications')
+                    .where('status', '==', 'approved')
+                    .orderBy('submittedAt', 'desc')
+                    .get()
+                    .then(function (snapshot) {
+                        if (snapshot.empty) {
+                            showAdminMessage('No approved members to export.', '#ffcc00');
+                            return;
+                        }
+
+                        var headers = [
+                            'full_name', 'preferred_name', 'email', 'phone',
+                            'fetlife_name', 'birthday', 'roles',
+                            'attended_before', 'experience',
+                            'community_contribution', 'elegance_meaning',
+                            'dietary', 'notes',
+                            'submitted_at', 'approved_at', 'approved_by'
+                        ];
+                        var rows = [headers];
+
+                        snapshot.forEach(function (doc) {
+                            var d = doc.data();
+                            var roles = Array.isArray(d.roles) ? d.roles.join('; ') : (d.roles || '');
+                            var submitted = d.submittedAt && d.submittedAt.toDate
+                                ? d.submittedAt.toDate().toISOString() : '';
+                            var approved = d.approvedAt && d.approvedAt.toDate
+                                ? d.approvedAt.toDate().toISOString() : '';
+                            rows.push([
+                                d.full_name || '',
+                                d.preferred_name || '',
+                                d.email || '',
+                                d.phone || '',
+                                d.fetlife_name || '',
+                                d.birthday || '',
+                                roles,
+                                d.attended_before || '',
+                                d.experience || '',
+                                d.community_contribution || '',
+                                d.elegance_meaning || '',
+                                d.dietary || '',
+                                d.notes || '',
+                                submitted,
+                                approved,
+                                d.approvedBy || ''
+                            ]);
+                        });
+
+                        downloadCsv(rows, 'members_' + todayStamp() + '.csv');
+                        showAdminMessage('Exported ' + (rows.length - 1) + ' member(s).', 'lightgreen');
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Export failed: ' + error.message, '#ff6b6b');
+                    })
+                    .finally(function () {
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                    });
+            }
+
+            // ---- Export newsletter subscribers as CSV ----
+            function exportNewsletterCsv() {
+                var btn = document.getElementById('export-newsletter-btn');
+                btn.disabled = true;
+                var originalText = btn.textContent;
+                btn.textContent = 'Exporting...';
+
+                db.collection('newsletter_subscribers')
+                    .orderBy('subscribedAt', 'desc')
+                    .get()
+                    .then(function (snapshot) {
+                        if (snapshot.empty) {
+                            showAdminMessage('No newsletter subscribers to export.', '#ffcc00');
+                            return;
+                        }
+
+                        var rows = [['email', 'subscribed_at']];
+                        snapshot.forEach(function (doc) {
+                            var d = doc.data();
+                            var ts = d.subscribedAt && d.subscribedAt.toDate
+                                ? d.subscribedAt.toDate().toISOString()
+                                : '';
+                            rows.push([d.email || doc.id, ts]);
+                        });
+
+                        downloadCsv(rows, 'newsletter_subscribers_' + todayStamp() + '.csv');
+                        showAdminMessage('Exported ' + (rows.length - 1) + ' subscriber(s).', 'lightgreen');
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Export failed: ' + error.message, '#ff6b6b');
+                    })
+                    .finally(function () {
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                    });
+            }
+
+            function downloadCsv(rows, filename) {
+                var csv = rows.map(function (row) {
+                    return row.map(csvEscape).join(',');
+                }).join('\r\n');
+                // Prepend UTF-8 BOM so Excel opens it correctly.
+                var blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            function csvEscape(value) {
+                if (value == null) return '';
+                var s = String(value);
+                if (/[",\r\n]/.test(s)) {
+                    s = '"' + s.replace(/"/g, '""') + '"';
+                }
+                return s;
+            }
+
+            function todayStamp() {
+                var d = new Date();
+                var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
             }
         </script>
 

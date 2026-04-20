@@ -178,4 +178,86 @@ footer {
 }
 
 /* auth-required links: always visible, but redirect to login when logged out */
- 
+
+/* Footer subscribe link — emphasized entry point for the newsletter modal */
+.footer-subscribe-link {
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+/* Subscribe modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.modal-overlay[hidden] {
+  display: none;
+}
+
+.modal-panel {
+  position: relative;
+  background: black;
+  border: 2px solid goldenrod;
+  color: goldenrod;
+  max-width: 480px;
+  width: 100%;
+  padding: 32px 24px 24px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 6px;
+  right: 10px;
+  background: transparent;
+  border: none;
+  color: goldenrod;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.modal-close:hover {
+  color: #fff;
+}
+
+.modal-title {
+  color: goldenrod;
+  margin: 0 0 8px 0;
+}
+
+.modal-blurb {
+  margin: 0 0 16px 0;
+}
+
+#subscribe-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#subscribe-email {
+  padding: 10px 12px;
+  background: black;
+  color: goldenrod;
+  border: 1px solid goldenrod;
+  font-size: 16px;
+}
+
+#subscribe-email::placeholder {
+  color: #a08040;
+}
+
+#subscribe-status {
+  min-height: 1.2em;
+  margin: 12px 0 0 0;
+}
