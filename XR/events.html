@@ -267,7 +267,10 @@
                         if (eventMap[d]) {
                             var ev = getEventById(eventMap[d].eventId);
                             var bg = colorForSeries(ev.series);
-                            html += '<div class="calendar-day-event" data-event-id="' + escapeHtml(eventMap[d].eventId) + '" style="background:' + bg + ';"><a href="' + escapeHtml(ev.detailPage) + '">' + d + '</a></div>';
+                            var inner = ev.detailPage
+                                ? '<a href="' + escapeHtml(ev.detailPage) + '">' + d + '</a>'
+                                : '<span style="display:block; width:100%; height:100%; color:black; font-weight:bold;">' + d + '</span>';
+                            html += '<div class="calendar-day-event" data-event-id="' + escapeHtml(eventMap[d].eventId) + '" style="background:' + bg + ';">' + inner + '</div>';
                         } else {
                             html += '<div>' + d + '</div>';
                         }

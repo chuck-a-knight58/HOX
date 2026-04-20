@@ -106,7 +106,7 @@
 
                 auth.signInWithEmailAndPassword(email, password)
                     .then(function () {
-                        window.location.href = 'index.html';
+                        window.location.href = 'members.html';
                     })
                     .catch(function (error) {
                         showAuthMessage('loginMessage', getFriendlyError(error), '#ff6b6b');

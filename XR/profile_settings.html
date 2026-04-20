@@ -1,0 +1,285 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="https://XanaduKink.com/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Profile Settings">
+<meta name="robots" content="noindex, nofollow">
+<meta name="rating" content="adult">
+<title>Xanadu Reserve - Profile Settings</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<style>
+    .settings-wrap {
+        max-width: 640px;
+        margin: 20px auto 40px auto;
+        padding: 0 20px;
+    }
+    .back-link {
+        display: inline-block;
+        margin-bottom: 14px;
+        font-size: 0.9em;
+    }
+    .m-card {
+        border: 1px solid goldenrod;
+        background: #111;
+        padding: 22px;
+    }
+    .m-card h3 {
+        margin: 0 0 16px 0;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 10px;
+        font-size: 1.1em;
+        letter-spacing: 0.04em;
+    }
+    .m-card input, .m-card textarea {
+        width: 100%;
+        padding: 8px;
+        background: #1a1a1a;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        box-sizing: border-box;
+        font-family: inherit;
+        font-size: 0.95em;
+    }
+    .m-card label {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 0.9em;
+    }
+    .m-card label > span {
+        display: block;
+        margin-bottom: 4px;
+        opacity: 0.85;
+    }
+    .readonly-field {
+        padding: 8px;
+        background: #1a1a1a;
+        border: 1px solid rgba(218, 165, 32, 0.5);
+        color: rgba(218, 165, 32, 0.75);
+    }
+    .m-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 14px;
+        flex-wrap: wrap;
+    }
+    .m-btn {
+        padding: 10px 22px;
+        background: goldenrod;
+        color: black;
+        border: none;
+        font-size: 0.95em;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .m-btn:hover { background: #c8960e; }
+    .m-btn.secondary {
+        background: none;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+    }
+    .m-btn.secondary:hover { background: #222; }
+    .m-msg {
+        margin-top: 12px;
+        font-size: 0.9em;
+        display: none;
+    }
+    #page-loading, #page-denied {
+        text-align: center;
+        padding: 40px 20px;
+    }
+</style>
+</head>
+
+<body background='black' style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <div class="page-header">
+            <p class="page_title" style="vertical-align: top;">Profile Settings</p>
+            <span class="auth-nav">
+                <span id="auth-user-name" style="display:none;"></span>
+                <a id="auth-link" href="login.html">Login</a>
+            </span>
+        </div>
+
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="events.html">Events</a>
+            <a href="members_benefits.html">Membership Benefits</a>
+            <a href="members.html">Members</a>
+            <a href="contactus.html">Contact</a>
+        </nav>
+
+        <div id="page-loading">Loading...</div>
+
+        <div id="page-denied" style="display:none;">
+            <h2>Members Only</h2>
+            <p>Please <a href="login.html">log in</a> to update your profile.</p>
+        </div>
+
+        <div id="page-content" class="settings-wrap" style="display:none;">
+
+            <a class="back-link" href="members.html">&larr; Back to Members Lounge</a>
+
+            <div class="m-card">
+                <h3>Update Your Information</h3>
+                <form id="profile-form" onsubmit="return saveProfile(event);">
+
+                    <label><span>Name</span>
+                        <div class="readonly-field" id="f-name">&mdash;</div>
+                    </label>
+                    <label><span>Email</span>
+                        <div class="readonly-field" id="f-email">&mdash;</div>
+                    </label>
+
+                    <label><span>Preferred Name / Nickname</span>
+                        <input type="text" id="f-preferred">
+                    </label>
+                    <label><span>Phone Number</span>
+                        <input type="tel" id="f-phone">
+                    </label>
+                    <label><span>FetLife Name</span>
+                        <input type="text" id="f-fetlife">
+                    </label>
+                    <label><span>Birthdate</span>
+                        <input type="date" id="f-birthday">
+                    </label>
+                    <label><span>Dietary Restrictions / Allergies</span>
+                        <textarea id="f-dietary" rows="3"></textarea>
+                    </label>
+                    <label><span>Additional Notes / Accessibility Needs</span>
+                        <textarea id="f-notes" rows="3"></textarea>
+                    </label>
+
+                    <div class="m-actions">
+                        <button type="submit" class="m-btn">Save Changes</button>
+                        <a href="members.html" class="m-btn secondary" style="text-decoration:none; display:inline-block;">Cancel</a>
+                    </div>
+                    <p id="profile-msg" class="m-msg"></p>
+                </form>
+            </div>
+
+        </div>
+
+        <script>
+            var currentUser = null;
+            var applicationDocId = null;
+
+            auth.onAuthStateChanged(function (user) {
+                document.getElementById('page-loading').style.display = 'none';
+                if (!user) {
+                    document.getElementById('page-denied').style.display = 'block';
+                    return;
+                }
+                currentUser = user;
+                document.getElementById('page-content').style.display = 'block';
+                loadProfile(user);
+            });
+
+            function loadProfile(user) {
+                document.getElementById('f-email').textContent = user.email || '—';
+                document.getElementById('f-name').textContent = user.displayName || user.email || '—';
+
+                db.collection('applications')
+                    .where('authUid', '==', user.uid)
+                    .limit(1)
+                    .get()
+                    .then(function (snap) {
+                        if (snap.empty) {
+                            return db.collection('applications')
+                                .where('email', '==', user.email)
+                                .limit(1)
+                                .get();
+                        }
+                        return snap;
+                    })
+                    .then(function (snap) {
+                        if (!snap || snap.empty) return;
+                        var doc = snap.docs[0];
+                        var d = doc.data();
+                        applicationDocId = doc.id;
+
+                        if (d.full_name) document.getElementById('f-name').textContent = d.full_name;
+
+                        document.getElementById('f-preferred').value = d.preferred_name || '';
+                        document.getElementById('f-phone').value = d.phone || '';
+                        document.getElementById('f-fetlife').value = d.fetlife_name || '';
+                        document.getElementById('f-birthday').value = d.birthday || '';
+                        document.getElementById('f-dietary').value = d.dietary && d.dietary !== 'None' ? d.dietary : '';
+                        document.getElementById('f-notes').value = d.notes && d.notes !== 'None' ? d.notes : '';
+                    })
+                    .catch(function (err) {
+                        console.error('Profile load error:', err);
+                    });
+            }
+
+            function saveProfile(event) {
+                event.preventDefault();
+                if (!applicationDocId) {
+                    showMsg('No profile record found to update.', '#ff6b6b');
+                    return false;
+                }
+
+                var birthday = document.getElementById('f-birthday').value;
+                if (birthday) {
+                    var parts = birthday.split('-');
+                    var bd = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+                    var today = new Date();
+                    var age = today.getFullYear() - bd.getFullYear();
+                    var m = today.getMonth() - bd.getMonth();
+                    if (m < 0 || (m === 0 && today.getDate() < bd.getDate())) age--;
+                    if (isNaN(age) || age < 21) {
+                        showMsg('Birthdate indicates age under 21.', '#ff6b6b');
+                        return false;
+                    }
+                }
+
+                var updates = {
+                    preferred_name: document.getElementById('f-preferred').value.trim(),
+                    phone: document.getElementById('f-phone').value.trim(),
+                    fetlife_name: document.getElementById('f-fetlife').value.trim(),
+                    birthday: birthday,
+                    dietary: document.getElementById('f-dietary').value.trim() || 'None',
+                    notes: document.getElementById('f-notes').value.trim() || 'None',
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                };
+
+                db.collection('applications').doc(applicationDocId).update(updates)
+                    .then(function () {
+                        showMsg('Your information has been updated.', 'lightgreen');
+                    })
+                    .catch(function (err) {
+                        showMsg('Error: ' + err.message, '#ff6b6b');
+                    });
+                return false;
+            }
+
+            function showMsg(msg, color) {
+                var el = document.getElementById('profile-msg');
+                el.textContent = msg;
+                el.style.color = color;
+                el.style.display = 'block';
+            }
+        </script>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+            initAuthUI();
+        </script>
+
+    </div>
+
+</body>
+</html>

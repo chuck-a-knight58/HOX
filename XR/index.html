@@ -29,9 +29,9 @@
             <span class="auth-nav">
                 <span id="auth-user-name" style="display:none;"></span>
                 <a id="auth-link" href="login.html">Login</a>
-            <div id="auth-gated" style="display: none; text-align: center; font-weight: bold;">
-                Member's only features available
-            </div>
+                <div id="auth-gated" style="display: none; text-align: center; font-weight: bold;">
+                    Member's only features available
+                </div>
             </span>
         </div>
 
@@ -40,7 +40,11 @@
             <a href="events.html">Events</a>
             <a href="members_benefits.html">Membership Benefits</a>
             <a href="join.html">Join</a>
+            <a href="members.html" class="members-only-link" style="display:none;">Members</a>
         </nav>
+        <style>
+            body.user-logged-in .members-only-link { display: inline !important; }
+        </style>
 
         <div>
             <img class="large_image" src="assets/XR.png" alt="Xanadu Reserve" />
@@ -50,6 +54,12 @@
         <script>
             includeHTML();
             initAuthUI();
+
+            auth.onAuthStateChanged(function (user) {
+                if (user) {
+                    window.location.replace('members.html');
+                }
+            });
         </script>
         
     </div>
