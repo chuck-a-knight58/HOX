@@ -1,0 +1,134 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<title>Xanadu Reserve</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs (for shared nav/auth) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<!-- Markdown renderer -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<style>
+    .md-wrap {
+        max-width: 900px;
+        margin: 20px auto 40px auto;
+        padding: 0 20px;
+        line-height: 1.6;
+    }
+    .md-wrap h1, .md-wrap h2, .md-wrap h3, .md-wrap h4 {
+        color: goldenrod;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 6px;
+        margin-top: 1.6em;
+    }
+    .md-wrap h1:first-child { margin-top: 0; }
+    .md-wrap a { color: #87CEFA; word-break: break-word; }
+    .md-wrap a:visited { color: #B0A0D0; }
+    .md-wrap a:hover { color: #B0E0FF; }
+    .md-wrap hr {
+        border: none;
+        border-top: 1px solid goldenrod;
+        margin: 30px 0;
+    }
+    .md-wrap code {
+        background: #222;
+        color: goldenrod;
+        padding: 2px 6px;
+        border-radius: 3px;
+    }
+    .md-wrap pre {
+        background: #111;
+        color: goldenrod;
+        padding: 12px;
+        overflow-x: auto;
+        border: 1px solid goldenrod;
+    }
+    .md-wrap blockquote {
+        border-left: 3px solid goldenrod;
+        margin: 1em 0;
+        padding: 0.2em 1em;
+        color: #d4a647;
+        font-style: italic;
+    }
+    .md-wrap ul, .md-wrap ol {
+        padding-left: 1.5em;
+    }
+    .md-wrap img {
+        max-width: 100%;
+        height: auto;
+    }
+    #md-error {
+        text-align: center;
+        color: #ff6b6b;
+        padding: 40px 20px;
+    }
+</style>
+</head>
+
+<body style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <div class="page-header">
+            <p class="page_title" style="vertical-align: top;">Xanadu Reserve</p>
+            <span class="auth-nav">
+                <span id="auth-user-name" style="display:none;"></span>
+                <a id="auth-link" href="login.html">Login</a>
+            </span>
+        </div>
+
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="events.html">Events</a>
+            <a href="members_benefits.html">Membership Benefits</a>
+            <a href="join.html">Join</a>
+            <a href="members.html" class="members-only-link" style="display:none;">Members</a>
+        </nav>
+        <style>
+            body.user-logged-in .members-only-link { display: inline !important; }
+        </style>
+
+        <div class="md-wrap">
+            <div id="md-content">Loading…</div>
+            <div id="md-error" style="display:none;"></div>
+        </div>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+            initAuthUI();
+
+            fetch('test.md', { cache: 'no-cache' })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.text();
+                })
+                .then(function (md) {
+                    marked.setOptions({ gfm: true, breaks: true });
+                    document.getElementById('md-content').innerHTML = marked.parse(md);
+                })
+                .catch(function (err) {
+                    document.getElementById('md-content').style.display = 'none';
+                    var errEl = document.getElementById('md-error');
+                    errEl.textContent = 'Could not load content: ' + err.message;
+                    errEl.style.display = 'block';
+                });
+        </script>
+
+    </div>
+
+</body>
+</html>
