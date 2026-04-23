@@ -1,0 +1,359 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve FAQ — answers to the questions we hear most often from prospective members and guests.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
+<link rel="icon" href="favicon.ico" sizes="any">
+<title>FAQ — Xanadu Reserve</title>
+<link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Frequently Asked Questions — Xanadu Reserve" />
+<meta property="og:description" content="Answers to the questions we hear most often from prospective members and guests." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/XR.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+
+<body style="color: rgb(171, 119, 14);">
+
+    <div w3-include-html="nav.html"></div>
+
+    <p class="page_title">Frequently Asked Questions</p>
+
+    <style>
+        .faq-wrap {
+            max-width: 900px;
+            margin: 10px auto 20px auto;
+            padding: 0 20px;
+        }
+        .faq-intro {
+            text-align: center;
+            max-width: 780px;
+            margin: 0 auto 24px auto;
+        }
+        .faq-tagline {
+            font-style: italic;
+            font-size: 1.15em;
+            line-height: 1.5;
+            margin: 0 0 12px 0;
+        }
+        .faq-intro p {
+            line-height: 1.55;
+            margin: 0 0 10px 0;
+        }
+        .faq-section-title {
+            margin: 28px 0 10px 0;
+            padding: 6px 0;
+            border-bottom: 1px solid goldenrod;
+            letter-spacing: 0.06em;
+            font-size: 1em;
+            text-transform: uppercase;
+            opacity: 0.95;
+        }
+        .faq-item {
+            border: 1px solid goldenrod;
+            background: #111;
+            margin: 12px 0;
+        }
+        .faq-item > summary {
+            list-style: none;
+            cursor: pointer;
+            padding: 16px 44px 16px 20px;
+            font-weight: bold;
+            font-size: 1.02em;
+            letter-spacing: 0.02em;
+            position: relative;
+            outline: none;
+        }
+        .faq-item > summary::-webkit-details-marker { display: none; }
+        .faq-item > summary::after {
+            content: "+";
+            position: absolute;
+            right: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.3em;
+            font-weight: normal;
+            transition: transform 0.15s ease;
+        }
+        .faq-item[open] > summary::after {
+            content: "\2013"; /* en dash */
+        }
+        .faq-item > summary:hover {
+            background: #181818;
+        }
+        .faq-body {
+            padding: 0 20px 18px 20px;
+            line-height: 1.6;
+        }
+        .faq-body p {
+            margin: 0 0 10px 0;
+        }
+        .faq-body p:last-child {
+            margin-bottom: 0;
+        }
+        .faq-closing {
+            text-align: center;
+            font-style: italic;
+            line-height: 1.5;
+            margin-top: 28px;
+            padding: 14px;
+            border-top: 1px solid goldenrod;
+            border-bottom: 1px solid goldenrod;
+        }
+    </style>
+
+    <div class="faq-wrap">
+
+        <div class="faq-intro">
+            <p class="faq-tagline">
+                &ldquo;Curiosity is always welcome. So are good questions.&rdquo;
+            </p>
+            <p>
+                The answers below address what we hear most often from prospective members and guests.
+                If your question isn&rsquo;t here, write to us at
+                <a class="alt" href="mailto:XanaduReserve@gmail.com">XanaduReserve@gmail.com</a> &mdash;
+                every message is read personally.
+            </p>
+        </div>
+
+        <div class="faq-section-title">Getting Started</div>
+
+        <details class="faq-item">
+            <summary>What does &ldquo;High Protocol&rdquo; mean in practice?</summary>
+            <div class="faq-body">
+                <p>
+                    High Protocol is a practice of refined attention &mdash; to ritual, to partner, to
+                    the moment itself. At a Xanadu Reserve event, that looks like formal service,
+                    intentional dress, measured conversation, and clearly defined roles throughout
+                    the evening.
+                </p>
+                <p>
+                    Guests arrive dressed for the occasion. Events open with a shared welcome and toast.
+                    What follows &mdash; dinner, tea, ceremony &mdash; is orchestrated rather than
+                    improvised. Those in service positions move with care and deliberation. Those being
+                    served receive that care with presence and appreciation.
+                </p>
+                <p>
+                    The structure is not decoration. It is the medium through which connection deepens.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>What should a first-timer expect?</summary>
+            <div class="faq-body">
+                <p>
+                    Our Cocktail Parties are designed specifically as a gentle introduction to the
+                    Reserve. Expect a warm welcome at the door, a shared toast to open the evening,
+                    and unhurried conversation in a space that favors quality over volume. Questions
+                    are welcomed. Hosts make themselves available to every newcomer.
+                </p>
+                <p>
+                    You will not be asked to perform, prove, or pretend. Observe, ask, and let the
+                    evening unfold at its own pace. The community is cultivated slowly, and there is
+                    no hurry.
+                </p>
+                <p>
+                    For more immersive events (High Protocol dinners, Royal Afternoon Tea), we
+                    recommend beginning with a Cocktail Party first so you can meet hosts and regulars
+                    before stepping into the more structured gatherings.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>Can I come simply to observe?</summary>
+            <div class="faq-body">
+                <p>
+                    Yes &mdash; most of our introductory events (Cocktail Parties in particular) welcome
+                    guests who are curious but not yet ready to participate more fully. You are free
+                    to arrive, meet people, observe the atmosphere, and leave without any expectation
+                    of what you will or won&rsquo;t do next.
+                </p>
+                <p>
+                    The more ceremonial events assume active participation in the ritual. If you wish
+                    to observe those, reach out to us beforehand and we will talk through whether a
+                    particular evening is the right fit.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>What if I&rsquo;m solo, new, queer, older, or otherwise not sure I&rsquo;ll fit in?</summary>
+            <div class="faq-body">
+                <p>
+                    You fit. Xanadu Reserve welcomes members and guests of every orientation,
+                    identity, body, background, and level of experience. Chosen names and pronouns
+                    are honored from first introduction. Newcomers and seasoned practitioners are
+                    treated with equal grace.
+                </p>
+                <p>
+                    Solo attendees are common and actively welcomed &mdash; many of our most beloved
+                    members first arrived on their own. If you have concerns specific to your own
+                    situation, email us before the event and we will answer directly and discreetly.
+                </p>
+            </div>
+        </details>
+
+        <div class="faq-section-title">Our Events</div>
+
+        <details class="faq-item">
+            <summary>What&rsquo;s the difference between Xanadu Reserve, Escape to Xanadu, and PET?</summary>
+            <div class="faq-body">
+                <p>
+                    <strong>Xanadu Reserve</strong> is our flagship private social club &mdash;
+                    High Protocol dinners, Royal Afternoon Teas, Reserve Cocktail parties, and curated
+                    social experiences that emphasize ritual, elegance, and intentional connection.
+                    Most Reserve events are members-first.
+                </p>
+                <p>
+                    <strong>Escape to Xanadu</strong> is our themed social series &mdash; more playful,
+                    less formal, and often costume-driven (think Toga Parties and seasonal soir&eacute;es).
+                    These events are sponsorship-based; please contact us for details.
+                </p>
+                <p>
+                    <strong>PET (Power Exchange Together)</strong> is our discussion and community
+                    gathering for those interested in power-exchange dynamics. PET events are open to
+                    all, lower-key in format, and focused on conversation, education, and connection
+                    rather than ceremony or play.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>What should I wear? Is there a dress code?</summary>
+            <div class="faq-body">
+                <p>
+                    Dress code varies by event and is always indicated on the event page and ticket.
+                    In general:
+                </p>
+                <p>
+                    <strong>Cocktail Parties</strong> &mdash; Smart casual. Think polished, put-together,
+                    not black-tie.<br>
+                    <strong>Royal Afternoon Tea</strong> &mdash; Elevated daywear. Tea attire, refined
+                    and expressive.<br>
+                    <strong>High Protocol Dinners</strong> &mdash; Formal. Themed where noted (e.g., A
+                    Starry Night in Paris).<br>
+                    <strong>Escape to Xanadu</strong> &mdash; Costume per the evening&rsquo;s theme.<br>
+                    <strong>PET gatherings</strong> &mdash; Come as you are.
+                </p>
+                <p>
+                    When in doubt, dress up rather than down. Every room reads the effort, and the
+                    effort is part of the experience.
+                </p>
+            </div>
+        </details>
+
+        <div class="faq-section-title">Requirements &amp; Access</div>
+
+        <details class="faq-item">
+            <summary>What are the age and attendance requirements?</summary>
+            <div class="faq-body">
+                <p>
+                    All attendees must be 21 years of age or older. Identity verification may be
+                    requested at application, at the door, or in response to a concern.
+                </p>
+                <p>
+                    Attendance at most Reserve events also requires acceptance of our
+                    <a class="alt" href="community_standards.html">Community Standards</a> &mdash;
+                    our shared agreements on consent, discretion, safety, and conduct. These are not
+                    optional.
+                </p>
+                <p>
+                    Event-specific requirements (membership status, sponsorship, themed attire, etc.)
+                    are indicated on each event&rsquo;s page and in the ticket confirmation.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>How do you handle accessibility?</summary>
+            <div class="faq-body">
+                <p>
+                    We want every guest to be able to be fully present, and we do our best to
+                    accommodate accessibility needs &mdash; mobility, sensory, dietary, or otherwise.
+                </p>
+                <p>
+                    Every attendee form includes a space for accessibility needs and dietary
+                    restrictions. If you have specific requirements, please share them there, or email
+                    us directly at
+                    <a class="alt" href="mailto:XanaduReserve@gmail.com">XanaduReserve@gmail.com</a>
+                    as early as possible so we can plan the evening around them.
+                </p>
+                <p>
+                    Venues vary by event and not every space can accommodate every need. If a venue
+                    is not a fit for your accessibility requirements, we will say so plainly and work
+                    with you to find an event that is.
+                </p>
+            </div>
+        </details>
+
+        <div class="faq-section-title">Tickets &amp; Membership</div>
+
+        <details class="faq-item">
+            <summary>What&rsquo;s your refund policy?</summary>
+            <div class="faq-body">
+                <p>
+                    Tickets are issued through our ticketing partner (Forbidden Tickets) and are
+                    generally non-refundable once purchased. We design our events around confirmed
+                    guest lists, and last-minute cancellations affect the experience for everyone.
+                </p>
+                <p>
+                    That said, life happens. If you need to cancel, write to us as early as possible
+                    at
+                    <a class="alt" href="mailto:XanaduReserve@gmail.com">XanaduReserve@gmail.com</a>.
+                    Depending on the circumstances and how far in advance you reach out, we may be
+                    able to offer a credit toward a future event or arrange a transfer of your ticket.
+                </p>
+                <p>
+                    Membership dues are non-refundable once the membership term has begun.
+                </p>
+            </div>
+        </details>
+
+        <details class="faq-item">
+            <summary>I still have a question. How do I reach you?</summary>
+            <div class="faq-body">
+                <p>
+                    The best way is to email us at
+                    <a class="alt" href="mailto:XanaduReserve@gmail.com">XanaduReserve@gmail.com</a>.
+                    Every message is read personally by a host and answered with care.
+                </p>
+                <p>
+                    You can also find us on FetLife &mdash; our profiles and community groups are
+                    listed on our <a class="alt" href="contactus.html">Contact Us</a> page.
+                </p>
+            </div>
+        </details>
+
+        <div class="faq-closing">
+            Good questions are always welcome.<br>
+            Every conversation begins with one.
+        </div>
+
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
+
+</body>
+</html>

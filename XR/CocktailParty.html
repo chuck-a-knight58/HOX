@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Cocktail Party">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Cocktail Party — a gentle introduction to our private social club. Casually elegant, intentional, and welcoming to newcomers.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>Cocktail Party — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Xanadu Reserve Cocktail Party" />
+<meta property="og:description" content="A casually elegant evening designed to welcome newcomers while honoring the intimacy our community is known for." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/CocktailParty_2.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,50 +30,72 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="medium_image" src="assets/CocktailParty_2.png" alt="XR Events" />
-                <br>
-                <a href="https://xanadukink.com/404.shtml">Tickets</a>
-                <br>
-                Location: Listed on your ticket<br>
-                Dress Code: Smart Casual<br>
-                <p class="column_text">
-                Join us for a casually elegant Cocktail Evening designed to welcome new faces while honoring the intimacy and intentionality our community is known for.<br>
-                <br>
-                This gathering offers a gentle introduction to Xanadu Reserve a private social club for those who value presence, discernment, elevated experiences, and meaningful connection.
-                </p>
-            </div>
+    <p class="page_title">Cocktail Party</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                Xanadu Reserve<br>
-                Cocktail Party<br>
-                August 1st, 2026<br>
-                6:30pm to 9:00pm<br>
-                Members & Non-Members<br>
-                <p class="column_text">
-                The evening will unfold with quiet elegance:<br>
-                <br>
-                We begin with a warm welcome and shared toast, setting the tone for connection and refinement. From there, the evening opens naturally.<br>
-                <br>
-                Guests and members mingle in relaxed, thoughtful conversation. Questions are welcomed and connections form organically.<br>
-                <br>
-                While this evening welcomes newcomers, it is always held with intention and care. We believe meaningful communities are cultivated slowly, through shared standards, mutual respect, and genuine presence.<br>
-                <br>
-                We look forward to meeting you.
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/CocktailParty_2.png" alt="Xanadu Reserve Cocktail Party" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;A gentle introduction to Xanadu Reserve &mdash; welcoming, elegant,
+                    intentional.&rdquo;
                 </p>
+                <dl class="event-meta">
+                    <dt>Date</dt><dd>Varies &mdash; see calendar</dd>
+                    <dt>Time</dt><dd>6:30 PM &ndash; 9:00 PM</dd>
+                    <dt>Audience</dt><dd>Members &amp; Non-Members</dd>
+                    <dt>Dress Code</dt><dd>Smart Casual</dd>
+                    <dt>Location</dt><dd>Listed on your ticket</dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                Join us for a casually elegant Cocktail Evening designed to welcome new faces
+                while honoring the intimacy and intentionality our community is known for.
+            </p>
+            <p>
+                This gathering offers a gentle introduction to Xanadu Reserve &mdash; a private
+                social club for those who value presence, discernment, elevated experiences, and
+                meaningful connection.
+            </p>
+            <p>
+                The evening unfolds with quiet elegance. We begin with a warm welcome and shared
+                toast, setting the tone for connection and refinement. From there, the evening
+                opens naturally: guests and members mingle in relaxed, thoughtful conversation,
+                questions are welcomed, and connections form organically.
+            </p>
+            <p>
+                While this evening welcomes newcomers, it is always held with intention and care.
+                We believe meaningful communities are cultivated slowly &mdash; through shared
+                standards, mutual respect, and genuine presence.
+            </p>
+            <p>
+                We look forward to meeting you.
+            </p>
+        </div>
+
+        <div class="event-cta">
+            <a href="events.html">View Calendar</a>
+            <a href="faq.html" class="secondary">First-Timer Questions</a>
+        </div>
+
+        <div class="event-closing">
+            Presence, not performance.<br>
+            Come as you are &mdash; dressed well, curious, welcome.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

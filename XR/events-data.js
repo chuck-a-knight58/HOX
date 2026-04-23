@@ -88,7 +88,7 @@ const EVENTS_DATA = [
         date: '2026-09-19',
         time: '5:00pm - 1:00am',
         audience: 'Xanadu Reserve & Club InnThrall Members Only',
-        image: 'KinkyHPDinner.png',
+        image: 'KinkyHPDinner.jpg',
         detailPage: 'KinkyHPDinner.html',
         ticketUrl: 'https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9',
         authRequired: true
@@ -120,7 +120,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu053026',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Spring Soirée',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-05-30',
         time: '6:00pm - 1:00am',
@@ -131,7 +131,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu062726',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Midsummer Night',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-06-27',
         time: '6:00pm - 1:00am',
@@ -142,7 +142,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu071126',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Summer Gathering',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-07-11',
         time: '6:00pm - 1:00am',
@@ -153,7 +153,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu082226',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Late Summer Escape',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-08-22',
         time: '6:00pm - 1:00am',
@@ -164,7 +164,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu092626',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Autumn Equinox',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-09-26',
         time: '6:00pm - 1:00am',
@@ -175,7 +175,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu101726',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Harvest Revelry',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-10-17',
         time: '6:00pm - 1:00am',
@@ -186,7 +186,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu112126',
         series: 'Escape to Xanadu',
-        name: '',
+        name: 'Winter Welcome',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-11-21',
         time: '6:00pm - 1:00am',
@@ -197,7 +197,7 @@ const EVENTS_DATA = [
     {
         id: 'EscapeToXanadu121226',
         series: 'Xanadu Christmas',
-        name: '',
+        name: 'Holiday Gala',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-12-12',
         time: '6:00pm - 1:00am',
@@ -208,7 +208,7 @@ const EVENTS_DATA = [
     {
         id: 'PET053026',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-05-09',
         time: '2:00pm - 4:00pm',
@@ -221,7 +221,7 @@ const EVENTS_DATA = [
     {
         id: 'PET060626',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-06-06',
         time: '2:00pm - 4:00pm',
@@ -234,7 +234,7 @@ const EVENTS_DATA = [
     {
         id: 'PET090926',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-09-12',
         time: '2:00pm - 4:00pm',
@@ -247,7 +247,7 @@ const EVENTS_DATA = [
     {
         id: 'PET100326',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-10-03',
         time: '2:00pm - 4:00pm',
@@ -260,7 +260,7 @@ const EVENTS_DATA = [
     {
         id: 'PET110726',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-11-07',
         time: '2:00pm - 4:00pm',
@@ -273,7 +273,7 @@ const EVENTS_DATA = [
     {
         id: 'PET121226',
         series: 'Power Exchange Together',
-        name: '',
+        name: 'Monthly Gathering',
         subtitle: '',
         date: '2026-12-12',
         time: '2:00pm - 4:00pm',

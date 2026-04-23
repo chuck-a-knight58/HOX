@@ -4,13 +4,12 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Attendee Information Form">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="robots" content="index, follow">
+<META name="description" content="Xanadu Reserve Attendee Information Form — submit your details for the upcoming event and receive your promo code.">
+<meta name="robots" content="noindex, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve</title>
+<title>Attendee Information Form — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 
@@ -24,6 +23,8 @@
 <body style="color: rgb(171, 119, 14);">
 
     <div>
+
+        <div w3-include-html="nav.html"></div>
 
         <p class="page_title">Xanadu Reserve Attendee Information Form</p>
 
@@ -167,7 +168,6 @@
                     roles[roles.indexOf('Other')] = 'Other: ' + roleOther;
                 }
 
-                // Build email body as JSON
                 var data = {
                     event_name: formData.get('event_name') || '',
                     event_date: formData.get('event_date') || '',
@@ -183,21 +183,21 @@
                     dietary: formData.get('dietary') || 'None',
                     elegance_meaning: formData.get('elegance_meaning') || 'None',
                     notes: formData.get('notes') || 'None',
-                    todays_date: formData.get('todays_date') || ''
+                    todays_date: formData.get('todays_date') || '',
+                    submittedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 
-                var body = JSON.stringify(data, null, 2);
+                // Save to Firestore (encrypted at rest, access controlled by rules)
+                db.collection('attendee_info').add(data)
+                    .then(function () {
+                        showMessage('Your information has been submitted. We\'ll be in touch with your promo code.', 'lightgreen');
+                        form.reset();
+                        document.getElementById('todaysDate').valueAsDate = new Date();
+                    })
+                    .catch(function (error) {
+                        showMessage('Error submitting information: ' + error.message, 'red');
+                    });
 
-                var subject = 'Xanadu Reserve Attendee Information - ' + formData.get('event_name') + ' - ' + formData.get('full_name');
-
-                // Open mailto link
-                var mailtoLink = 'mailto:XanaduKink@gmail.com'
-                    + '?subject=' + encodeURIComponent(subject)
-                    + '&body=' + encodeURIComponent(body);
-
-                window.location.href = mailtoLink;
-
-                showMessage('Opening your email client to send the information...', 'lightgreen');
                 return false;
             }
 

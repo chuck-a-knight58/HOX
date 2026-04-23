@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve — the Tri-State's most exclusive kink experience. A private social club for those who value ritual, presence, and elevated community.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
-<title>Xanadu Reserve</title>
+<title>Xanadu Reserve — Ritual, Presence, Elevated Community</title>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Xanadu Reserve" />
+<meta property="og:description" content="The Tri-State's most exclusive kink experience. A private social club for those who value ritual, presence, and elevated community." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/XR.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -19,6 +26,198 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="firebase-config.js"></script>
+<script src="events-data.js"></script>
+
+<style>
+    .home-hero {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 28px;
+        align-items: center;
+        max-width: 1100px;
+        margin: 24px auto 12px auto;
+        padding: 0 20px;
+    }
+    .home-hero-image {
+        flex: 1 1 380px;
+        text-align: center;
+    }
+    .home-hero-image img {
+        max-width: 100%;
+        max-height: 60vh;
+        height: auto;
+        width: auto;
+    }
+    .home-hero-text {
+        flex: 1 1 340px;
+    }
+    .home-headline {
+        font-family: var(--serif);
+        font-weight: 600;
+        font-size: 2.1em;
+        line-height: 1.2;
+        margin: 0 0 14px 0;
+        letter-spacing: 0.02em;
+    }
+    .home-sub {
+        font-style: italic;
+        font-size: 1.1em;
+        line-height: 1.5;
+        margin: 0 0 14px 0;
+    }
+    .home-region {
+        font-size: 0.9em;
+        opacity: 0.85;
+        margin: 0 0 18px 0;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+    .home-cta {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+    .home-cta a {
+        display: inline-block;
+        padding: 12px 24px;
+        background: goldenrod;
+        color: black;
+        text-decoration: none;
+        font-weight: 600;
+        font-family: var(--serif);
+        letter-spacing: 0.04em;
+        font-size: 1.02em;
+        border: 1px solid goldenrod;
+    }
+    .home-cta a:hover {
+        background: var(--color-bronze);
+    }
+    .home-cta a.secondary {
+        background: transparent;
+        color: goldenrod;
+    }
+    .home-cta a.secondary:hover {
+        background: var(--bg-elevated);
+        color: #B0E0FF;
+    }
+    .home-section {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 0 20px;
+    }
+    .home-section-title {
+        text-align: center;
+        font-family: var(--serif);
+        font-size: 1.6em;
+        font-weight: 500;
+        letter-spacing: 0.08em;
+        margin: 0 0 20px 0;
+        text-transform: uppercase;
+    }
+    .home-pillars {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+    }
+    .home-pillar {
+        border: 1px solid goldenrod;
+        background: var(--bg-panel);
+        padding: 22px;
+        text-align: center;
+    }
+    .home-pillar h3 {
+        margin: 0 0 10px 0;
+        font-family: var(--serif);
+        font-size: 1.2em;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 10px;
+    }
+    .home-pillar p {
+        margin: 0 0 14px 0;
+        line-height: 1.55;
+        font-size: 0.95em;
+    }
+    .home-pillar a {
+        color: #87CEFA;
+        text-decoration: none;
+        border-bottom: 1px solid transparent;
+    }
+    .home-pillar a:hover {
+        color: #B0E0FF;
+        border-bottom-color: #B0E0FF;
+    }
+    .next-event {
+        border: 1px solid goldenrod;
+        background: var(--bg-panel);
+        padding: 24px;
+        max-width: 720px;
+        margin: 0 auto;
+        text-align: center;
+    }
+    .next-event-label {
+        font-size: 0.85em;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.85;
+    }
+    .next-event-name {
+        font-family: var(--serif);
+        font-size: 1.8em;
+        font-weight: 500;
+        margin: 6px 0 4px 0;
+    }
+    .next-event-subtitle {
+        font-style: italic;
+        font-size: 1em;
+        margin: 0 0 10px 0;
+        opacity: 0.9;
+    }
+    .next-event-meta {
+        font-size: 0.95em;
+        margin: 4px 0;
+    }
+    .next-event-cta {
+        margin-top: 14px;
+        display: flex;
+        gap: 10px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .next-event-cta a {
+        display: inline-block;
+        padding: 10px 20px;
+        background: goldenrod;
+        color: black;
+        text-decoration: none;
+        font-weight: 600;
+        font-family: var(--serif);
+        letter-spacing: 0.04em;
+        border: 1px solid goldenrod;
+    }
+    .next-event-cta a:hover {
+        background: var(--color-bronze);
+    }
+    .next-event-cta a.secondary {
+        background: transparent;
+        color: goldenrod;
+    }
+    .next-event-cta a.secondary:hover {
+        background: var(--bg-elevated);
+        color: #B0E0FF;
+    }
+    .home-quote {
+        max-width: 820px;
+        margin: 0 auto;
+        padding: 24px;
+        border-top: 1px solid goldenrod;
+        border-bottom: 1px solid goldenrod;
+        text-align: center;
+        font-style: italic;
+        font-family: var(--serif);
+        font-size: 1.25em;
+        line-height: 1.5;
+    }
+</style>
 </head>
 
 <body style="color: rgb(171, 119, 14);">
@@ -26,7 +225,7 @@
     <div>
 
         <div class="page-header">
-            <p class="page_title" style="vertical-align: top;">Welcome to Xanadu Reserve</p>
+            <p class="page_title" style="vertical-align: top;">Xanadu Reserve</p>
             <span class="auth-nav">
                 <span id="auth-user-name" style="display:none;"></span>
                 <a id="auth-link" href="login.html">Login</a>
@@ -36,34 +235,164 @@
             </span>
         </div>
 
-        <nav class="navbar">
-            <a href="about.html">About</a>
-            <a href="events.html">Events</a>
-            <a href="members_benefits.html">Membership Benefits</a>
-            <a href="join.html">Join</a>
-            <a href="test.html">News</a>
-            <a href="members.html" class="members-only-link" style="display:none;">Members</a>
-        </nav>
-        <style>
-            body.user-logged-in .members-only-link { display: inline !important; }
-        </style>
+        <div w3-include-html="nav.html"></div>
 
-        <div>
-            <img class="large_image" src="assets/XR.png" alt="Xanadu Reserve" />
+        <div class="home-hero">
+            <div class="home-hero-image">
+                <img src="assets/XR.png" alt="Xanadu Reserve" />
+            </div>
+            <div class="home-hero-text">
+                <h1 class="home-headline">Where ritual meets refinement.</h1>
+                <p class="home-sub">
+                    Xanadu Reserve is a private social club for those who value elegant connection,
+                    the embodied practice of High Protocol, and community cultivated with care.
+                </p>
+                <p class="home-region">New York · New Jersey · Pennsylvania</p>
+                <div class="home-cta">
+                    <a href="events.html">See Upcoming Events</a>
+                    <a href="join.html" class="secondary">Apply for Membership</a>
+                </div>
+            </div>
         </div>
-    
+
+        <div class="home-section">
+            <h2 class="home-section-title">The Next Gathering</h2>
+            <div id="next-event-card" class="next-event">
+                <div class="next-event-label">Loading…</div>
+            </div>
+        </div>
+
+        <div class="home-section">
+            <div class="home-quote">
+                &ldquo;Not every gathering is a High Protocol function &mdash;
+                but every gathering is an experience.&rdquo;
+            </div>
+        </div>
+
+        <div class="home-section">
+            <h2 class="home-section-title">Begin Here</h2>
+            <div class="home-pillars">
+                <div class="home-pillar">
+                    <h3>Discover</h3>
+                    <p>
+                        Learn what makes Xanadu Reserve different &mdash; our philosophy,
+                        our rituals, and what an evening with us feels like.
+                    </p>
+                    <a href="about.html">About Xanadu Reserve →</a>
+                </div>
+                <div class="home-pillar">
+                    <h3>Attend</h3>
+                    <p>
+                        From Cocktail Parties that welcome newcomers to immersive
+                        High Protocol dinners, see what&rsquo;s on the calendar.
+                    </p>
+                    <a href="events.html">View Events →</a>
+                </div>
+                <div class="home-pillar">
+                    <h3>Belong</h3>
+                    <p>
+                        Charter membership includes priority access to every Reserve
+                        gathering, guest privileges, and the official Reserve Pin.
+                    </p>
+                    <a href="members_benefits.html">Membership Benefits →</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="home-section">
+            <h2 class="home-section-title">New Here?</h2>
+            <div class="home-pillars">
+                <div class="home-pillar">
+                    <h3>Frequently Asked Questions</h3>
+                    <p>
+                        Curious about High Protocol, dress codes, what to expect as
+                        a first-timer, or how events are structured? Start here.
+                    </p>
+                    <a href="faq.html">Read the FAQ →</a>
+                </div>
+                <div class="home-pillar">
+                    <h3>Our Community Standards</h3>
+                    <p>
+                        Consent, discretion, respect, and safety are the agreements
+                        that guide every Reserve gathering. Read them before you apply.
+                    </p>
+                    <a href="community_standards.html">Community Standards →</a>
+                </div>
+                <div class="home-pillar">
+                    <h3>Meet the Hosts</h3>
+                    <p>
+                        Knight of Xanadu and The Girl_Star founded Xanadu Reserve
+                        out of a shared vision of ritual, elegance, and belonging.
+                    </p>
+                    <a href="hosts.html">Meet the Hosts →</a>
+                </div>
+            </div>
+        </div>
+
         <div w3-include-html="footer.html"></div>
+
         <script>
             includeHTML();
             initAuthUI();
 
-            auth.onAuthStateChanged(function (user) {
-                if (user) {
-                    window.location.replace('members.html');
+            // ---- Render the next upcoming Xanadu Reserve event ----
+            (function () {
+                try {
+                    var today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    var monthNames = ['January','February','March','April','May','June',
+                                      'July','August','September','October','November','December'];
+
+                    function ordinal(n) {
+                        var s = ['th', 'st', 'nd', 'rd'];
+                        var v = n % 100;
+                        return n + (s[(v - 20) % 10] || s[v] || s[0]);
+                    }
+                    function formatDate(iso) {
+                        var d = new Date(iso + 'T00:00:00');
+                        return monthNames[d.getMonth()] + ' ' + ordinal(d.getDate()) + ', ' + d.getFullYear();
+                    }
+                    function escapeHtml(s) {
+                        return String(s == null ? '' : s)
+                            .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                            .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+                    }
+
+                    var upcoming = (typeof EVENTS_DATA !== 'undefined' ? EVENTS_DATA : [])
+                        .filter(function (e) {
+                            return e.series === 'Xanadu Reserve' && new Date(e.date + 'T00:00:00') >= today;
+                        })
+                        .sort(function (a, b) { return a.date < b.date ? -1 : 1; });
+
+                    var host = document.getElementById('next-event-card');
+                    if (!host) return;
+
+                    if (upcoming.length === 0) {
+                        host.innerHTML =
+                            '<div class="next-event-label">Nothing on the immediate calendar</div>' +
+                            '<div class="next-event-name">New events coming soon</div>' +
+                            '<p class="next-event-meta">Subscribe below to be the first to know when the next gathering is announced.</p>';
+                        return;
+                    }
+
+                    var e = upcoming[0];
+                    var subtitle = e.subtitle ? '<p class="next-event-subtitle">' + escapeHtml(e.subtitle) + '</p>' : '';
+                    var detailLink = e.detailPage ? '<a href="' + escapeHtml(e.detailPage) + '">More Info</a>' : '';
+                    var ticketLink = e.ticketUrl ? '<a href="' + escapeHtml(e.ticketUrl) + '" class="secondary">Tickets</a>' : '';
+
+                    host.innerHTML =
+                        '<div class="next-event-label">Upcoming · ' + escapeHtml(e.series) + '</div>' +
+                        '<div class="next-event-name">' + escapeHtml(e.name) + '</div>' +
+                        subtitle +
+                        '<div class="next-event-meta">' + escapeHtml(formatDate(e.date)) + ' · ' + escapeHtml(e.time) + '</div>' +
+                        '<div class="next-event-meta">' + escapeHtml(e.audience) + '</div>' +
+                        '<div class="next-event-cta">' + detailLink + ticketLink + '</div>';
+                } catch (err) {
+                    console.error('next-event render failed', err);
                 }
-            });
+            })();
         </script>
-        
+
     </div>
 
 </body>

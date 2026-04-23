@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Royal Afternoon Tea">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Royal Afternoon Tea — an immersive High Protocol experience of grace, ritual, and refined tradition.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>Royal Afternoon Tea — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Royal Afternoon Tea — Xanadu Reserve" />
+<meta property="og:description" content="An immersive High Protocol experience of grace, ritual, and refined tradition." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/RoyalAfternoonTea2.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,57 +30,91 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <p class="column_text">
-                    Enter a world of elegance, ritual, and refined tradition as Xanadu Reserve presents our World Class High Protocol Royal Afternoon Tea. This event is an immersive experience where grace and structure meet timeless sophistication.<br>
-                    <br>
-                    This is more than tea and pastries; it is a carefully orchestrated afternoon of poised service, elevated etiquette, and intentional ceremony. Guests will enjoy exquisite tea, delicate confections, and a serene atmosphere designed to inspire connection, presence, and beauty in every detail.<br>
-                    <br>
-                    Whether you are drawn to the art of formal hospitality, the comfort of tradition, or the magic of High Protocol ritual, this afternoon promises an unforgettable experience of grandeur and grace.<br>
-                 </p>
-                <p class="column_text">
-                    Also Included:<br>
-                    <div class="column_text" style="margin-left: 30px;">
-                    A glass of Xanadu Reserve Cherry Royale Bubbly (Alcoholic and Non-Alcoholic)<br>
-                    <br>
-                    A 45-minute training video to watch at your leisure, designed to help you arrive prepared, confident, and ready to fully enjoy the rituals and expectations of High Protocol Tea.<br>
-                    </div>
-                </p>
-                <p class="column_text">
-                    $60 Members price does not include Forbidden ticket tax & fees<br>
-                    <p class="column_text">
-                    $75 Non-Members price does not include Forbidden ticket tax & fees<br>
-                    Send a <a href="info.html?event_name=Royal+Afternoon+Tea&event_date=2026-05-16">Attendee Information Form</a> to receive promo code<br>
-                </p>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/7ed08c0096">Tickets</a><br>
-                Promo Code Needed<br>
-            </div>
+    <p class="page_title">A Royal Afternoon Tea</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="medium_image" src="assets/RoyalAfternoonTea2.png" alt="XR Events" />
-                <br>A Royal Afternoon Tea<br>
-                May 16, 2026<br>
-                1:00pm - 4:00pm<br>
-                <br>
-                Event commences at 2:00 PM.<br>
-                The Right Side of the Slash should arrive by 1:00 PM.<br>
-                The Left Side of the Slash are invited to arrive at 1:00 PM for pre-event socializing and refined conversation.<br>
-                <br>
-                Location: Listed on your ticket<br>
-                <br>
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/RoyalAfternoonTea2.png" alt="Royal Afternoon Tea" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;Where grace and structure meet timeless sophistication.&rdquo;
+                </p>
+                <dl class="event-meta">
+                    <dt>Date</dt><dd>May 16, 2026</dd>
+                    <dt>Time</dt><dd>1:00 PM &ndash; 4:00 PM</dd>
+                    <dt>Audience</dt><dd>Members &amp; Non-Members</dd>
+                    <dt>Location</dt><dd>Listed on your ticket</dd>
+                    <dt>Arrival</dt>
+                    <dd>
+                        Event commences at 2:00 PM.<br>
+                        The Right Side of the Slash should arrive by 1:00 PM.<br>
+                        The Left Side of the Slash are invited to arrive at 1:00 PM for pre-event
+                        socializing and refined conversation.
+                    </dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                Enter a world of elegance, ritual, and refined tradition as Xanadu Reserve presents
+                our World Class High Protocol Royal Afternoon Tea. This event is an immersive
+                experience where grace and structure meet timeless sophistication.
+            </p>
+            <p>
+                This is more than tea and pastries; it is a carefully orchestrated afternoon of
+                poised service, elevated etiquette, and intentional ceremony. Guests enjoy exquisite
+                tea, delicate confections, and a serene atmosphere designed to inspire connection,
+                presence, and beauty in every detail.
+            </p>
+            <p>
+                Whether you are drawn to the art of formal hospitality, the comfort of tradition,
+                or the magic of High Protocol ritual, this afternoon promises an unforgettable
+                experience of grandeur and grace.
+            </p>
+            <p>
+                <strong>Also included:</strong> a glass of Xanadu Reserve Cherry Royale Bubbly
+                (alcoholic and non-alcoholic), and a 45-minute training video to watch at your
+                leisure &mdash; designed to help you arrive prepared, confident, and ready to fully
+                enjoy the rituals and expectations of High Protocol Tea.
+            </p>
+        </div>
+
+        <div class="event-pricing">
+            <h3>Pricing</h3>
+            <div class="pricing-row">
+                <span class="pricing-amount">$60</span> &mdash; Members
+            </div>
+            <div class="pricing-row">
+                <span class="pricing-amount">$75</span> &mdash; Non-Members
+            </div>
+            <div class="pricing-row" style="opacity: 0.85; font-size: 0.9em; margin-top: 10px;">
+                Prices do not include Forbidden Tickets tax &amp; fees. Promo code required &mdash;
+                send the <a class="alt" href="info.html?event_name=Royal+Afternoon+Tea&event_date=2026-05-16">Attendee Information Form</a>
+                to receive yours.
+            </div>
+        </div>
+
+        <div class="event-cta">
+            <a href="https://forbiddentickets.com/events/xanadu-kink/7ed08c0096">Get Tickets</a>
+            <a href="info.html?event_name=Royal+Afternoon+Tea&event_date=2026-05-16" class="secondary">Attendee Information Form</a>
+        </div>
+
+        <div class="event-closing">
+            Every gesture considered.<br>
+            Every detail intentional.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Pool Party">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Enchanted Waters Pool Party — a poolside gathering for Xanadu Reserve and Club InnThrall members where fantasy meets refinement.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>Enchanted Waters Pool Party — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Enchanted Waters Pool Party — Xanadu Reserve" />
+<meta property="og:description" content="A poolside gathering where fantasy meets refinement. Mermaids welcome." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/InnThrallPool.jpeg" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,54 +30,79 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <p class="column_text">
-                    Enchanted Waters: Mermaids Welcome<br>
-                    <br>
-                    Slip beneath the surface and into a world of magic, elegance, and playful indulgence…<br>
-                    <br>
-                    Enchanted Waters is a poolside gathering for Xanadu Reserve and Club InnThrall members. Join us for an afternoon where fantasy meets refinement, and every ripple invites connection, laughter, and a touch of enchantment.<br>
-                    <br>
-                    Set against the backdrop of an Olympic-sized pool, guests are invited to swim, relax, and play in an atmosphere designed for both leisure and connection. Enjoy curated mocktails and light bites as you bask in the sun, embody your most radiant self, and perhaps even channel your inner mermaid.<br>
-                    <br>
-                    Whether you float, mingle, or simply soak in the ambiance, this experience is designed to be both refreshing and unforgettable.
-                 </p>
-                <p class="column_text">
-                    Also Included:<br>
-                    <div class="column_text" style="margin-left: 30px;">
-                    Hors d'oeuvres and Mocktails provided. BYO Legal Libations<br>
-                    </div>
-                </p>
-                <p class="column_text">
-                    $45 Members price does not include Forbidden ticket tax & fees
-                </p>
-                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/982abf23ed">Tickets</a><br>
-                Promo Code Needed<br>
-            </div>
+    <p class="page_title">Enchanted Waters Pool Party</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="medium_image" src="assets/InnThrallPool.jpeg" alt="XR Events" />
-                <br>Enchanted Waters Pool Party<br>
-                July 19th, 2026<br>
-                3:00pm - 7:00pm<br>
-                <br>
-                Location: Listed on your ticket<br>
-                <br>
-                Casual or less (bathing suit optional)
-                <br>
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/InnThrallPool.jpeg" alt="Enchanted Waters Pool Party" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;Slip beneath the surface and into a world of magic, elegance, and
+                    playful indulgence&hellip;&rdquo;
+                </p>
+                <dl class="event-meta">
+                    <dt>Theme</dt><dd>Mermaids Welcome</dd>
+                    <dt>Date</dt><dd>July 19, 2026</dd>
+                    <dt>Time</dt><dd>3:00 PM &ndash; 7:00 PM</dd>
+                    <dt>Audience</dt><dd>Xanadu Reserve &amp; Club InnThrall Members</dd>
+                    <dt>Attire</dt><dd>Casual or less (bathing suit optional)</dd>
+                    <dt>Location</dt><dd>Listed on your ticket</dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                Enchanted Waters is a poolside gathering for Xanadu Reserve and Club InnThrall
+                members. Join us for an afternoon where fantasy meets refinement, and every ripple
+                invites connection, laughter, and a touch of enchantment.
+            </p>
+            <p>
+                Set against the backdrop of an Olympic-sized pool, guests are invited to swim,
+                relax, and play in an atmosphere designed for both leisure and connection. Enjoy
+                curated mocktails and light bites as you bask in the sun, embody your most radiant
+                self, and perhaps even channel your inner mermaid.
+            </p>
+            <p>
+                Whether you float, mingle, or simply soak in the ambiance, this experience is
+                designed to be both refreshing and unforgettable.
+            </p>
+            <p>
+                <strong>Also included:</strong> hors d&rsquo;oeuvres and mocktails.
+                BYO legal libations welcome.
+            </p>
+        </div>
+
+        <div class="event-pricing">
+            <h3>Pricing</h3>
+            <div class="pricing-row">
+                <span class="pricing-amount">$45</span> &mdash; Members
+            </div>
+            <div class="pricing-row" style="opacity: 0.85; font-size: 0.9em; margin-top: 10px;">
+                Price does not include Forbidden Tickets tax &amp; fees. Promo code required.
+            </div>
+        </div>
+
+        <div class="event-cta">
+            <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/982abf23ed">Get Tickets</a>
+            <a href="community_standards.html" class="secondary">Community Standards</a>
+        </div>
+
+        <div class="event-closing">
+            Fantasy meets refinement.<br>
+            Every ripple an invitation.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

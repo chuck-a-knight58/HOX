@@ -4,12 +4,12 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Login">
-<meta name="robots" content="index, follow">
+<META name="description" content="Xanadu Reserve Member Login — sign in to access members-only features and event information.">
+<meta name="robots" content="noindex, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve - Login</title>
+<title>Login — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 
@@ -23,6 +23,8 @@
 <body style="color: rgb(171, 119, 14);">
 
     <div>
+
+        <div w3-include-html="nav.html"></div>
 
         <p class="page_title">Xanadu Reserve</p>
 
@@ -140,12 +142,12 @@
                 if (user) {
                     loginSection.style.display = 'none';
                     loggedInSection.style.display = 'block';
-                    memberBanner.style.display = 'block';
+                    if (memberBanner) memberBanner.style.display = 'block';
                     document.getElementById('loggedInName').textContent = user.displayName || user.email;
                 } else {
                     loginSection.style.display = 'block';
                     loggedInSection.style.display = 'none';
-                    memberBanner.style.display = 'none';
+                    if (memberBanner) memberBanner.style.display = 'none';
                 }
             });
         </script>

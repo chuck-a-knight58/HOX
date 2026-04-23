@@ -4,12 +4,20 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve">
+<META name="description" content="Xanadu Reserve News — announcements, upcoming events, and dispatches from the community.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve</title>
+<title>Xanadu Reserve News</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Xanadu Reserve News" />
+<meta property="og:description" content="Announcements, upcoming events, and dispatches from the Xanadu Reserve community." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/XR.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs (for shared nav/auth) -->
@@ -26,17 +34,19 @@
         max-width: 900px;
         margin: 20px auto 40px auto;
         padding: 0 20px;
-        line-height: 1.6;
+        line-height: 1.65;
     }
     .md-wrap h1, .md-wrap h2, .md-wrap h3, .md-wrap h4 {
         color: goldenrod;
+        font-family: var(--serif);
         border-bottom: 1px solid goldenrod;
         padding-bottom: 6px;
         margin-top: 1.6em;
+        letter-spacing: 0.02em;
     }
     .md-wrap h1:first-child { margin-top: 0; }
     .md-wrap a { color: #87CEFA; word-break: break-word; }
-    .md-wrap a:visited { color: #B0A0D0; }
+    .md-wrap a:visited { color: var(--color-gold-soft); }
     .md-wrap a:hover { color: #B0E0FF; }
     .md-wrap hr {
         border: none;
@@ -90,17 +100,7 @@
             </span>
         </div>
 
-        <nav class="navbar">
-            <a href="index.html">Home</a>
-            <a href="about.html">About</a>
-            <a href="events.html">Events</a>
-            <a href="members_benefits.html">Membership Benefits</a>
-            <a href="join.html">Join</a>
-            <a href="members.html" class="members-only-link" style="display:none;">Members</a>
-        </nav>
-        <style>
-            body.user-logged-in .members-only-link { display: inline !important; }
-        </style>
+        <div w3-include-html="nav.html"></div>
 
         <div class="md-wrap">
             <div id="md-content">Loading…</div>
@@ -112,7 +112,7 @@
             includeHTML();
             initAuthUI();
 
-            fetch('test.md', { cache: 'no-cache' })
+            fetch('news.md', { cache: 'no-cache' })
                 .then(function (res) {
                     if (!res.ok) throw new Error('HTTP ' + res.status);
                     return res.text();

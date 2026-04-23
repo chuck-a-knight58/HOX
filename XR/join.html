@@ -4,13 +4,19 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Membership Request Form">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Apply for Xanadu Reserve membership — complete the Membership Request Form and our Advisory Board will review your application.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve</title>
+<title>Join — Xanadu Reserve</title>
+
+<!-- Open Graph -->
+<meta property="og:title" content="Apply for Membership — Xanadu Reserve" />
+<meta property="og:description" content="Charter member rate. Priority access, guest privileges, and the Reserve Pin." />
+<meta property="og:type" content="website" />
+<meta property="og:image" content="assets/XR.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
 
@@ -24,6 +30,8 @@
 <body style="color: rgb(171, 119, 14);">
 
     <div>
+
+        <div w3-include-html="nav.html"></div>
 
         <p class="page_title">Xanadu Reserve Membership Request Form</p>
 
@@ -110,6 +118,19 @@
                         style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
                 </label>
 
+                <fieldset style="border: 1px solid goldenrod; padding: 15px;">
+                    <legend>Community Standards Agreement</legend>
+                    <label style="display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;">
+                        <input type="checkbox" name="standards_agreement" id="standardsAgreement" required style="margin-top: 4px;">
+                        <span>
+                            I have read and agree to the
+                            <a class="alt" href="community_standards.html" target="_blank" rel="noopener">Xanadu Reserve Community Standards</a>
+                            — including the agreements on consent, discretion, respect, safety, and accountability.
+                            I understand that attendance at any Reserve gathering is conditional on my adherence to these standards.
+                        </span>
+                    </label>
+                </fieldset>
+
                 <div style="text-align: center; margin-top: 10px;">
                     <button type="submit"
                         style="padding: 12px 40px; background: goldenrod; color: black; border: none; font-size: 16px; font-weight: bold; cursor: pointer;">
@@ -146,6 +167,13 @@
                     return false;
                 }
 
+                // Validate Community Standards agreement
+                var standardsCheckbox = document.getElementById('standardsAgreement');
+                if (!standardsCheckbox || !standardsCheckbox.checked) {
+                    showMessage('Please confirm that you have read and agree to the Community Standards.', 'red');
+                    return false;
+                }
+
                 // Gather selected roles
                 var roles = [];
                 document.querySelectorAll('input[name="roles"]:checked').forEach(function(cb) {
@@ -171,6 +199,7 @@
                     community_contribution: formData.get('community_contribution') || 'None',
                     elegance_meaning: formData.get('elegance_meaning') || 'None',
                     notes: formData.get('notes') || 'None',
+                    standards_agreement: true,
                     status: 'pending',
                     submittedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };

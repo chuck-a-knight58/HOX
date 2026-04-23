@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Cocktail Party">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="A Velvet Harvest Soirée — a Kinky High Protocol event combining refined dining, live performance, and a play party within a dedicated space.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>A Velvet Harvest Soirée — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="A Velvet Harvest Soirée — Xanadu Reserve" />
+<meta property="og:description" content="A Kinky High Protocol event combining refined dining, live performance, and a progression of experience." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/KinkyHPDinner.jpg" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,50 +30,83 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="mediumish_image" src="assets/KinkyHPDinner.png" alt="XR Events" />
-                September 19, 2026<br>
-                Xanadu Reserve & Club InnThrall Members Only<br>
-                <br>
-                $300, $150 deposit to reserve your spot, <br>
-                balance due 30 days prior to event<br>
-                Price does not include Forbidden ticket tax & fees<br>
-                <br>
-                <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Tickets</a><br>
-                <br>
-                Location: Listed on your ticket<br>
-                Dress Code: Black Tie Optional<br>
-            </div>
+    <p class="page_title">A Velvet Harvest Soirée</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                <br>
-                A Velvet Harvest Soirée<br>
-                <p class="column_text">
-                    As the season turns and early autumn settles in, you are invited into an evening where elegance deepens and every detail is intentionally orchestrated.<br>
-                    <br>
-                    A Velvet Harvest Soirée is an experience for those who appreciate refinement, ritual, and indulgence.<br>
-                    <br>
-                    The evening begins with a structured High Protocol 5-course dinner, where service becomes ceremony and presence becomes power. Live performers weave artistry throughout, blending elegance with expression.<br>
-                    <br>
-                    As dinner concludes, the atmosphere softens into a refined lounge with optional cigar service.<br>
-                    <br>
-                    The night culminates in a BDSM play party within an 800 ft² dungeon and Olympic-size pool.<br>
-                    <br>
-                    This is not simply an event—it is a progression of experience.
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/KinkyHPDinner.jpg" alt="A Velvet Harvest Soirée" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;This is not simply an event &mdash; it is a progression of experience.&rdquo;
                 </p>
+                <dl class="event-meta">
+                    <dt>Event</dt><dd>Kinky High Protocol Event</dd>
+                    <dt>Date</dt><dd>September 19, 2026</dd>
+                    <dt>Time</dt><dd>5:00 PM &ndash; 1:00 AM</dd>
+                    <dt>Audience</dt><dd>Xanadu Reserve &amp; Club InnThrall Members Only</dd>
+                    <dt>Dress Code</dt><dd>Black Tie Optional</dd>
+                    <dt>Location</dt><dd>Listed on your ticket</dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                As the season turns and early autumn settles in, you are invited into an evening
+                where elegance deepens and every detail is intentionally orchestrated.
+            </p>
+            <p>
+                A Velvet Harvest Soirée is an experience for those who appreciate refinement,
+                ritual, and indulgence.
+            </p>
+            <p>
+                The evening begins with a structured High Protocol 5-course dinner, where service
+                becomes ceremony and presence becomes power. Live performers weave artistry
+                throughout, blending elegance with expression.
+            </p>
+            <p>
+                As dinner concludes, the atmosphere softens into a refined lounge with optional
+                cigar service.
+            </p>
+            <p>
+                The night culminates in a BDSM play party within an 800 sq. ft. dungeon and
+                Olympic-size pool.
+            </p>
+        </div>
+
+        <div class="event-pricing">
+            <h3>Pricing</h3>
+            <div class="pricing-row">
+                <span class="pricing-amount">$300</span> total
+            </div>
+            <div class="pricing-row" style="opacity: 0.9;">
+                $150 deposit to reserve your spot; balance due 30 days prior to event.
+            </div>
+            <div class="pricing-row" style="opacity: 0.85; font-size: 0.9em; margin-top: 10px;">
+                Price does not include Forbidden Tickets tax &amp; fees.
+            </div>
+        </div>
+
+        <div class="event-cta">
+            <a class="auth-required" href="https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9">Reserve Your Place</a>
+            <a href="community_standards.html" class="secondary">Community Standards</a>
+        </div>
+
+        <div class="event-closing">
+            Service as ceremony.<br>
+            Presence as power.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve High Protocol Dinner Starry Night in Paris">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="A Starry Night in Paris — a 1-day High Protocol Intensive culminating in a multi-course dinner beneath Parisian-inspired ambiance.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>A Starry Night in Paris — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="A Starry Night in Paris — Xanadu Reserve" />
+<meta property="og:description" content="A 1-day High Protocol Intensive culminating in a multi-course dinner beneath Parisian-inspired ambiance." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/HPDinner_StarryNightInParis.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,62 +30,103 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="medium_image" src="assets/HPDinner_StarryNightInParis.png" alt="XR Events" />
-                <p class="column_text">
-                For Participants Who Have Already Attended the Orchestrated Elegance 1-Day Intensive:<br>
-                <div class="column_text" style="margin-left: 30px;">
-                $175 — Left Side of the Slash: Promo code LHalf<br>
-                Participants join us at 1:30 PM for the afternoon session and High Protocol dinner experience.<br>
-                <br>
-                $150 — Right Side of the Slash: Promo Code RHalf<br>
-                Participants join us at 1:30 PM for the afternoon practicum and High Protocol dinner service.<br>
-                </div>
-                </p>
-                <p class="column_text">
-                For New Participants (Members & Non-Members / Have Not Attended the Intensive)<br>
-                Send <a href="info.html?event_name=A+Starry+Night+in+Paris&event_date=2026-06-13">Attendee Information Form</a> to receive promo code<br>
-                <div class="column_text" style="margin-left: 30px;">
-                $195 — Left Side of the Slash Includes full participation in the morning & afternoon training session and the High Protocol dinner experience.<br>
-                <br>
-                $175 — Right Side of the Slash Includes participation in the morning & afternoon practicum training and High Protocol dinner service
-                </div>
-                </p>
-                <p class="column_text">
-                Price does not include Forbidden ticket tax & fees<br>
-                </p>
-                <a href="https://forbiddentickets.com/events/xanadu-kink/35828f6ea1">Tickets</a><br>
-                Promo Code Needed<br>
-                Dress Code: Black Tie Optional<br>
-          </div>
+    <p class="page_title">A Starry Night in Paris</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                A Starry Night in Paris<br>
-                1-day High Protocol Intensive<br>
-                June 13, 2026<br>
-                9:30am to 9:30pm<br>
-                Members & Non-Members<br>
-                <p class="column_text">
-                The Experience A Starry Night in Paris<br>
-                Your evening begins with focused instruction on the foundations of High Protocol dining, embodied etiquette, and the subtle art of moving with intention. Beneath a Parisian-inspired ambiance, you will engage in guided practice, ritual structure, and hands-on refinement designed to cultivate composure, grace, and confident presence. Every gesture is considered. Every movement purposeful. This is where protocol becomes poetry in motion.<br>
-                <br>
-                As twilight deepens into a velvet sky, the experience transitions into an exquisite multi-course dinner curated by a professional chef. Inspired by the romance of Paris and the artistry of French cuisine, the menu unfolds beneath a canopy of soft candlelight and starlit elegance. Deep midnight hues, shimmering accents, and refined décor evoke the charm of a summer evening along the Seine—creating a dining experience that feels both intimate and transcendent.<br>
-                <br>
-                FetLife Event Page
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/HPDinner_StarryNightInParis.png" alt="A Starry Night in Paris" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;Where protocol becomes poetry in motion.&rdquo;
                 </p>
+                <dl class="event-meta">
+                    <dt>Event</dt><dd>1-day High Protocol Intensive</dd>
+                    <dt>Date</dt><dd>June 13, 2026</dd>
+                    <dt>Time</dt><dd>9:30 AM &ndash; 9:30 PM</dd>
+                    <dt>Audience</dt><dd>Members &amp; Non-Members</dd>
+                    <dt>Dress Code</dt><dd>Black Tie Optional</dd>
+                    <dt>Location</dt><dd>Listed on your ticket</dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                Your evening begins with focused instruction on the foundations of High Protocol
+                dining, embodied etiquette, and the subtle art of moving with intention. Beneath a
+                Parisian-inspired ambiance, you will engage in guided practice, ritual structure,
+                and hands-on refinement designed to cultivate composure, grace, and confident
+                presence.
+            </p>
+            <p>
+                Every gesture is considered. Every movement purposeful. This is where protocol
+                becomes poetry in motion.
+            </p>
+            <p>
+                As twilight deepens into a velvet sky, the experience transitions into an exquisite
+                multi-course dinner curated by a professional chef. Inspired by the romance of Paris
+                and the artistry of French cuisine, the menu unfolds beneath a canopy of soft
+                candlelight and starlit elegance. Deep midnight hues, shimmering accents, and
+                refined décor evoke the charm of a summer evening along the Seine &mdash; creating a
+                dining experience that feels both intimate and transcendent.
+            </p>
+        </div>
+
+        <div class="event-pricing">
+            <h3>Pricing &mdash; Returning Participants</h3>
+            <div style="opacity: 0.9; font-size: 0.92em; margin-bottom: 10px;">
+                For those who have already attended the Orchestrated Elegance 1-Day Intensive.
+                Participants join us at 1:30 PM for the afternoon session.
+            </div>
+            <div class="pricing-row">
+                <span class="pricing-amount">$175</span> &mdash; Left Side of the Slash
+                <span style="opacity: 0.8;">(promo code: <code>LHalf</code>)</span>
+            </div>
+            <div class="pricing-row">
+                <span class="pricing-amount">$150</span> &mdash; Right Side of the Slash
+                <span style="opacity: 0.8;">(promo code: <code>RHalf</code>)</span>
+            </div>
+        </div>
+
+        <div class="event-pricing">
+            <h3>Pricing &mdash; New Participants</h3>
+            <div style="opacity: 0.9; font-size: 0.92em; margin-bottom: 10px;">
+                For members and non-members who have not attended the Intensive. Includes full
+                participation in morning &amp; afternoon training and the High Protocol dinner.
+                Send the <a class="alt" href="info.html?event_name=A+Starry+Night+in+Paris&event_date=2026-06-13">Attendee Information Form</a>
+                to receive your promo code.
+            </div>
+            <div class="pricing-row">
+                <span class="pricing-amount">$195</span> &mdash; Left Side of the Slash
+            </div>
+            <div class="pricing-row">
+                <span class="pricing-amount">$175</span> &mdash; Right Side of the Slash
+            </div>
+            <div class="pricing-row" style="opacity: 0.85; font-size: 0.9em; margin-top: 10px;">
+                Prices do not include Forbidden Tickets tax &amp; fees.
+            </div>
+        </div>
+
+        <div class="event-cta">
+            <a href="https://forbiddentickets.com/events/xanadu-kink/35828f6ea1">Get Tickets</a>
+            <a href="info.html?event_name=A+Starry+Night+in+Paris&event_date=2026-06-13" class="secondary">Attendee Information Form</a>
+        </div>
+
+        <div class="event-closing">
+            An evening along the Seine.<br>
+            Shaped with care. Shared with grace.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

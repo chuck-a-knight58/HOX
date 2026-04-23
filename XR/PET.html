@@ -4,14 +4,21 @@
 <base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
 <META charset="UTF-8">
 <META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Reserve Cocktail Party">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Power Exchange Together (PET) — a North Central NJ community supporting those exploring power-exchange dynamics in a healthy, safe, and consensual way.">
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
-<title>Xanadu Reserve Upcoming Events</title>
+<title>Power Exchange Together (PET) — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Power Exchange Together (PET)" />
+<meta property="og:description" content="A North Central NJ community supporting those exploring power-exchange dynamics in a healthy, safe, and consensual way." />
+<meta property="og:type" content="event" />
+<meta property="og:image" content="assets/PET.png" />
+<meta property="og:site_name" content="Xanadu Reserve" />
+
 <script type="text/javascript" src="utils.js"></script>
 
 <!-- Firebase SDKs -->
@@ -23,39 +30,66 @@
 
 <body style="color: rgb(171, 119, 14);">
 
-    <div>
+    <div w3-include-html="nav.html"></div>
 
-        <div class="row">
-            <div class="cell" vertical-align="middle" align="center">
-                <img class="mediumish_image" src="assets/PET.png" alt="PET" />
-                Usually meets the first Saturday of the month<br>
-                2pm - 4pm<br>
-                <br>
-                Location: Washington, New Jersey<br>
-            </div>
+    <p class="page_title">Power Exchange Together</p>
 
-            <div class="cell" vertical-align="middle" align="center">
-                <p class="column_text">
-                Power Exchange Together North Central NJ is an organization that is committed to supporting participants that have a desire to explore power exchange relationships in a healthy, safe, consensual, and constructive way by exchanging ideas, knowledge and experience.<br>
-                <br>
-                We understand that power exchange relationships differ based on the individuals within their own consensual dynamic.<br>
-                <br>
-                So, join us each month as we welcome everyone into the world of power exchange<br>
-                <br>
-                For more information on monthly in person meetings visit our <a class="alt" href="https://fetlife.com/groups/308553">FETLife</a> page.<br>
-                <br>
-                Anyone over 21 is welcome.
-            </p>
+    <div class="event-wrap">
+
+        <div class="event-hero">
+            <img src="assets/PET.png" alt="Power Exchange Together" />
+            <div class="event-hero-text">
+                <p class="event-tagline">
+                    &ldquo;A space to inform, teach, support, and build community around intentional
+                    power-exchange dynamics.&rdquo;
+                </p>
+                <dl class="event-meta">
+                    <dt>Schedule</dt><dd>Usually the first Saturday of the month</dd>
+                    <dt>Time</dt><dd>2:00 PM &ndash; 4:00 PM</dd>
+                    <dt>Location</dt><dd>Washington, New Jersey</dd>
+                    <dt>Audience</dt><dd>Open to all &mdash; 21+</dd>
+                </dl>
             </div>
         </div>
 
-        <div w3-include-html="footer.html"></div>
-        <script>
-            includeHTML();
-            initAuthUI();
-        </script>
+        <div class="event-body">
+            <p>
+                Power Exchange Together North Central NJ is an organization committed to supporting
+                participants who have a desire to explore power-exchange relationships in a healthy,
+                safe, consensual, and constructive way &mdash; by exchanging ideas, knowledge, and
+                experience.
+            </p>
+            <p>
+                We understand that power-exchange relationships differ based on the individuals
+                within their own consensual dynamic. So, join us each month as we welcome everyone
+                into the world of power exchange.
+            </p>
+            <p>
+                For more information on monthly in-person meetings, visit our
+                <a class="alt" href="https://fetlife.com/groups/308553">FetLife group</a>.
+            </p>
+            <p>
+                Anyone over 21 is welcome.
+            </p>
+        </div>
+
+        <div class="event-cta">
+            <a href="https://fetlife.com/groups/308553">Visit FetLife Group</a>
+            <a href="events.html" class="secondary">View Upcoming Dates</a>
+        </div>
+
+        <div class="event-closing">
+            Community over performance.<br>
+            Conversation, curiosity, and care.
+        </div>
 
     </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
 
 </body>
 </html>

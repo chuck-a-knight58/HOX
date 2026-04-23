@@ -1,27 +1,54 @@
-body {
-  background-color: black;
-  color: goldenrod;
-  margin: 0;
-  padding: 0;
+/* ---- Typography ---- */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  --color-gold: goldenrod;
+  --color-gold-soft: #8c7035;
+  --color-bronze: #b07a2b;
+  --color-burgundy: #6b2e3d;
+  --bg: #000;
+  --bg-panel: #111;
+  --bg-elevated: #181818;
+  --serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 }
 
+body {
+  background-color: var(--bg);
+  color: var(--color-gold);
+  margin: 0;
+  padding: 0;
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* ---- Links ---- */
 a {
   color: #87CEFA;
 }
 
 a:visited {
-  color: #B0A0D0;
+  color: var(--color-gold-soft);
 }
 
 a:hover {
   color: #B0E0FF;
 }
 
+/* ---- Navbar ---- */
 .navbar {
     display: flex;
     justify-content: center;
+    flex-wrap: wrap;
     gap: 20px;
-    padding: 0px 0;
+    padding: 8px 10px;
     border-bottom: 1px solid goldenrod;
     margin-bottom: 0px;
 }
@@ -30,6 +57,9 @@ a:hover {
     color: goldenrod;
     text-decoration: none;
     padding: 5px 10px;
+    font-family: var(--serif);
+    font-size: 1.05em;
+    letter-spacing: 0.04em;
 }
 
 .navbar a:hover {
@@ -37,6 +67,7 @@ a:hover {
     text-decoration: underline;
 }
 
+/* ---- Images ---- */
 .small_image {
     width: 172px;
     height: 112px;
@@ -69,6 +100,7 @@ a:hover {
     padding: 0;
 }
 
+/* ---- Layout ---- */
 .row {
     display: flex;
     flex-direction: row;
@@ -81,8 +113,8 @@ a:hover {
     float: left;
     width: 20.0%;
     padding: 5px;
-  }
-    
+}
+
 .left_column {
   width: 20%;
   padding: 5px;
@@ -96,6 +128,7 @@ a:hover {
 
 .cell {
     flex: 1 1 calc(20% - 20px);
+    min-width: 240px;
     padding: 15px;
     text-align: center;
     vertical-align: middle;
@@ -105,6 +138,7 @@ a:hover {
     text-align: left;
 }
 
+/* ---- Page header / title ---- */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -114,8 +148,14 @@ a:hover {
 
 .page_title {
     padding-left: 10px;
+    font-family: var(--serif);
+    font-size: 2.2em;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    margin: 18px 0 6px 0;
 }
 
+/* ---- Footer ---- */
 footer {
   background-color: black;
   color: goldenrod;
@@ -141,7 +181,7 @@ footer {
   text-align: right;
 }
 
-/* Auth UI */
+/* ---- Auth UI ---- */
 .btn-gold {
   padding: 12px 40px;
   background: goldenrod;
@@ -150,10 +190,12 @@ footer {
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
+  font-family: var(--serif);
+  letter-spacing: 0.04em;
 }
 
 .btn-gold:hover {
-  background: #c8960e;
+  background: var(--color-bronze);
 }
 
 .auth-message {
@@ -177,15 +219,13 @@ footer {
   padding: 40px 20px;
 }
 
-/* auth-required links: always visible, but redirect to login when logged out */
-
-/* Footer subscribe link — emphasized entry point for the newsletter modal */
+/* ---- Footer subscribe ---- */
 .footer-subscribe-link {
   font-weight: bold;
   text-decoration: underline;
 }
 
-/* Subscribe modal */
+/* ---- Subscribe modal ---- */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -251,6 +291,7 @@ footer {
   color: goldenrod;
   border: 1px solid goldenrod;
   font-size: 16px;
+  font-family: var(--sans);
 }
 
 #subscribe-email::placeholder {
@@ -260,4 +301,122 @@ footer {
 #subscribe-status {
   min-height: 1.2em;
   margin: 12px 0 0 0;
+}
+
+/* ---- Shared event detail page ---- */
+.event-wrap {
+    max-width: 1100px;
+    margin: 10px auto 20px auto;
+    padding: 0 20px;
+}
+.event-hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 28px;
+    margin-bottom: 24px;
+}
+.event-hero img {
+    flex: 1 1 340px;
+    max-width: 100%;
+    max-height: 60vh;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    border: 1px solid goldenrod;
+}
+.event-hero-text {
+    flex: 1 1 340px;
+}
+.event-tagline {
+    font-style: italic;
+    font-size: 1.15em;
+    line-height: 1.5;
+    margin: 0 0 12px 0;
+}
+.event-meta {
+    border: 1px solid goldenrod;
+    background: var(--bg-panel);
+    padding: 18px;
+    margin: 0 0 18px 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 18px;
+    font-size: 0.95em;
+    line-height: 1.5;
+}
+.event-meta dt {
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.85;
+}
+.event-meta dd {
+    margin: 0;
+}
+.event-body {
+    line-height: 1.65;
+}
+.event-body p {
+    margin: 0 0 14px 0;
+}
+.event-pricing {
+    border: 1px solid goldenrod;
+    background: var(--bg-panel);
+    padding: 18px;
+    margin: 18px 0;
+}
+.event-pricing h3 {
+    margin: 0 0 10px 0;
+    border-bottom: 1px solid goldenrod;
+    padding-bottom: 8px;
+    font-size: 1.05em;
+    letter-spacing: 0.04em;
+}
+.event-pricing .pricing-row {
+    margin: 8px 0;
+    line-height: 1.5;
+}
+.event-pricing .pricing-amount {
+    font-weight: 600;
+    color: goldenrod;
+}
+.event-cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    margin: 22px 0 10px 0;
+}
+.event-cta a {
+    display: inline-block;
+    padding: 12px 28px;
+    background: goldenrod;
+    color: black;
+    text-decoration: none;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    font-family: var(--serif);
+    font-size: 1.05em;
+    border: 1px solid goldenrod;
+}
+.event-cta a:hover {
+    background: var(--color-bronze);
+    color: black;
+}
+.event-cta a.secondary {
+    background: transparent;
+    color: goldenrod;
+}
+.event-cta a.secondary:hover {
+    background: var(--bg-elevated);
+    color: #B0E0FF;
+}
+.event-closing {
+    text-align: center;
+    font-style: italic;
+    line-height: 1.5;
+    margin-top: 22px;
+    padding: 12px;
+    border-top: 1px solid goldenrod;
+    border-bottom: 1px solid goldenrod;
 }
