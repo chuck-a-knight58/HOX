@@ -9,6 +9,9 @@
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#daa520">
 <title>Login — Xanadu Reserve</title>
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
@@ -94,7 +97,7 @@
                     case 'auth/email-already-in-use':
                         return 'An account with this email already exists.';
                     case 'auth/weak-password':
-                        return 'Password must be at least 6 characters.';
+                        return 'Password does not meet our requirements. Please choose a stronger one.';
                     case 'auth/too-many-requests':
                         return 'Too many attempts. Please try again later.';
                     default:

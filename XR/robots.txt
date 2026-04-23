@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /XR/
+Disallow: /XR/admin.html
+Disallow: /XR/login.html
+Disallow: /XR/members.html
+Disallow: /XR/info.html
+Disallow: /XR/profile_settings.html
+Disallow: /XR/change_password.html
+
+Sitemap: https://www.xanadukink.com/XR/sitemap.xml

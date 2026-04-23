@@ -9,6 +9,9 @@
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
 <link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#daa520">
 <title>Upcoming Events — Xanadu Reserve</title>
 
 <!-- Open Graph -->
@@ -376,7 +379,7 @@
                     var subtitle = e.subtitle ? escapeHtml(e.subtitle) + '<br>' : '';
                     var ticketClass = e.authRequired ? ' class="auth-required"' : '';
                     var html = '<div class="cell" vertical-align="middle" align="center">';
-                    html += '<a href="' + escapeHtml(e.detailPage) + '"><img class="small_image" src="assets/' + escapeHtml(e.image) + '" alt="XR Events" /></a><br>';
+                    html += '<a href="' + escapeHtml(e.detailPage) + '"><img class="small_image" src="assets/' + escapeHtml(e.image) + '" alt="' + escapeHtml(e.series + ': ' + e.name) + '" /></a><br>';
                     html += escapeHtml(e.series) + '<br>';
                     html += escapeHtml(e.name) + '<br>';
                     html += subtitle;

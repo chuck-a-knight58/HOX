@@ -1,0 +1,21 @@
+{
+    "name": "Xanadu Reserve",
+    "short_name": "XR",
+    "description": "The Tri-State's most exclusive kink experience. A private social club for those who value ritual, presence, and elevated community.",
+    "icons": [
+        {
+            "src": "apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "assets/XR.png",
+            "sizes": "any",
+            "type": "image/png"
+        }
+    ],
+    "theme_color": "#daa520",
+    "background_color": "#000000",
+    "display": "standalone",
+    "start_url": "/XR/"
+}

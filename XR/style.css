@@ -67,6 +67,28 @@ a:hover {
     text-decoration: underline;
 }
 
+.navbar a.active {
+    color: var(--color-bronze);
+    border-bottom: 2px solid var(--color-bronze);
+    padding-bottom: 3px;
+}
+
+.navbar a.active:hover {
+    color: #B0E0FF;
+    border-bottom-color: #B0E0FF;
+}
+
+/* ---- Focus styles for keyboard users ---- */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--color-bronze);
+    outline-offset: 2px;
+}
+
 /* ---- Images ---- */
 .small_image {
     width: 172px;
