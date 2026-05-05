@@ -8,6 +8,7 @@
 <meta name="robots" content="noindex, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
+<link rel="canonical" href="https://www.xanadukink.com/XR/info.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
@@ -71,9 +72,9 @@
                         style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
                 </label>
 
-                <label>Age (21+ required):
-                    <input type="number" name="age" min="21" required
-                        style="width: 100px; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
+                <label>Date of Birth (must be 21+):
+                    <input type="date" name="birthday" required
+                        style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
                 </label>
 
                 <fieldset style="border: 1px solid goldenrod; padding: 15px;">
@@ -119,6 +120,19 @@
                         style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
                 </label>
 
+                <fieldset style="border: 1px solid goldenrod; padding: 15px;">
+                    <legend>Community Standards Agreement</legend>
+                    <label style="display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;">
+                        <input type="checkbox" name="standards_agreement" id="standardsAgreement" required style="margin-top: 4px;">
+                        <span>
+                            I have read and agree to the
+                            <a class="alt" href="community_standards.html" target="_blank" rel="noopener">Xanadu Reserve Community Standards</a>
+                            — including the agreements on consent, discretion, respect, safety, and accountability.
+                            I understand that attendance at any Reserve gathering is conditional on my adherence to these standards.
+                        </span>
+                    </label>
+                </fieldset>
+
                 <div style="text-align: center; margin-top: 10px;">
                     <button type="submit"
                         style="padding: 12px 40px; background: goldenrod; color: black; border: none; font-size: 16px; font-weight: bold; cursor: pointer;">
@@ -154,10 +168,23 @@
                 var form = document.getElementById('attendeeInformationForm');
                 var formData = new FormData(form);
 
-                // Validate age
-                var age = parseInt(formData.get('age'));
-                if (age < 21) {
+                // Validate age from birthday
+                var birthday = new Date(formData.get('birthday'));
+                var today = new Date();
+                var age = today.getFullYear() - birthday.getFullYear();
+                var m = today.getMonth() - birthday.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthday.getDate())) {
+                    age--;
+                }
+                if (isNaN(age) || age < 21) {
                     showMessage('You must be 21 or older to register.', 'red');
+                    return false;
+                }
+
+                // Validate Community Standards agreement
+                var standardsCheckbox = document.getElementById('standardsAgreement');
+                if (!standardsCheckbox || !standardsCheckbox.checked) {
+                    showMessage('Please confirm that you have read and agree to the Community Standards.', 'red');
                     return false;
                 }
 
@@ -172,6 +199,8 @@
                 }
 
                 var data = {
+                    type: 'Attendance Request',
+                    userId: null,
                     event_name: formData.get('event_name') || '',
                     event_date: formData.get('event_date') || '',
                     full_name: formData.get('full_name') || '',
@@ -179,14 +208,16 @@
                     fetlife_name: formData.get('fetlife_name') || '',
                     email: formData.get('email') || '',
                     phone: formData.get('phone') || '',
-                    age: formData.get('age') || '',
-                    attended_before: formData.get('attended_before') || 'Not specified',
-                    experience: formData.get('experience') || 'Not specified',
-                    roles: roles.length > 0 ? roles : ['Not specified'],
-                    dietary: formData.get('dietary') || 'None',
-                    elegance_meaning: formData.get('elegance_meaning') || 'None',
+                    birthday: formData.get('birthday') || '',
+                    attended_before: formData.get('attended_before') || '',
+                    experience: formData.get('experience') || '',
+                    roles: roles.length > 0 ? roles : [''],
+                    dietary: formData.get('dietary') || '',
+                    community_contribution: '',
+                    elegance_meaning: formData.get('elegance_meaning') || '',
                     notes: formData.get('notes') || 'None',
-                    todays_date: formData.get('todays_date') || '',
+                    standards_agreement: true,
+                    status: 'pending',
                     submittedAt: firebase.firestore.FieldValue.serverTimestamp()
                 };
 

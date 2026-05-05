@@ -442,3 +442,12 @@ footer {
     border-top: 1px solid goldenrod;
     border-bottom: 1px solid goldenrod;
 }
+
+.auth-show { display: none; }
+body.user-logged-in .auth-show { display: inline; }
+body.user-logged-in .auth-hide { display: none; }
+body.user-logged-in .auth-disable {
+    pointer-events: none;
+    opacity: 0.5;
+    cursor: not-allowed;
+}

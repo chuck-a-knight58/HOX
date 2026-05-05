@@ -8,6 +8,7 @@
 <meta name="robots" content="index, follow">
 <meta name="rating" content="adult">
 <meta name="google-site-verification" content="oQny7m5f65B-R0KY6N6IC9aXN42LlqNNZcL_BCFlYw0" />
+<link rel="canonical" href="https://www.xanadukink.com/XR/join.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
@@ -188,20 +189,23 @@
                 }
 
                 var data = {
+                    type: 'Membership Request',
                     userId: user ? user.uid : null,
+                    event_name: '',
+                    event_date: '',
                     full_name: formData.get('full_name') || '',
                     preferred_name: formData.get('preferred_name') || '',
                     fetlife_name: formData.get('fetlife_name') || '',
                     email: formData.get('email') || '',
                     phone: formData.get('phone') || '',
                     birthday: formData.get('birthday') || '',
-                    attended_before: formData.get('attended_before') || 'Not specified',
-                    experience: formData.get('experience') || 'Not specified',
-                    roles: roles.length > 0 ? roles : ['Not specified'],
+                    attended_before: formData.get('attended_before') || '',
+                    experience: formData.get('experience') || '',
+                    roles: roles.length > 0 ? roles : [''],
                     dietary: formData.get('dietary') || 'None',
-                    community_contribution: formData.get('community_contribution') || 'None',
-                    elegance_meaning: formData.get('elegance_meaning') || 'None',
-                    notes: formData.get('notes') || 'None',
+                    community_contribution: formData.get('community_contribution') || '',
+                    elegance_meaning: formData.get('elegance_meaning') || '',
+                    notes: formData.get('notes') || '',
                     standards_agreement: true,
                     status: 'pending',
                     submittedAt: firebase.firestore.FieldValue.serverTimestamp()

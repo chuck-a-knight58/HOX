@@ -7,6 +7,7 @@
 <META name="description" content="Xanadu Reserve Admin">
 <meta name="robots" content="noindex, nofollow">
 <meta name="rating" content="adult">
+<link rel="canonical" href="https://www.xanadukink.com/XR/admin.html">
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <link rel="manifest" href="site.webmanifest">
@@ -230,6 +231,11 @@
 
                             html += '<div class="app-card">';
                             html += '<h3>' + escapeHtml(d.full_name || 'No Name') + ' <span class="status-badge status-' + status + '">' + status + '</span></h3>';
+                            html += field('Type', d.type);
+                            if (d.type === 'Attendance Request') {
+                                html += field('Event Name', d.event_name);
+                                html += field('Event Date', d.event_date);
+                            }
                             html += field('Email', d.email);
                             html += field('Preferred Name', d.preferred_name);
                             html += field('FetLife Name', d.fetlife_name);
@@ -246,7 +252,11 @@
 
                             if (status === 'pending') {
                                 html += '<div class="app-actions">';
-                                html += '<button class="btn-approve" onclick="approveApplication(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve &amp; Create Account</button>';
+                                if (d.type === 'Attendance Request') {
+                                    html += '<button class="btn-approve" onclick="approveAttendance(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve Attendance</button>';
+                                } else {
+                                    html += '<button class="btn-approve" onclick="approveApplication(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve &amp; Create Account</button>';
+                                }
                                 html += '<button class="btn-reject" onclick="rejectApplication(\'' + doc.id + '\')">Reject</button>';
                                 html += '</div>';
                             }
@@ -263,6 +273,27 @@
 
             function field(label, value) {
                 return '<div class="app-field"><strong>' + escapeHtml(label) + ':</strong> ' + escapeHtml(value || 'N/A') + '</div>';
+            }
+
+            // ---- Approve Attendance ----
+            // Marks an Attendance Request as approved without creating a
+            // Firebase Auth account. Use approveApplication for membership
+            // requests where a login should be provisioned.
+            function approveAttendance(docId, email, displayName) {
+                if (!confirm('Approve attendance for ' + displayName + '?')) return;
+
+                db.collection('applications').doc(docId).update({
+                    status: 'approved',
+                    approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    approvedBy: auth.currentUser.email
+                })
+                .then(function () {
+                    showAdminMessage('Attendance approved for ' + displayName + '.', 'lightgreen');
+                    loadApplications(currentTab);
+                })
+                .catch(function (error) {
+                    showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                });
             }
 
             // ---- Approve: create Firebase Auth account ----
@@ -385,41 +416,37 @@
                             return;
                         }
 
-                        var headers = [
+                        // Preferred column order for known fields; any
+                        // additional keys present on docs are appended after.
+                        var preferred = [
+                            'doc_id', 'type', 'userId', 'status',
                             'full_name', 'preferred_name', 'email', 'phone',
-                            'fetlife_name', 'birthday', 'roles',
-                            'attended_before', 'experience',
+                            'fetlife_name', 'birthday',
+                            'event_name', 'event_date',
+                            'roles', 'attended_before', 'experience',
                             'community_contribution', 'elegance_meaning',
-                            'dietary', 'notes',
-                            'submitted_at', 'approved_at', 'approved_by'
+                            'dietary', 'notes', 'standards_agreement',
+                            'submittedAt', 'approvedAt', 'approvedBy',
+                            'rejectedAt', 'rejectedBy'
                         ];
-                        var rows = [headers];
 
+                        var docs = [];
+                        var keySet = {};
                         snapshot.forEach(function (doc) {
                             var d = doc.data();
-                            var roles = Array.isArray(d.roles) ? d.roles.join('; ') : (d.roles || '');
-                            var submitted = d.submittedAt && d.submittedAt.toDate
-                                ? d.submittedAt.toDate().toISOString() : '';
-                            var approved = d.approvedAt && d.approvedAt.toDate
-                                ? d.approvedAt.toDate().toISOString() : '';
-                            rows.push([
-                                d.full_name || '',
-                                d.preferred_name || '',
-                                d.email || '',
-                                d.phone || '',
-                                d.fetlife_name || '',
-                                d.birthday || '',
-                                roles,
-                                d.attended_before || '',
-                                d.experience || '',
-                                d.community_contribution || '',
-                                d.elegance_meaning || '',
-                                d.dietary || '',
-                                d.notes || '',
-                                submitted,
-                                approved,
-                                d.approvedBy || ''
-                            ]);
+                            d.doc_id = doc.id;
+                            docs.push(d);
+                            Object.keys(d).forEach(function (k) { keySet[k] = true; });
+                        });
+
+                        var headers = preferred.filter(function (k) { return keySet[k]; });
+                        Object.keys(keySet).sort().forEach(function (k) {
+                            if (headers.indexOf(k) === -1) headers.push(k);
+                        });
+
+                        var rows = [headers];
+                        docs.forEach(function (d) {
+                            rows.push(headers.map(function (k) { return formatCsvValue(d[k]); }));
                         });
 
                         downloadCsv(rows, 'members_' + todayStamp() + '.csv');
@@ -494,6 +521,18 @@
                     s = '"' + s.replace(/"/g, '""') + '"';
                 }
                 return s;
+            }
+
+            // Convert any Firestore field value to a CSV-friendly string.
+            // Handles Timestamps, arrays, plain objects, primitives, and null.
+            function formatCsvValue(v) {
+                if (v == null) return '';
+                if (typeof v.toDate === 'function') return v.toDate().toISOString();
+                if (Array.isArray(v)) return v.map(formatCsvValue).join('; ');
+                if (typeof v === 'object') {
+                    try { return JSON.stringify(v); } catch (e) { return String(v); }
+                }
+                return String(v);
             }
 
             function todayStamp() {
