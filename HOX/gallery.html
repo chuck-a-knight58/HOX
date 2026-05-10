@@ -1,78 +1,26 @@
 <!DOCTYPE HTML>
 <html lang="en">
 <head>
-<META charset="UTF-8">
-<META name="viewport" content="width=device-width, initial-scale=1.0">
-<META name="description" content="Xanadu Kink is a hub for High Protocol traditions and Power Exchange dynamics, emphasizing intentionality, etiquette, and meaningful connection. Originally rooted in refined protocol, it has grown into a space that blends traditional values with modern expressions of authority and service. Xanadu offers curated events, workshops, and gatherings to educate and immerse participants in its ethos.">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Xanadu Kink is a hub for High Protocol traditions and Power Exchange dynamics, emphasizing intentionality, etiquette, and meaningful connection. Originally rooted in refined protocol, it has grown into a space that blends traditional values with modern expressions of authority and service. Xanadu offers curated events, workshops, and gatherings to educate and immerse participants in its ethos.">
 <meta name="robots" content="noindex">
 <meta name="rating" content="adult">
 <title>Xanadu Kink Gallery</title>
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #f5f5f5;
-  }
-  .carousel {
-    position: relative;
-    width: 600px;
-    max-width: 90%;
-    background: white;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-    text-align: center;
-  }
-  .carousel img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-  .caption {
-    padding: 15px;
-    background: #fff;
-    font-size: 1rem;
-    color: #333;
-  }
-  .nav-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-    font-size: 1.2rem;
-    border-radius: 5px;
-  }
-  .nav-btn:hover {
-    background: rgba(0,0,0,0.7);
-  }
-  .prev {
-    left: 10px;
-  }
-  .next {
-    right: 10px;
-  }
-</style>
+<link rel="canonical" href="https://www.xanadukink.com/">
 </head>
 <body>
 
-<div>
+<div w3-include-html="nav.html"></div>
 
-    <div class="carousel">
+<div class="carousel">
     <button class="nav-btn prev">&#10094;</button>
     <button class="nav-btn next">&#10095;</button>
     <img id="carousel-image" src="" alt="Carousel Image">
     <div class="caption" id="carousel-caption"></div>
-    </div>
+</div>
 
     <script>
 		const slides = [
@@ -187,12 +135,10 @@
     showSlide(currentIndex);
     </script>
 
-    <div w3-include-html="footer.html"></div>
-    <script>
-        includeHTML();
-    </script>
-    
-</div>
+<div w3-include-html="footer.html"></div>
+<script>
+    includeHTML();
+</script>
 
 </body>
 </html>
