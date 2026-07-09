@@ -1,0 +1,74 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/PET/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="About Power Exchange Together (P.E.T.) — our mission, values, and how our international chapters support power exchange relationships.">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<title>About — Power Exchange Together</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+
+<body>
+
+    <div w3-include-html="nav.html"></div>
+
+    <section class="hero">
+        <p class="eyebrow">Our Mission</p>
+        <h1 class="page_title">About P.E.T.</h1>
+        <p class="tag_line">Power exchange, explored together — healthy, safe, consensual, and constructive.</p>
+    </section>
+
+    <div class="container">
+        <div class="panel">
+            <h2>Who We Are</h2>
+            <p class="text">
+                Power Exchange Together (P.E.T.) is a community initiative designed to support individuals
+                and dynamics who are exploring or actively living power exchange relationships. Through local
+                chapters, we bring people together to exchange ideas, knowledge, and experience in a
+                welcoming, judgement-free environment.
+            </p>
+
+            <h2>What We Believe</h2>
+            <p class="text">
+                We understand that power exchange relationships differ based on the individuals within their
+                own consensual dynamic. There is no single "right" way to build authority and service — only
+                the way that is healthy, safe, consensual, and constructive for the people involved. Our role
+                is to provide education, community, and support so members can build the dynamic that is right
+                for them.
+            </p>
+
+            <h2>How Chapters Work</h2>
+            <p class="text">
+                Each P.E.T. chapter is led by local volunteers who host regular meetings, discussions, and
+                educational gatherings. Chapters set their own cadence and topics while sharing a common set of
+                values and access to a growing library of teaching materials and meeting-topic resources
+                maintained by the international leadership.
+            </p>
+
+            <h2>Get Involved</h2>
+            <p class="text">
+                Ready to connect? <a href="chapters.html">Find a chapter near you</a>, or — if you'd like to
+                start or help lead a chapter — <a href="join.html">apply to join the leadership</a>. Anyone
+                aged 21 or older is welcome.
+            </p>
+        </div>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/PET/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Directory of active Power Exchange Together (P.E.T.) chapters worldwide, with contact information for each local group.">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<title>Active Chapters — Power Exchange Together</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase Auth only (used by the nav for login state; chapter data is static JSON) -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+
+<body>
+
+    <div w3-include-html="nav.html"></div>
+
+    <section class="hero">
+        <p class="eyebrow">Membership</p>
+        <h1 class="page_title">Active P.E.T. Chapters</h1>
+        <p class="tag_line">Find a Power Exchange Together chapter near you and reach out to its leadership.</p>
+    </section>
+
+    <div class="container">
+        <p id="chapters-status" class="text text-center muted">Loading chapters…</p>
+        <div id="chapters-root"></div>
+        <p class="text text-center muted" style="margin-top: 40px;">
+            Don't see a chapter in your area?
+            <a href="join.html">Apply to start one</a>.
+        </p>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
+
+    <script>
+        // Region display order; overridden by "regionOrder" in chapters.json if present.
+        var REGION_ORDER = [
+            'Canada',
+            'Northeast & Mid-Atlantic',
+            'Southeast',
+            'Midwest',
+            'West',
+            'Pacific & International'
+        ];
+
+        function escapeHtml(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+
+        function renderChapters(chapters) {
+            var root = document.getElementById('chapters-root');
+            var status = document.getElementById('chapters-status');
+
+            if (!chapters || !chapters.length) {
+                status.textContent = 'No chapters are listed yet. Please check back soon.';
+                return;
+            }
+            status.style.display = 'none';
+
+            // Group by region.
+            var groups = {};
+            chapters.forEach(function (c) {
+                var r = c.region || 'Other';
+                (groups[r] = groups[r] || []).push(c);
+            });
+
+            // Ordered regions first, then any extras alphabetically.
+            var regions = REGION_ORDER.filter(function (r) { return groups[r]; });
+            Object.keys(groups).sort().forEach(function (r) {
+                if (regions.indexOf(r) === -1) regions.push(r);
+            });
+
+            var html = '';
+            regions.forEach(function (region) {
+                html += '<h2 class="region-heading">' + escapeHtml(region) + '</h2>';
+                html += '<div class="chapter-grid">';
+                groups[region]
+                    .sort(function (a, b) { return (a.name || '').localeCompare(b.name || ''); })
+                    .forEach(function (c) {
+                        html += '<div class="chapter-card">';
+                        html += '<h4>' + escapeHtml(c.name) + '</h4>';
+                        if (c.location) {
+                            html += '<p class="location">' + escapeHtml(c.location) + '</p>';
+                        }
+                        if (c.contactEmail) {
+                            html += '<p class="contact">✉ <a href="mailto:' + escapeHtml(c.contactEmail) + '">' +
+                                    escapeHtml(c.contactEmail) + '</a></p>';
+                        }
+                        html += '</div>';
+                    });
+                html += '</div>';
+            });
+            root.innerHTML = html;
+        }
+
+        // Load the chapter directory from the static JSON file.
+        function loadChapters() {
+            var status = document.getElementById('chapters-status');
+            // Cache-bust so edits to chapters.json show up without a hard refresh.
+            fetch('chapters.json?v=' + Date.now(), { cache: 'no-store' })
+                .then(function (res) {
+                    if (!res.ok) throw new Error('HTTP ' + res.status);
+                    return res.json();
+                })
+                .then(function (data) {
+                    if (data && Array.isArray(data.regionOrder) && data.regionOrder.length) {
+                        REGION_ORDER = data.regionOrder;
+                    }
+                    var list = (data && Array.isArray(data.chapters)) ? data.chapters
+                             : (Array.isArray(data) ? data : []);
+                    renderChapters(list);
+                })
+                .catch(function (err) {
+                    console.error('Could not load chapters.json:', err && err.message);
+                    status.textContent = 'Sorry — the chapter directory could not be loaded. Please try again later.';
+                });
+        }
+
+        loadChapters();
+    </script>
+
+</body>
+</html>

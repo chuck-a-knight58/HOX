@@ -1,0 +1,30 @@
+{
+  "_comment": "Active P.E.T. Chapters directory. Edit this file to add, remove, or update chapters — chapters.html renders directly from it. Source: beyondleather.net/?page_id=119.",
+  "regionOrder": [
+    "Canada",
+    "Northeast & Mid-Atlantic",
+    "Southeast",
+    "Midwest",
+    "West",
+    "Pacific & International"
+  ],
+  "chapters": [
+    { "name": "Kootenay",                        "location": "Kootenay, British Columbia, Canada", "region": "Canada",                   "contactEmail": "house.of.luxper@gmail.com" },
+    { "name": "Greater Vancouver",               "location": "Greater Vancouver, BC, Canada",      "region": "Canada",                   "contactEmail": "p.e.t.greater.vancouver@gmail.com" },
+    { "name": "North / Central New Jersey",      "location": "North & Central New Jersey",         "region": "Northeast & Mid-Atlantic", "contactEmail": "PET.North.Central.NJ@gmail.com" },
+    { "name": "Southern New Jersey",             "location": "Southern New Jersey",                "region": "Northeast & Mid-Atlantic", "contactEmail": "PETofSouthernNJ@gmail.com" },
+    { "name": "Maryland",                        "location": "Maryland",                           "region": "Northeast & Mid-Atlantic", "contactEmail": "P.E.T.ofMaryland@gmail.com" },
+    { "name": "National Capital / DC Region",    "location": "Washington, DC Metro",               "region": "Northeast & Mid-Atlantic", "contactEmail": "CitadelofKink+PET@gmail.com" },
+    { "name": "Richmond",                        "location": "Richmond, Virginia",                 "region": "Northeast & Mid-Atlantic", "contactEmail": "Powerexchangerva@gmail.com" },
+    { "name": "Broward",                         "location": "Broward County, Florida",            "region": "Southeast",                "contactEmail": "petbrowardflorida@gmail.com" },
+    { "name": "Jacksonville / Duval County",     "location": "Jacksonville, Florida",              "region": "Southeast",                "contactEmail": "PET.Duval@yahoo.com" },
+    { "name": "Charlotte County",                "location": "Charlotte County, Florida",          "region": "Southeast",                "contactEmail": "PETinCCFL@gmail.com" },
+    { "name": "Southeast Georgia",               "location": "Southeast Georgia",                  "region": "Southeast",                "contactEmail": "Petsoutheastgeorgia@gmail.com" },
+    { "name": "Murfreesboro",                    "location": "Murfreesboro, Tennessee",            "region": "Southeast",                "contactEmail": "pet.murfreesboro@gmail.com" },
+    { "name": "Southern Kentucky",               "location": "Southern Kentucky",                  "region": "Southeast",                "contactEmail": "petsouthernky@gmail.com" },
+    { "name": "West Michigan",                   "location": "Muskegon Area, Michigan",            "region": "Midwest",                  "contactEmail": "PETofWestMichigan@gmail.com" },
+    { "name": "Spokane",                         "location": "Spokane, Washington",                "region": "West",                     "contactEmail": "PETofSpokane@gmail.com" },
+    { "name": "Pacific Australia & New Zealand", "location": "Australia & New Zealand",            "region": "Pacific & International",   "contactEmail": "petsouthpacific@outlook.com" },
+    { "name": "Hawaiian Kingdom",                "location": "Hawaiʻi",                       "region": "Pacific & International",   "contactEmail": "aloha.power.et@gmail.com" }
+  ]
+}

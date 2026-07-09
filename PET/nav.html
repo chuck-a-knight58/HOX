@@ -1,0 +1,15 @@
+<nav class="navbar">
+    <a href="index.html">Home</a>
+    <a href="chapters.html">Chapters</a>
+    <a href="about.html">About</a>
+    <a href="library.html" class="members-only-link" style="display:none;">Library</a>
+    <a href="contact.html">Contact</a>
+    <a class="auth-hide" href="join.html">Apply</a>
+    <a href="profile.html" class="members-only-link" style="display:none;">My Profile</a>
+    <a id="auth-link" href="login.html">Login</a>
+    <a href="admin.html" class="admin-only-link" style="display:none;">Admin</a>
+</nav>
+<style>
+    body.user-logged-in .members-only-link { display: inline !important; }
+    body.pet-admin .admin-only-link { display: inline !important; }
+</style>

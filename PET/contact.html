@@ -1,0 +1,113 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/PET/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Contact the Power Exchange Together (P.E.T.) international leadership team.">
+<meta name="robots" content="index, follow">
+<meta name="rating" content="adult">
+<title>Contact — Power Exchange Together</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+</head>
+
+<body>
+
+    <div w3-include-html="nav.html"></div>
+
+    <section class="hero">
+        <p class="eyebrow">Get in Touch</p>
+        <h1 class="page_title">Contact Us</h1>
+        <p class="tag_line">Questions about P.E.T., starting a chapter, or the leadership library? Reach out.</p>
+    </section>
+
+    <div class="container">
+        <div class="panel form-wrap">
+            <p class="text">
+                Looking for a specific chapter? Contact details for every active group are on the
+                <a href="chapters.html">Chapters</a> page. For anything else — general questions, starting a
+                new chapter, or leadership matters — send us a note below.
+            </p>
+
+            <form id="contactForm" class="pet-form" onsubmit="return submitContact(event);">
+                <label>Your Name
+                    <input type="text" name="name" required>
+                </label>
+                <label>Email Address
+                    <input type="email" name="email" required>
+                </label>
+                <label>Subject
+                    <input type="text" name="subject" required>
+                </label>
+                <label>Message
+                    <textarea name="message" rows="6" required></textarea>
+                </label>
+                <div class="text-center">
+                    <button type="submit" class="btn-accent">Send Message</button>
+                </div>
+                <p id="contactMessage" class="auth-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
+
+    <script>
+        function showContactMsg(msg, color) {
+            var el = document.getElementById('contactMessage');
+            el.textContent = msg;
+            el.style.color = color;
+        }
+
+        function submitContact(event) {
+            event.preventDefault();
+            var form = document.getElementById('contactForm');
+            var data = new FormData(form);
+
+            if (typeof db === 'undefined' || typeof firebase === 'undefined') {
+                showContactMsg('Messaging is unavailable right now. Please try again later.', '#b23b3b');
+                return false;
+            }
+
+            var payload = {
+                name: (data.get('name') || '').trim(),
+                email: (data.get('email') || '').trim(),
+                subject: (data.get('subject') || '').trim(),
+                message: (data.get('message') || '').trim(),
+                status: 'pending',
+                submittedAt: firebase.firestore.FieldValue.serverTimestamp()
+            };
+
+            var btn = form.querySelector('button[type="submit"]');
+            if (btn) btn.disabled = true;
+            showContactMsg('Sending…', 'var(--text-muted)');
+
+            db.collection('contact_messages').add(payload)
+                .then(function () {
+                    showContactMsg('Thank you — your message has been sent.', '#2e7d32');
+                    form.reset();
+                })
+                .catch(function (err) {
+                    showContactMsg('Something went wrong: ' + err.message, '#b23b3b');
+                })
+                .finally(function () {
+                    if (btn) btn.disabled = false;
+                });
+
+            return false;
+        }
+    </script>
+
+</body>
+</html>

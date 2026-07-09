@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/PET/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="P.E.T. leadership admin dashboard.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="rating" content="adult">
+<title>Admin — Power Exchange Together</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-storage-compat.js"></script>
+<script src="firebase-config.js"></script>
+<style>
+    .admin-section { margin-top: 14px; }
+    .admin-card {
+        background: var(--bg-panel);
+        border: 1px solid var(--line);
+        border-left: 4px solid var(--accent-soft);
+        box-shadow: var(--shadow);
+        padding: 16px 20px;
+        margin-bottom: 14px;
+    }
+    .admin-card h4 { margin: 0 0 6px; }
+    .admin-card .meta { color: var(--text-muted); font-size: 0.92em; margin: 2px 0; }
+    .admin-actions { margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn-small { padding: 7px 18px; font-size: 0.9em; }
+    .btn-danger { background: #8a2b2b; color: #fff; border: none; cursor: pointer;
+                  font-family: var(--serif); letter-spacing: 0.05em; border-radius: 2px; padding: 7px 18px; }
+    .btn-danger:hover { background: #6f2020; }
+    details.admin-form { margin: 10px 0 24px; }
+    details.admin-form summary { cursor: pointer; color: var(--accent); font-weight: 600; }
+    .tab-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin: 10px 0 24px; }
+    .tab-btn { padding: 9px 22px; border: 1px solid var(--line); background: var(--bg-panel);
+               cursor: pointer; font-family: var(--serif); font-size: 1.05em; border-radius: 2px; color: var(--heading); }
+    .tab-btn.active { background: var(--accent); color: #fff8f0; border-color: var(--accent); }
+</style>
+</head>
+
+<body>
+
+    <div w3-include-html="nav.html"></div>
+
+    <section class="hero">
+        <p class="eyebrow">Leadership Team</p>
+        <h1 class="page_title">Admin Dashboard</h1>
+    </section>
+
+    <div class="container">
+
+        <div id="gate" class="panel text-center">
+            <p class="text" id="gate-text">Checking access…</p>
+        </div>
+
+        <div id="admin-root" style="display:none;">
+
+            <div class="tab-row">
+                <button class="tab-btn active" data-tab="applications" onclick="showTab('applications')">Applications</button>
+                <button class="tab-btn" data-tab="library" onclick="showTab('library')">Library</button>
+            </div>
+
+            <!-- ============ APPLICATIONS ============ -->
+            <div id="tab-applications" class="admin-section">
+                <h2 class="section_title">Pending Applications</h2>
+                <p class="text-center muted" id="apps-status">Loading…</p>
+                <div id="apps-list"></div>
+            </div>
+
+            <!-- ============ LIBRARY ============ -->
+            <div id="tab-library" class="admin-section" style="display:none;">
+                <h2 class="section_title">Library Resources</h2>
+
+                <details class="admin-form">
+                    <summary>+ Add a resource</summary>
+                    <form id="resourceForm" class="pet-form" onsubmit="return addResource(event);" style="margin-top:14px;">
+                        <label>Title <input type="text" name="title" required></label>
+                        <label>Category
+                            <select name="category" required>
+                                <option value="">Select…</option>
+                                <option>Meeting-Topic Notes</option>
+                                <option>Teaching Materials</option>
+                                <option>Presentation Resources</option>
+                            </select>
+                        </label>
+                        <label>Description <textarea name="description" rows="3"></textarea></label>
+                        <label>External Link (optional — use this OR upload a file below)
+                            <input type="url" name="externalUrl" placeholder="https://…">
+                        </label>
+                        <label>Upload File (PDF, slides, etc. — optional)
+                            <input type="file" name="file" id="resourceFile">
+                        </label>
+                        <div><button type="submit" class="btn-accent btn-small">Add Resource</button></div>
+                        <p id="resourceMsg" class="auth-message"></p>
+                    </form>
+                </details>
+
+                <p class="text-center muted" id="library-status">Loading…</p>
+                <div id="library-list"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div w3-include-html="footer.html"></div>
+    <script>
+        includeHTML();
+        initAuthUI();
+    </script>
+
+    <script>
+        // ---- Helpers ----
+        function escapeHtml(str) {
+            return String(str == null ? '' : str)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+        }
+        function setMsg(id, msg, color) {
+            var el = document.getElementById(id);
+            if (el) { el.textContent = msg; el.style.color = color; }
+        }
+        function showTab(name) {
+            ['applications', 'library'].forEach(function (t) {
+                document.getElementById('tab-' + t).style.display = (t === name) ? 'block' : 'none';
+            });
+            document.querySelectorAll('.tab-btn').forEach(function (b) {
+                b.classList.toggle('active', b.dataset.tab === name);
+            });
+        }
+
+        // A secondary Firebase app lets us create leader accounts WITHOUT
+        // signing the admin out of their own session.
+        var secondaryApp = null;
+        function getSecondaryApp() {
+            if (!secondaryApp) {
+                secondaryApp = firebase.initializeApp(firebaseConfig, 'secondary');
+            }
+            return secondaryApp;
+        }
+        function randomPassword() {
+            // Temporary password; the applicant immediately gets a reset email.
+            var chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%';
+            var out = '';
+            var arr = new Uint32Array(20);
+            (window.crypto || window.msCrypto).getRandomValues(arr);
+            for (var i = 0; i < arr.length; i++) out += chars[arr[i] % chars.length];
+            return out;
+        }
+
+        // ======================= APPLICATIONS =======================
+        function loadApplications() {
+            db.collection('applications').where('status', '==', 'pending').get()
+                .then(function (snap) {
+                    var status = document.getElementById('apps-status');
+                    var list = document.getElementById('apps-list');
+                    if (snap.empty) { status.textContent = 'No pending applications.'; list.innerHTML = ''; return; }
+                    status.style.display = 'none';
+                    var html = '';
+                    snap.forEach(function (doc) {
+                        var a = doc.data();
+                        html += '<div class="admin-card" id="app-' + doc.id + '">';
+                        html += '<h4>' + escapeHtml(a.full_name || a.preferred_name || '(no name)') + '</h4>';
+                        html += '<p class="meta">' + escapeHtml(a.email || '') + ' · ' + escapeHtml(a.phone || '') + '</p>';
+                        html += '<p class="meta">' + escapeHtml(a.apply_type || '') + ' — ' +
+                                escapeHtml(a.chapter || '') + ' (' + escapeHtml(a.region || '') + ')</p>';
+                        html += '<p class="meta">Experience: ' + escapeHtml(a.experience || 'n/a') + '</p>';
+                        if (a.motivation) html += '<p>' + escapeHtml(a.motivation) + '</p>';
+                        if (a.notes) html += '<p class="meta">Notes: ' + escapeHtml(a.notes) + '</p>';
+                        html += '<div class="admin-actions">';
+                        html += '<button class="btn-accent btn-small" onclick="approveApp(\'' + doc.id + '\')">Approve &amp; create account</button>';
+                        html += '<button class="btn-danger" onclick="rejectApp(\'' + doc.id + '\')">Reject</button>';
+                        html += '</div>';
+                        html += '<p class="auth-message" id="appmsg-' + doc.id + '"></p>';
+                        html += '</div>';
+                    });
+                    list.innerHTML = html;
+                })
+                .catch(function (err) {
+                    document.getElementById('apps-status').textContent = 'Error: ' + err.message;
+                });
+        }
+
+        function approveApp(appId) {
+            var msgId = 'appmsg-' + appId;
+            setMsg(msgId, 'Approving…', 'var(--text-muted)');
+            db.collection('applications').doc(appId).get().then(function (doc) {
+                if (!doc.exists) throw new Error('Application not found.');
+                var a = doc.data();
+                var email = (a.email || '').trim();
+                if (!email) throw new Error('Application has no email address.');
+
+                var secAuth = getSecondaryApp().auth();
+                var uid = null;
+                return secAuth.createUserWithEmailAndPassword(email, randomPassword())
+                    .then(function (cred) {
+                        uid = cred.user.uid;
+                        var displayName = a.full_name || a.preferred_name || '';
+                        return displayName ? cred.user.updateProfile({ displayName: displayName }) : null;
+                    })
+                    .catch(function (err) {
+                        // If the account already exists, proceed to mark approved anyway.
+                        if (err.code === 'auth/email-already-in-use') { uid = null; return null; }
+                        throw err;
+                    })
+                    .then(function () { return secAuth.signOut(); })
+                    .then(function () {
+                        // Create the leader profile (admin-writable).
+                        if (!uid) return null;
+                        return db.collection('leaders').doc(uid).set({
+                            displayName: a.full_name || a.preferred_name || '',
+                            email: email,
+                            authUid: uid,
+                            chapter: a.chapter || '',
+                            region: a.region || '',
+                            role_in_chapter: '',
+                            bio: '',
+                            status: 'active',
+                            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }, { merge: true });
+                    })
+                    .then(function () {
+                        // Mark the application approved.
+                        return db.collection('applications').doc(appId).update({
+                            status: 'approved',
+                            authUid: uid,
+                            approvedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            approvedBy: auth.currentUser.email
+                        });
+                    })
+                    .then(function () {
+                        // Email the applicant a link to set their own password.
+                        return auth.sendPasswordResetEmail(email);
+                    })
+                    .then(function () {
+                        setMsg(msgId, 'Approved. A password-setup email was sent to ' + email + '.', '#2e7d32');
+                        var card = document.getElementById('app-' + appId);
+                        if (card) setTimeout(function () { card.remove(); }, 2500);
+                    });
+            }).catch(function (err) {
+                setMsg(msgId, 'Error: ' + err.message, '#b23b3b');
+            });
+        }
+
+        function rejectApp(appId) {
+            var msgId = 'appmsg-' + appId;
+            setMsg(msgId, 'Rejecting…', 'var(--text-muted)');
+            db.collection('applications').doc(appId).update({
+                status: 'rejected',
+                rejectedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                rejectedBy: auth.currentUser.email
+            }).then(function () {
+                var card = document.getElementById('app-' + appId);
+                if (card) card.remove();
+            }).catch(function (err) { setMsg(msgId, 'Error: ' + err.message, '#b23b3b'); });
+        }
+
+        // ======================= LIBRARY =======================
+        function loadLibrary() {
+            db.collection('library_resources').orderBy('category').get().then(function (snap) {
+                var status = document.getElementById('library-status');
+                var list = document.getElementById('library-list');
+                if (snap.empty) { status.textContent = 'No resources yet.'; list.innerHTML = ''; return; }
+                status.style.display = 'none';
+                var html = '';
+                snap.forEach(function (doc) {
+                    var r = doc.data();
+                    var link = r.fileUrl || r.externalUrl || '';
+                    html += '<div class="admin-card">';
+                    html += '<h4>' + escapeHtml(r.title || '') + '</h4>';
+                    html += '<p class="meta">' + escapeHtml(r.category || '') + '</p>';
+                    if (r.description) html += '<p>' + escapeHtml(r.description) + '</p>';
+                    if (link) html += '<p class="meta"><a href="' + escapeHtml(link) + '" target="_blank" rel="noopener">' + escapeHtml(link) + '</a></p>';
+                    html += '<div class="admin-actions"><button class="btn-danger" onclick="deleteResource(\'' + doc.id + '\', ' +
+                            (r.storagePath ? '\'' + escapeHtml(r.storagePath) + '\'' : 'null') + ')">Delete</button></div>';
+                    html += '</div>';
+                });
+                list.innerHTML = html;
+            }).catch(function (err) {
+                document.getElementById('library-status').textContent = 'Error: ' + err.message;
+            });
+        }
+
+        function addResource(event) {
+            event.preventDefault();
+            var form = document.getElementById('resourceForm');
+            var d = new FormData(form);
+            var title = (d.get('title') || '').trim();
+            var category = d.get('category') || '';
+            var description = (d.get('description') || '').trim();
+            var externalUrl = (d.get('externalUrl') || '').trim();
+            var fileInput = document.getElementById('resourceFile');
+            var file = fileInput && fileInput.files.length ? fileInput.files[0] : null;
+
+            var btn = form.querySelector('button[type="submit"]');
+            if (btn) btn.disabled = true;
+            setMsg('resourceMsg', 'Saving…', 'var(--text-muted)');
+
+            function saveDoc(fileUrl, storagePath) {
+                return db.collection('library_resources').add({
+                    title: title,
+                    category: category,
+                    description: description,
+                    externalUrl: externalUrl,
+                    fileUrl: fileUrl || '',
+                    storagePath: storagePath || '',
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdBy: auth.currentUser.email
+                });
+            }
+
+            var work;
+            if (file) {
+                if (!storage) { setMsg('resourceMsg', 'Storage is not enabled.', '#b23b3b'); if (btn) btn.disabled = false; return false; }
+                var path = 'library/' + Date.now() + '_' + file.name.replace(/[^\w.\-]/g, '_');
+                var ref = storage.ref(path);
+                work = ref.put(file)
+                    .then(function () { return ref.getDownloadURL(); })
+                    .then(function (url) { return saveDoc(url, path); });
+            } else if (externalUrl) {
+                work = saveDoc('', '');
+            } else {
+                setMsg('resourceMsg', 'Provide an external link or upload a file.', '#b23b3b');
+                if (btn) btn.disabled = false;
+                return false;
+            }
+
+            work.then(function () {
+                setMsg('resourceMsg', 'Resource added.', '#2e7d32');
+                form.reset();
+                loadLibrary();
+            }).catch(function (err) {
+                setMsg('resourceMsg', 'Error: ' + err.message, '#b23b3b');
+            }).finally(function () { if (btn) btn.disabled = false; });
+
+            return false;
+        }
+
+        function deleteResource(id, storagePath) {
+            if (!window.confirm('Delete this resource?')) return;
+            var p = Promise.resolve();
+            if (storagePath && storage) {
+                p = storage.ref(storagePath).delete().catch(function () { /* ignore missing file */ });
+            }
+            p.then(function () { return db.collection('library_resources').doc(id).delete(); })
+             .then(loadLibrary);
+        }
+
+        // ======================= ACCESS GATE =======================
+        auth.onAuthStateChanged(function (user) {
+            var gate = document.getElementById('gate');
+            var root = document.getElementById('admin-root');
+            if (user && isPetAdmin(user)) {
+                gate.style.display = 'none';
+                root.style.display = 'block';
+                loadApplications();
+                loadLibrary();
+            } else {
+                root.style.display = 'none';
+                gate.style.display = 'block';
+                document.getElementById('gate-text').innerHTML = user
+                    ? 'Your account (' + escapeHtml(user.email) + ') is not an administrator.'
+                    : 'Please <a href="login.html">log in</a> as an administrator to continue.';
+            }
+        });
+    </script>
+
+</body>
+</html>

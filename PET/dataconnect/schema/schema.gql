@@ -1,0 +1,55 @@
+type User @table {
+  displayName: String!
+  email: String!
+  role: String!
+  createdAt: Timestamp!
+  photoUrl: String
+  department: String
+}
+
+type Employee @table {
+  firstName: String!
+  lastName: String!
+  employeeId: String!
+  position: String!
+  createdAt: Timestamp!
+  contactEmail: String
+  phone: String
+  startDate: Date
+  manager: User
+}
+
+type CompanyResource @table {
+  title: String!
+  url: String!
+  type: String!
+  createdAt: Timestamp!
+  description: String
+}
+
+type Announcement @table {
+  title: String!
+  content: String!
+  createdAt: Timestamp!
+  targetAudience: String
+  author: User
+}
+
+type TrainingCourse @table {
+  name: String!
+  description: String!
+  durationHours: Int!
+  createdAt: Timestamp!
+  category: String
+  dueDate: Date
+  managedBy: User
+}
+
+type EmployeeTraining @table {
+  assignedAt: Timestamp!
+  status: String!
+  completedAt: Timestamp
+  score: Int
+  employee: Employee!
+  course: TrainingCourse!
+}
