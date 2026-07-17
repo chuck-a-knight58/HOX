@@ -317,6 +317,8 @@
                     html += field('Preferred Name', d.preferred_name);
                     html += field('FetLife Name', d.fetlife_name);
                     html += field('Phone', d.phone);
+                    html += field('City', d.city);
+                    html += field('State', d.state);
                     html += field('Birthday', d.birthday);
                     html += field('Attended Before', d.attended_before);
                     html += field('Experience', d.experience);
@@ -536,7 +538,7 @@
                         // additional keys present on docs are appended after.
                         var preferred = [
                             'doc_id', 'type', 'userId', 'status',
-                            'full_name', 'preferred_name', 'email', 'phone',
+                            'full_name', 'preferred_name', 'email', 'phone', 'city', 'state',
                             'fetlife_name', 'birthday',
                             'event_name', 'event_date',
                             'roles', 'attended_before', 'experience',

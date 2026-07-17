@@ -69,6 +69,16 @@
                         style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
                 </label>
 
+                <label>City:
+                    <input type="text" name="city" required
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
+                <label>State / Province:
+                    <input type="text" name="state" required
+                        style="width: 100%; padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod; box-sizing: border-box;">
+                </label>
+
                 <label>Date of Birth (must be 21+):
                     <input type="date" name="birthday" required
                         style="padding: 8px; background: #1a1a1a; color: goldenrod; border: 1px solid goldenrod;">
@@ -198,6 +208,8 @@
                     fetlife_name: formData.get('fetlife_name') || '',
                     email: formData.get('email') || '',
                     phone: formData.get('phone') || '',
+                    city: formData.get('city') || '',
+                    state: formData.get('state') || '',
                     birthday: formData.get('birthday') || '',
                     attended_before: formData.get('attended_before') || '',
                     experience: formData.get('experience') || '',
