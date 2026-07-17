@@ -72,6 +72,16 @@
         cursor: pointer;
     }
     .btn-reject:hover { background: #8e0000; }
+    .btn-hold {
+        padding: 8px 24px;
+        background: #6a1b9a;
+        color: white;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-hold:hover { background: #4a148c; }
     .status-badge {
         display: inline-block;
         padding: 3px 10px;
@@ -82,6 +92,18 @@
     .status-pending { background: #e65100; color: white; }
     .status-approved { background: #2e7d32; color: white; }
     .status-rejected { background: #c62828; color: white; }
+    .status-hold { background: #6a1b9a; color: white; }
+    .app-search {
+        width: 100%;
+        padding: 8px 10px;
+        background: #1a1a1a;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+    }
+    .app-search::placeholder { color: #8a7a3a; }
+    #app-count { margin-bottom: 12px; font-size: 14px; }
     .tab-bar {
         display: flex;
         gap: 10px;
@@ -156,15 +178,20 @@
 
             <div class="admin-toolbar">
                 <button id="export-members-btn" class="btn-export" onclick="exportMembersCsv()">Export Members (CSV)</button>
-                <button id="export-newsletter-btn" class="btn-export" onclick="exportNewsletterCsv()">Export Newsletter Subscribers (CSV)</button>
+                <a class="btn-export" href="newsletter.html" style="text-decoration:none;">Manage Newsletter Subscribers &rarr;</a>
             </div>
 
             <div class="tab-bar">
                 <button class="tab-btn active" onclick="switchTab('pending')">Pending</button>
                 <button class="tab-btn" onclick="switchTab('approved')">Approved</button>
+                <button class="tab-btn" onclick="switchTab('hold')">Hold</button>
                 <button class="tab-btn" onclick="switchTab('rejected')">Rejected</button>
             </div>
 
+            <input type="text" id="app-search" class="app-search"
+                   placeholder="Search by email, full name, or FetLife name…" autocomplete="off"
+                   oninput="renderApplications()">
+            <div id="app-count"></div>
             <div id="applications-list"></div>
 
         </div>
@@ -180,6 +207,7 @@
             ];
 
             var currentTab = 'pending';
+            var currentApps = [];   // cached apps for the active tab (for search/sort)
 
             // ---- Auth gate ----
             auth.onAuthStateChanged(function (user) {
@@ -205,74 +233,162 @@
                         btn.classList.add('active');
                     }
                 });
+
                 loadApplications(status);
             }
 
-            // ---- Load applications ----
+            // ---- Load applications for a status, then hand off to render ----
             function loadApplications(status) {
                 var listEl = document.getElementById('applications-list');
+                var countEl = document.getElementById('app-count');
                 listEl.innerHTML = '<p style="text-align:center;">Loading...</p>';
+                countEl.textContent = '';
 
                 db.collection('applications')
                     .where('status', '==', status)
-                    .orderBy('submittedAt', 'desc')
                     .get()
                     .then(function (snapshot) {
-                        if (snapshot.empty) {
-                            listEl.innerHTML = '<p style="text-align:center;">No ' + status + ' applications.</p>';
-                            return;
-                        }
-
-                        var html = '';
+                        var apps = [];
                         snapshot.forEach(function (doc) {
                             var d = doc.data();
-                            var submitted = d.submittedAt ? d.submittedAt.toDate().toLocaleDateString() : 'N/A';
-                            var roles = Array.isArray(d.roles) ? d.roles.join(', ') : (d.roles || 'N/A');
-
-                            html += '<div class="app-card">';
-                            html += '<h3>' + escapeHtml(d.full_name || 'No Name') + ' <span class="status-badge status-' + status + '">' + status + '</span></h3>';
-                            html += field('Type', d.type);
-                            if (d.type === 'Attendance Request') {
-                                html += field('Event Name', d.event_name);
-                                html += field('Event Date', d.event_date);
-                            }
-                            html += field('Email', d.email);
-                            html += field('Preferred Name', d.preferred_name);
-                            html += field('FetLife Name', d.fetlife_name);
-                            html += field('Phone', d.phone);
-                            html += field('Birthday', d.birthday);
-                            html += field('Attended Before', d.attended_before);
-                            html += field('Experience', d.experience);
-                            html += field('Roles', roles);
-                            html += field('Community Contribution', d.community_contribution);
-                            html += field('Elegance Meaning', d.elegance_meaning);
-                            html += field('Dietary', d.dietary);
-                            html += field('Notes', d.notes);
-                            html += field('Submitted', submitted);
-
-                            if (status === 'pending') {
-                                html += '<div class="app-actions">';
-                                if (d.type === 'Attendance Request') {
-                                    html += '<button class="btn-approve" onclick="approveAttendance(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve Attendance</button>';
-                                } else {
-                                    html += '<button class="btn-approve" onclick="approveApplication(\'' + doc.id + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve &amp; Create Account</button>';
-                                }
-                                html += '<button class="btn-reject" onclick="rejectApplication(\'' + doc.id + '\')">Reject</button>';
-                                html += '</div>';
-                            }
-
-                            html += '</div>';
+                            d._id = doc.id;
+                            apps.push(d);
                         });
-
-                        listEl.innerHTML = html;
+                        // Alphabetical by full name (fall back to email).
+                        apps.sort(function (a, b) {
+                            var an = (a.full_name || a.email || '').toLowerCase();
+                            var bn = (b.full_name || b.email || '').toLowerCase();
+                            return an.localeCompare(bn);
+                        });
+                        currentApps = apps;
+                        renderApplications();
                     })
                     .catch(function (error) {
+                        currentApps = [];
                         listEl.innerHTML = '<p style="color: #ff6b6b; text-align:center;">Error loading applications: ' + escapeHtml(error.message) + '</p>';
                     });
             }
 
+            // ---- Render the cached apps, filtered by the search box ----
+            // Search matches email, full name, and FetLife name.
+            function renderApplications() {
+                var listEl = document.getElementById('applications-list');
+                var countEl = document.getElementById('app-count');
+                var status = currentTab;
+                var termEl = document.getElementById('app-search');
+                var term = (termEl && termEl.value ? termEl.value : '').trim().toLowerCase();
+
+                if (!currentApps.length) {
+                    listEl.innerHTML = '<p style="text-align:center;">No ' + status + ' applications.</p>';
+                    countEl.textContent = '';
+                    return;
+                }
+
+                var filtered = currentApps.filter(function (d) {
+                    if (!term) return true;
+                    return (d.email && d.email.toLowerCase().indexOf(term) !== -1)
+                        || (d.full_name && d.full_name.toLowerCase().indexOf(term) !== -1)
+                        || (d.fetlife_name && d.fetlife_name.toLowerCase().indexOf(term) !== -1);
+                });
+
+                var total = currentApps.length;
+                var plural = total === 1 ? '' : 's';
+
+                if (!filtered.length) {
+                    listEl.innerHTML = '<p style="text-align:center;">No ' + status + ' applications match “' + escapeHtml(term) + '”.</p>';
+                    countEl.textContent = '0 of ' + total + ' ' + status + ' application' + plural;
+                    return;
+                }
+
+                var html = '';
+                filtered.forEach(function (d) {
+                    var docId = d._id;
+                    var submitted = d.submittedAt && d.submittedAt.toDate ? d.submittedAt.toDate().toLocaleDateString() : 'N/A';
+                    var roles = Array.isArray(d.roles) ? d.roles.join(', ') : (d.roles || 'N/A');
+
+                    html += '<div class="app-card">';
+                    html += '<h3>' + escapeHtml(d.full_name || 'No Name') + ' <span class="status-badge status-' + status + '">' + status + '</span></h3>';
+                    html += field('Type', d.type);
+                    if (d.type === 'Attendance Request') {
+                        html += field('Event Name', d.event_name);
+                        html += field('Event Date', d.event_date);
+                    }
+                    html += field('Email', d.email);
+                    html += field('Preferred Name', d.preferred_name);
+                    html += field('FetLife Name', d.fetlife_name);
+                    html += field('Phone', d.phone);
+                    html += field('Birthday', d.birthday);
+                    html += field('Attended Before', d.attended_before);
+                    html += field('Experience', d.experience);
+                    html += field('Roles', roles);
+                    html += field('Community Contribution', d.community_contribution);
+                    html += field('Elegance Meaning', d.elegance_meaning);
+                    html += field('Dietary', d.dietary);
+                    html += field('Notes', d.notes);
+                    html += field('Submitted', submitted);
+
+                    html += '<div class="app-actions">';
+                    if (status === 'pending') {
+                        if (d.type === 'Attendance Request') {
+                            html += '<button class="btn-approve" onclick="approveAttendance(\'' + docId + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve Attendance</button>';
+                        } else {
+                            html += '<button class="btn-approve" onclick="approveApplication(\'' + docId + '\', \'' + escapeAttr(d.email) + '\', \'' + escapeAttr(d.full_name) + '\')">Approve &amp; Create Account</button>';
+                        }
+                        html += '<button class="btn-hold" onclick="holdApplication(\'' + docId + '\')">Hold</button>';
+                        html += '<button class="btn-reject" onclick="rejectApplication(\'' + docId + '\')">Reject</button>';
+                    } else if (status === 'hold') {
+                        html += '<button class="btn-approve" onclick="unholdApplication(\'' + docId + '\')">Move to Pending</button>';
+                        html += '<button class="btn-reject" onclick="rejectApplication(\'' + docId + '\')">Reject</button>';
+                    }
+                    html += '</div>';
+
+                    html += '</div>';
+                });
+
+                listEl.innerHTML = html;
+                countEl.textContent = term
+                    ? filtered.length + ' of ' + total + ' ' + status + ' application' + plural
+                    : total + ' ' + status + ' application' + plural;
+            }
+
             function field(label, value) {
                 return '<div class="app-field"><strong>' + escapeHtml(label) + ':</strong> ' + escapeHtml(value || 'N/A') + '</div>';
+            }
+
+            // ---- Put a pending application on hold ----
+            function holdApplication(docId) {
+                if (!confirm('Put this application on hold?')) return;
+
+                db.collection('applications').doc(docId).update({
+                    status: 'hold',
+                    heldAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    heldBy: auth.currentUser.email
+                })
+                .then(function () {
+                    showAdminMessage('Application placed on hold.', '#ffcc00');
+                    loadApplications(currentTab);
+                })
+                .catch(function (error) {
+                    showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                });
+            }
+
+            // ---- Move a held application back to pending ----
+            function unholdApplication(docId) {
+                if (!confirm('Move this application back to pending?')) return;
+
+                db.collection('applications').doc(docId).update({
+                    status: 'pending',
+                    movedToPendingAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    movedToPendingBy: auth.currentUser.email
+                })
+                .then(function () {
+                    showAdminMessage('Application moved back to pending.', 'lightgreen');
+                    loadApplications(currentTab);
+                })
+                .catch(function (error) {
+                    showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                });
             }
 
             // ---- Approve Attendance ----
@@ -451,43 +567,6 @@
 
                         downloadCsv(rows, 'members_' + todayStamp() + '.csv');
                         showAdminMessage('Exported ' + (rows.length - 1) + ' member(s).', 'lightgreen');
-                    })
-                    .catch(function (error) {
-                        showAdminMessage('Export failed: ' + error.message, '#ff6b6b');
-                    })
-                    .finally(function () {
-                        btn.disabled = false;
-                        btn.textContent = originalText;
-                    });
-            }
-
-            // ---- Export newsletter subscribers as CSV ----
-            function exportNewsletterCsv() {
-                var btn = document.getElementById('export-newsletter-btn');
-                btn.disabled = true;
-                var originalText = btn.textContent;
-                btn.textContent = 'Exporting...';
-
-                db.collection('newsletter_subscribers')
-                    .orderBy('subscribedAt', 'desc')
-                    .get()
-                    .then(function (snapshot) {
-                        if (snapshot.empty) {
-                            showAdminMessage('No newsletter subscribers to export.', '#ffcc00');
-                            return;
-                        }
-
-                        var rows = [['email', 'subscribed_at']];
-                        snapshot.forEach(function (doc) {
-                            var d = doc.data();
-                            var ts = d.subscribedAt && d.subscribedAt.toDate
-                                ? d.subscribedAt.toDate().toISOString()
-                                : '';
-                            rows.push([d.email || doc.id, ts]);
-                        });
-
-                        downloadCsv(rows, 'newsletter_subscribers_' + todayStamp() + '.csv');
-                        showAdminMessage('Exported ' + (rows.length - 1) + ' subscriber(s).', 'lightgreen');
                     })
                     .catch(function (error) {
                         showAdminMessage('Export failed: ' + error.message, '#ff6b6b');

@@ -62,12 +62,16 @@ service cloud.firestore {
     }
 
     match /newsletter_subscribers/{email} {
+      // Public (self-serve) subscribe and admin add both create with the same
+      // clean payload; the doc id is the (lowercased) email, so duplicates are
+      // impossible. Admins may remove subscribers.
       allow create: if request.resource.data.keys().hasOnly(['email', 'subscribedAt'])
                     && request.resource.data.email is string
                     && request.resource.data.email.size() > 3
                     && request.resource.data.email.size() < 200;
-      allow read:           if isAdmin();
-      allow update, delete: if false;
+      allow read:   if isAdmin();
+      allow delete: if isAdmin();
+      allow update: if false;
     }
 
     match /{document=**} {

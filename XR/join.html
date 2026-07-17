@@ -214,6 +214,9 @@
                 // Save to Firestore
                 db.collection('applications').add(data)
                     .then(function () {
+                        // Automatically add the applicant to the newsletter list
+                        // (best-effort — never blocks the application).
+                        addApplicantToNewsletter(data.email);
                         showMessage('Your membership request has been submitted! We will review it and get back to you.', 'lightgreen');
                         form.reset();
                         document.getElementById('todaysDate').valueAsDate = new Date();
@@ -230,6 +233,22 @@
                 el.textContent = msg;
                 el.style.color = color;
                 el.style.display = 'block';
+            }
+
+            // Add an applicant's email to the newsletter list. The document id
+            // is the lowercased email, so this can never create a duplicate; if
+            // they are already subscribed the write is simply ignored. Runs
+            // best-effort and never affects the membership submission result.
+            function addApplicantToNewsletter(email) {
+                var clean = (email || '').trim().toLowerCase();
+                if (!clean) return;
+                db.collection('newsletter_subscribers').doc(clean).set({
+                    email: clean,
+                    subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }).catch(function (err) {
+                    // Already subscribed, or a transient error — not fatal.
+                    console.warn('Newsletter auto-subscribe skipped:', err && err.message);
+                });
             }
 
             // Pre-fill email from logged-in user

@@ -1,0 +1,624 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+<base href="/XR/"><script>(function(){var h=location.hostname;if(h==="localhost"||h==="127.0.0.1"||location.protocol==="file:")document.querySelector("base").href=location.href.replace(/[^/]*$/,"");})();</script>
+<META charset="UTF-8">
+<META name="viewport" content="width=device-width, initial-scale=1.0">
+<META name="description" content="Xanadu Reserve Newsletter Subscriber Management">
+<meta name="robots" content="noindex, nofollow">
+<meta name="rating" content="adult">
+<link rel="canonical" href="https://www.xanadukink.com/XR/newsletter.html">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<meta name="theme-color" content="#daa520">
+<title>Newsletter — Xanadu Reserve</title>
+<link rel="stylesheet" href="style.css">
+<script type="text/javascript" src="utils.js"></script>
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script src="firebase-config.js"></script>
+
+<style>
+    .admin-container {
+        max-width: 900px;
+        margin: 20px auto;
+        padding: 0 20px;
+    }
+    #admin-message {
+        text-align: center;
+        padding: 10px;
+        display: none;
+        margin-bottom: 15px;
+    }
+    #access-denied, #loading-msg {
+        text-align: center;
+        padding: 40px 20px;
+    }
+    .admin-toolbar {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+        border-bottom: 1px solid goldenrod;
+        padding-bottom: 12px;
+    }
+    .admin-back { color: goldenrod; }
+    .toolbar-actions { display: flex; flex-wrap: wrap; gap: 10px; }
+    .btn-export {
+        padding: 8px 20px;
+        background: goldenrod;
+        color: black;
+        border: 1px solid goldenrod;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-export:hover { background: #c8960e; }
+    .btn-export:disabled { opacity: 0.6; cursor: not-allowed; }
+    /* ---- Newsletter management ---- */
+    .newsletter-add {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 18px;
+    }
+    .newsletter-add input {
+        flex: 1 1 260px;
+        padding: 8px;
+        background: #1a1a1a;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        box-sizing: border-box;
+    }
+    #newsletter-count {
+        margin-bottom: 10px;
+        font-size: 14px;
+    }
+    .subscriber-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 14px;
+        border: 1px solid #555;
+        background: #111;
+        margin-bottom: 8px;
+    }
+    .subscriber-row .email { word-break: break-all; }
+    .subscriber-row .sub-name { color: #d9bc5c; font-size: 13px; }
+    .subscriber-row .sub-date { color: #999; font-size: 12px; }
+    .btn-add {
+        padding: 8px 20px;
+        background: #2e7d32;
+        color: #fff;
+        border: none;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+    .btn-add:hover { background: #1b5e20; }
+    .btn-del {
+        padding: 6px 16px;
+        background: #c62828;
+        color: #fff;
+        border: none;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+    .btn-del:hover { background: #8e0000; }
+    .newsletter-bulk {
+        margin-bottom: 18px;
+        border: 1px solid #555;
+        padding: 12px 14px;
+        background: #0d0d0d;
+    }
+    .newsletter-bulk summary {
+        cursor: pointer;
+        color: goldenrod;
+        font-weight: bold;
+    }
+    .newsletter-bulk .hint {
+        font-size: 13px;
+        color: #bbb;
+        margin: 10px 0 8px;
+    }
+    .newsletter-bulk textarea {
+        width: 100%;
+        padding: 8px;
+        background: #1a1a1a;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        box-sizing: border-box;
+        font-family: inherit;
+        resize: vertical;
+    }
+    .newsletter-search {
+        width: 100%;
+        padding: 8px 10px;
+        background: #1a1a1a;
+        color: goldenrod;
+        border: 1px solid goldenrod;
+        box-sizing: border-box;
+        margin-bottom: 12px;
+    }
+    .newsletter-search::placeholder { color: #8a7a3a; }
+</style>
+</head>
+
+<body style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <p class="page_title">Newsletter Subscribers</p>
+
+        <div id="loading-msg">Loading...</div>
+
+        <div id="access-denied" style="display: none;">
+            <h2>Access Denied</h2>
+            <p>You must be logged in as an admin to view this page.</p>
+            <p><a href="login.html">Login</a></p>
+        </div>
+
+        <div id="admin-content" class="admin-container" style="display: none;">
+
+            <div id="admin-message"></div>
+
+            <div class="admin-toolbar">
+                <a class="admin-back" href="admin.html">&larr; Back to Admin</a>
+                <span class="toolbar-actions">
+                    <button id="copy-emails-btn" class="btn-export" onclick="copyEmails()">Copy Emails</button>
+                    <button id="export-newsletter-btn" class="btn-export" onclick="exportNewsletterCsv()">Export Subscribers (CSV)</button>
+                </span>
+            </div>
+
+            <div class="newsletter-add">
+                <input type="email" id="newsletter-email" placeholder="subscriber@email.com"
+                       autocomplete="off"
+                       onkeydown="if(event.key==='Enter'){event.preventDefault();addSubscriber();}">
+                <button class="btn-add" onclick="addSubscriber()">Add Subscriber</button>
+            </div>
+
+            <details class="newsletter-bulk">
+                <summary>Bulk add addresses</summary>
+                <p class="hint">Paste multiple email addresses separated by commas, spaces, or new lines.
+                    Duplicates and already-subscribed addresses are skipped automatically.</p>
+                <textarea id="newsletter-bulk-input" rows="6"
+                          placeholder="alice@example.com, bob@example.com&#10;carol@example.com"></textarea>
+                <div style="margin-top: 10px;">
+                    <button class="btn-add" onclick="bulkAddSubscribers()">Add All</button>
+                </div>
+            </details>
+
+            <input type="text" id="newsletter-search" class="newsletter-search"
+                   placeholder="Search by email or name…" autocomplete="off"
+                   oninput="renderNewsletterList()">
+            <div id="newsletter-count"></div>
+            <div id="newsletter-list"></div>
+
+        </div>
+
+        <script>
+            // -----------------------------------------------------------
+            // Admin emails — keep in sync with admin.html and firestore.rules
+            // -----------------------------------------------------------
+            var ADMIN_EMAILS = [
+                'chuck@xanadukink.com',
+                'chuck.a.knight@gmail.com',
+                'l.knight@me.com'
+            ];
+
+            var NEWSLETTER_EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            var newsletterSubs = [];   // cached enriched + sorted subscribers
+
+            // ---- Auth gate ----
+            auth.onAuthStateChanged(function (user) {
+                document.getElementById('loading-msg').style.display = 'none';
+
+                if (!user || ADMIN_EMAILS.indexOf(user.email) === -1) {
+                    document.getElementById('access-denied').style.display = 'block';
+                    document.getElementById('admin-content').style.display = 'none';
+                    return;
+                }
+
+                document.getElementById('admin-content').style.display = 'block';
+                loadNewsletter();
+            });
+
+            // Build an { emailLower: {full_name, fetlife_name} } lookup from the
+            // applications collection. If more than one application shares an
+            // email, the most recent non-empty value is kept for each field.
+            function fetchApplicationNameMap() {
+                return db.collection('applications').get().then(function (snap) {
+                    var map = {};
+                    snap.forEach(function (doc) {
+                        var d = doc.data();
+                        if (!d.email) return;
+                        var key = String(d.email).trim().toLowerCase();
+                        if (!key) return;
+                        var when = (d.submittedAt && d.submittedAt.toMillis) ? d.submittedAt.toMillis() : 0;
+                        var rec = map[key] || { full_name: '', fetlife_name: '', _fnWhen: -1, _flWhen: -1 };
+                        if (d.full_name && when >= rec._fnWhen) { rec.full_name = d.full_name; rec._fnWhen = when; }
+                        if (d.fetlife_name && when >= rec._flWhen) { rec.fetlife_name = d.fetlife_name; rec._flWhen = when; }
+                        map[key] = rec;
+                    });
+                    return map;
+                });
+            }
+
+            function loadNewsletter() {
+                var listEl = document.getElementById('newsletter-list');
+                var countEl = document.getElementById('newsletter-count');
+                listEl.innerHTML = '<p style="text-align:center;">Loading...</p>';
+                countEl.textContent = '';
+
+                Promise.all([
+                    db.collection('newsletter_subscribers').get(),
+                    fetchApplicationNameMap()
+                ])
+                    .then(function (results) {
+                        var snapshot = results[0];
+                        var nameMap = results[1];
+
+                        // Collect + enrich with names, then sort alphabetically by email.
+                        var subs = [];
+                        snapshot.forEach(function (doc) {
+                            var d = doc.data();
+                            var email = d.email || doc.id;
+                            var info = nameMap[String(email).toLowerCase()] || {};
+                            subs.push({
+                                id: doc.id,
+                                email: email,
+                                full_name: info.full_name || '',
+                                fetlife_name: info.fetlife_name || '',
+                                date: d.subscribedAt && d.subscribedAt.toDate
+                                    ? d.subscribedAt.toDate().toLocaleDateString()
+                                    : ''
+                            });
+                        });
+                        subs.sort(function (a, b) {
+                            return a.email.toLowerCase().localeCompare(b.email.toLowerCase());
+                        });
+
+                        newsletterSubs = subs;
+                        renderNewsletterList();   // honors the current search box value
+                    })
+                    .catch(function (error) {
+                        newsletterSubs = [];
+                        listEl.innerHTML = '<p style="color:#ff6b6b;text-align:center;">Error loading subscribers: ' +
+                            escapeHtml(error.message) + '</p>';
+                    });
+            }
+
+            // Render the cached subscriber list, filtered by the search box.
+            // Matches the term against email, full name, and FetLife name.
+            function renderNewsletterList() {
+                var listEl = document.getElementById('newsletter-list');
+                var countEl = document.getElementById('newsletter-count');
+                var termEl = document.getElementById('newsletter-search');
+                var term = (termEl && termEl.value ? termEl.value : '').trim().toLowerCase();
+
+                if (!newsletterSubs.length) {
+                    listEl.innerHTML = '<p style="text-align:center;">No subscribers yet.</p>';
+                    countEl.textContent = '';
+                    return;
+                }
+
+                var filtered = newsletterSubs.filter(function (s) {
+                    if (!term) return true;
+                    return s.email.toLowerCase().indexOf(term) !== -1
+                        || (s.full_name && s.full_name.toLowerCase().indexOf(term) !== -1)
+                        || (s.fetlife_name && s.fetlife_name.toLowerCase().indexOf(term) !== -1);
+                });
+
+                var total = newsletterSubs.length;
+                var plural = total === 1 ? '' : 's';
+
+                if (!filtered.length) {
+                    listEl.innerHTML = '<p style="text-align:center;">No subscribers match “' +
+                        escapeHtml(term) + '”.</p>';
+                    countEl.textContent = '0 of ' + total + ' subscriber' + plural;
+                    return;
+                }
+
+                var html = '';
+                filtered.forEach(function (s) {
+                    var nameBits = [];
+                    if (s.full_name) nameBits.push(escapeHtml(s.full_name));
+                    if (s.fetlife_name) nameBits.push('FetLife: ' + escapeHtml(s.fetlife_name));
+                    var nameStr = nameBits.length
+                        ? ' <span class="sub-name">— ' + nameBits.join(' · ') + '</span>'
+                        : '';
+                    html += '<div class="subscriber-row">';
+                    html += '<span class="email">' + escapeHtml(s.email) + nameStr +
+                            (s.date ? ' <span class="sub-date">(' + escapeHtml(s.date) + ')</span>' : '') +
+                            '</span>';
+                    html += '<button class="btn-del" onclick="deleteSubscriber(\'' +
+                            escapeAttr(s.id) + '\')">Delete</button>';
+                    html += '</div>';
+                });
+                listEl.innerHTML = html;
+                countEl.textContent = term
+                    ? filtered.length + ' of ' + total + ' subscriber' + plural
+                    : total + ' subscriber' + plural;
+            }
+
+            function addSubscriber() {
+                var input = document.getElementById('newsletter-email');
+                var email = (input.value || '').trim().toLowerCase();
+
+                if (!NEWSLETTER_EMAIL_RE.test(email)) {
+                    showAdminMessage('Please enter a valid email address.', '#ff6b6b');
+                    return;
+                }
+
+                // Doc id == email guarantees no duplicates; check first so we can
+                // tell the admin it already exists instead of silently no-op'ing.
+                var ref = db.collection('newsletter_subscribers').doc(email);
+                ref.get()
+                    .then(function (doc) {
+                        if (doc.exists) {
+                            showAdminMessage(email + ' is already subscribed.', '#ffcc00');
+                            return null;
+                        }
+                        return ref.set({
+                            email: email,
+                            subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+                        }).then(function () {
+                            showAdminMessage('Added ' + email + '.', 'lightgreen');
+                            input.value = '';
+                            loadNewsletter();
+                        });
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                    });
+            }
+
+            function bulkAddSubscribers() {
+                var input = document.getElementById('newsletter-bulk-input');
+
+                // Split on any run of commas, semicolons, or whitespace (incl. newlines).
+                var tokens = (input.value || '').split(/[\s,;]+/);
+                var seen = {};
+                var valid = [];
+                var invalidCount = 0;
+                tokens.forEach(function (t) {
+                    var e = t.trim().toLowerCase();
+                    if (!e) return;
+                    if (!NEWSLETTER_EMAIL_RE.test(e)) { invalidCount++; return; }
+                    if (seen[e]) return;           // de-dupe within the pasted input
+                    seen[e] = true;
+                    valid.push(e);
+                });
+
+                if (valid.length === 0) {
+                    showAdminMessage('No valid email addresses found' +
+                        (invalidCount ? ' (' + invalidCount + ' invalid).' : '.'), '#ff6b6b');
+                    return;
+                }
+
+                showAdminMessage('Processing ' + valid.length + ' address(es)…', '#ffcc00');
+
+                // Fetch existing ids once so we skip already-subscribed addresses
+                // (doc id == email, so this also guarantees no duplicates).
+                db.collection('newsletter_subscribers').get()
+                    .then(function (snapshot) {
+                        var existing = {};
+                        snapshot.forEach(function (doc) { existing[doc.id] = true; });
+
+                        var toAdd = valid.filter(function (e) { return !existing[e]; });
+                        var skipped = valid.length - toAdd.length;
+
+                        if (toAdd.length === 0) {
+                            showAdminMessage('All ' + valid.length + ' address(es) are already subscribed.', '#ffcc00');
+                            return;
+                        }
+
+                        // Commit in batches (Firestore caps a batch at 500 writes).
+                        var chunks = [];
+                        for (var i = 0; i < toAdd.length; i += 450) {
+                            chunks.push(toAdd.slice(i, i + 450));
+                        }
+                        var chain = Promise.resolve();
+                        chunks.forEach(function (chunk) {
+                            chain = chain.then(function () {
+                                var batch = db.batch();
+                                chunk.forEach(function (e) {
+                                    batch.set(db.collection('newsletter_subscribers').doc(e), {
+                                        email: e,
+                                        subscribedAt: firebase.firestore.FieldValue.serverTimestamp()
+                                    });
+                                });
+                                return batch.commit();
+                            });
+                        });
+
+                        return chain.then(function () {
+                            var msg = 'Added ' + toAdd.length + ' subscriber(s).';
+                            if (skipped) msg += ' Skipped ' + skipped + ' already-subscribed.';
+                            if (invalidCount) msg += ' Ignored ' + invalidCount + ' invalid.';
+                            showAdminMessage(msg, 'lightgreen');
+                            input.value = '';
+                            loadNewsletter();
+                        });
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Bulk add failed: ' + error.message, '#ff6b6b');
+                    });
+            }
+
+            function deleteSubscriber(docId) {
+                if (!confirm('Remove ' + docId + ' from the newsletter list?')) return;
+
+                db.collection('newsletter_subscribers').doc(docId).delete()
+                    .then(function () {
+                        showAdminMessage('Removed ' + docId + '.', 'lightgreen');
+                        loadNewsletter();
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Error: ' + error.message, '#ff6b6b');
+                    });
+            }
+
+            // ---- Copy all subscriber emails as a comma-separated list ----
+            function copyEmails() {
+                if (!newsletterSubs.length) {
+                    showAdminMessage('No subscribers to copy.', '#ffcc00');
+                    return;
+                }
+                var text = newsletterSubs.map(function (s) { return s.email; }).join(', ');
+                var count = newsletterSubs.length;
+                function done() {
+                    showAdminMessage('Copied ' + count + ' email address(es) to the clipboard.', 'lightgreen');
+                }
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text)
+                        .then(done)
+                        .catch(function () { fallbackCopy(text, done); });
+                } else {
+                    fallbackCopy(text, done);
+                }
+            }
+
+            function fallbackCopy(text, onSuccess) {
+                var ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'fixed';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    if (document.execCommand('copy')) { onSuccess(); }
+                    else { showAdminMessage('Could not copy automatically. Please copy manually.', '#ff6b6b'); }
+                } catch (e) {
+                    showAdminMessage('Could not copy automatically. Please copy manually.', '#ff6b6b');
+                }
+                document.body.removeChild(ta);
+            }
+
+            // ---- Export newsletter subscribers as CSV (with names) ----
+            function exportNewsletterCsv() {
+                var btn = document.getElementById('export-newsletter-btn');
+                btn.disabled = true;
+                var originalText = btn.textContent;
+                btn.textContent = 'Exporting...';
+
+                Promise.all([
+                    db.collection('newsletter_subscribers').get(),
+                    fetchApplicationNameMap()
+                ])
+                    .then(function (results) {
+                        var snapshot = results[0];
+                        var nameMap = results[1];
+
+                        if (snapshot.empty) {
+                            showAdminMessage('No newsletter subscribers to export.', '#ffcc00');
+                            return;
+                        }
+
+                        // Enrich with names, then sort alphabetically by email.
+                        var subs = [];
+                        snapshot.forEach(function (doc) {
+                            var d = doc.data();
+                            var email = d.email || doc.id;
+                            var info = nameMap[String(email).toLowerCase()] || {};
+                            subs.push({
+                                email: email,
+                                full_name: info.full_name || '',
+                                fetlife_name: info.fetlife_name || '',
+                                subscribed_at: d.subscribedAt && d.subscribedAt.toDate
+                                    ? d.subscribedAt.toDate().toISOString()
+                                    : ''
+                            });
+                        });
+                        subs.sort(function (a, b) {
+                            return a.email.toLowerCase().localeCompare(b.email.toLowerCase());
+                        });
+
+                        var rows = [['email', 'full_name', 'fetlife_name', 'subscribed_at']];
+                        subs.forEach(function (s) {
+                            rows.push([s.email, s.full_name, s.fetlife_name, s.subscribed_at]);
+                        });
+
+                        downloadCsv(rows, 'newsletter_subscribers_' + todayStamp() + '.csv');
+                        showAdminMessage('Exported ' + (rows.length - 1) + ' subscriber(s).', 'lightgreen');
+                    })
+                    .catch(function (error) {
+                        showAdminMessage('Export failed: ' + error.message, '#ff6b6b');
+                    })
+                    .finally(function () {
+                        btn.disabled = false;
+                        btn.textContent = originalText;
+                    });
+            }
+
+            // ---- Shared helpers ----
+            function downloadCsv(rows, filename) {
+                var csv = rows.map(function (row) {
+                    return row.map(csvEscape).join(',');
+                }).join('\r\n');
+                // Prepend UTF-8 BOM so Excel opens it correctly.
+                var blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            function csvEscape(value) {
+                if (value == null) return '';
+                var s = String(value);
+                if (/[",\r\n]/.test(s)) {
+                    s = '"' + s.replace(/"/g, '""') + '"';
+                }
+                return s;
+            }
+
+            function todayStamp() {
+                var d = new Date();
+                var pad = function (n) { return n < 10 ? '0' + n : '' + n; };
+                return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+            }
+
+            function escapeHtml(str) {
+                if (str == null) return '';
+                return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            }
+
+            function escapeAttr(str) {
+                if (str == null) return '';
+                return String(str).replace(/'/g, "\\'").replace(/"/g, '\\"');
+            }
+
+            function showAdminMessage(msg, color) {
+                var el = document.getElementById('admin-message');
+                el.textContent = msg;
+                el.style.color = color;
+                el.style.display = 'block';
+                setTimeout(function () { el.style.display = 'none'; }, 15000);
+            }
+        </script>
+
+        <div w3-include-html="footer.html"></div>
+        <script>
+            includeHTML();
+            initAuthUI();
+        </script>
+
+    </div>
+
+</body>
+</html>
