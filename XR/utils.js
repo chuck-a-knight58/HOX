@@ -24,9 +24,47 @@ function includeHTML() {
       return;
     }
   }
-  /* All includes processed — highlight the current nav link. */
+  /* All includes processed — highlight the current nav link and
+     populate the footer's "last updated" timestamp. */
   setActiveNav();
+  renderLastUpdated();
 };
+
+// ---- Last updated timestamp ----
+// Shows the date/time of the most recent commit to the site's GitHub repo,
+// so it reflects a change to ANY page. Cached per session to limit API calls;
+// falls back to the current page's file-modified date if the API is unreachable.
+function renderLastUpdated() {
+  var el = document.getElementById('last-updated');
+  if (!el) return;
+
+  function show(d) {
+    if (isNaN(d.getTime())) return;
+    el.textContent = 'Last updated: ' + d.toLocaleString(undefined, {
+      year: 'numeric', month: 'long', day: 'numeric',
+      hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+    });
+  }
+  function fallback() { show(new Date(document.lastModified)); }
+
+  // Reuse a value already fetched this session to avoid extra API calls.
+  try {
+    var cached = sessionStorage.getItem('xr_last_commit');
+    if (cached) { show(new Date(cached)); return; }
+  } catch (e) { /* sessionStorage unavailable — ignore */ }
+
+  if (!window.fetch) { fallback(); return; }
+  fetch('https://api.github.com/repos/chuck-a-knight58/HOX/commits?per_page=1', { cache: 'no-store' })
+    .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+    .then(function (data) {
+      var iso = data && data[0] && data[0].commit && data[0].commit.committer &&
+                data[0].commit.committer.date;
+      if (!iso) throw new Error('no commit date');
+      try { sessionStorage.setItem('xr_last_commit', iso); } catch (e) {}
+      show(new Date(iso));
+    })
+    .catch(fallback);
+}
 
 // ---- Active nav highlighter ----
 // Adds .active class to the <a> in .navbar whose href matches the current page.
