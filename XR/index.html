@@ -335,9 +335,42 @@
 
         <div w3-include-html="footer.html"></div>
 
+        <p id="last-updated" style="text-align:center; font-size:0.8em; color:#8a7a3a; padding:10px 0 18px; margin:0;"></p>
+
         <script>
             includeHTML();
             initAuthUI();
+
+            // ---- Last updated timestamp ----
+            // Uses the date/time of the most recent commit to the site's GitHub
+            // repo, so it reflects a change to ANY page. Falls back to this
+            // page's file-modified date if the API is unreachable.
+            (function () {
+                var el = document.getElementById('last-updated');
+                if (!el) return;
+
+                function show(d) {
+                    el.textContent = 'Last updated: ' + d.toLocaleString(undefined, {
+                        year: 'numeric', month: 'long', day: 'numeric',
+                        hour: 'numeric', minute: '2-digit', timeZoneName: 'short'
+                    });
+                }
+                function fallback() {
+                    var d = new Date(document.lastModified);
+                    if (!isNaN(d.getTime())) show(d);
+                }
+
+                if (!window.fetch) { fallback(); return; }
+                fetch('https://api.github.com/repos/chuck-a-knight58/HOX/commits?per_page=1', { cache: 'no-store' })
+                    .then(function (res) { if (!res.ok) throw new Error('HTTP ' + res.status); return res.json(); })
+                    .then(function (data) {
+                        var iso = data && data[0] && data[0].commit && data[0].commit.committer &&
+                                  data[0].commit.committer.date;
+                        if (!iso) throw new Error('no commit date');
+                        show(new Date(iso));
+                    })
+                    .catch(fallback);
+            })();
 
             // ---- Render the next upcoming Xanadu Reserve event ----
             (function () {
