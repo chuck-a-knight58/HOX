@@ -129,36 +129,14 @@ const EVENTS_DATA = [
         authRequired: true
     },
     {
-        id: 'EscapeToXanadu062726',
+        id: 'EscapeToXanadu082926',
         series: 'Escape to Xanadu',
-        name: 'Midsummer Night',
+        name: 'We\'re Baaaack',
         subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-06-27',
+        date: '2026-08-29',
         time: '6:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu071126',
-        series: 'Escape to Xanadu',
-        name: 'Summer Gathering',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-07-11',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu082226',
-        series: 'Escape to Xanadu',
-        name: 'Late Summer Escape',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-08-22',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
+        image: 'EscapeToXanadu082926.png',
         authRequired: true
     },
     {
@@ -169,40 +147,7 @@ const EVENTS_DATA = [
         date: '2026-09-26',
         time: '6:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu101726',
-        series: 'Escape to Xanadu',
-        name: 'Harvest Revelry',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-10-17',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu112126',
-        series: 'Escape to Xanadu',
-        name: 'Winter Welcome',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-11-21',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu121226',
-        series: 'Xanadu Christmas',
-        name: 'Holiday Gala',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-12-12',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
+        image: 'EscapeToXanadu092626.png',
         authRequired: true
     },
     {
@@ -236,7 +181,7 @@ const EVENTS_DATA = [
         series: 'Power Exchange Together',
         name: 'Monthly Gathering',
         subtitle: '',
-        date: '2026-09-12',
+        date: '2026-08-29',
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
