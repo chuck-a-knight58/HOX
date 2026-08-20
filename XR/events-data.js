@@ -401,7 +401,7 @@ const EVENTS_DATA = [
         date: '2026-12-31',
         time: '7:00pm - 1:00am Est.',
         audience: 'Xanadu Reserve Members Only',
-        image: 'NYE2026.jpg',
+        image: 'NYE2026.png',
         detailPage: '',
         ticketUrl: '',
         authRequired: true
