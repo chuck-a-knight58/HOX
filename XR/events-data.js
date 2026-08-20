@@ -29,6 +29,30 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
+        id: 'EscapeToXanadu042526',
+        series: 'Escape to Xanadu',
+        name: 'Toga Party',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-04-25',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'TogaParty.png',
+        authRequired: true
+    },
+    {
+        id: 'PET050926',
+        series: 'Power Exchange Together',
+        name: 'Monthly Gathering',
+        subtitle: '',
+        date: '2026-05-09',
+        time: '2:00pm - 4:00pm',
+        audience: 'Open to all',
+        image: 'PET.png',
+        detailPage: 'PET.html',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
         id: 'RoyalAfternoonTea',
         series: 'Xanadu Reserve',
         name: 'Royal Afternoon Tea',
@@ -39,6 +63,30 @@ const EVENTS_DATA = [
         image: 'RoyalAfternoonTea1.png',
         detailPage: 'RoyalAfternoonTea.html',
         ticketUrl: 'https://forbiddentickets.com/events/xanadu-kink/7ed08c0096',
+        authRequired: true
+    },
+    {
+        id: 'EscapeToXanadu053026',
+        series: 'Escape to Xanadu',
+        name: 'Spring Soirée',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-05-30',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu.jpeg',
+        authRequired: true
+    },
+    {
+        id: 'PET060626',
+        series: 'Power Exchange Together',
+        name: 'Monthly Gathering',
+        subtitle: '',
+        date: '2026-06-06',
+        time: '2:00pm - 4:00pm',
+        audience: 'Open to all',
+        image: 'PET.png',
+        detailPage: 'PET.html',
+        ticketUrl: '',
         authRequired: false
     },
     {
@@ -81,6 +129,107 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
+        id: 'XanaduKinkAcademy080826',
+        series: 'Xanadu Kink Academy',
+        name: 'Present at Power Exchange South Jersey',
+        subtitle: 'Art of the Scene',
+        date: '2026-08-8',
+        time: '4:00pm - 6:00pm',
+        audience: 'Xanadu Power Exchange Together Members',
+        image: 'XKA.png',
+        authRequired: false
+    },
+    {
+        id: 'EscapeToXanadu082226',
+        series: 'Escape to Xanadu',
+        name: 'We are Back from Summer',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-08-22',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu082226.png',
+        authRequired: true
+    },
+    {
+        id: 'PET090829',
+        series: 'Power Exchange Together',
+        name: 'Monthly Gathering',
+        subtitle: '',
+        date: '2026-08-29',
+        time: '2:00pm - 4:00pm',
+        audience: 'Meet us there',
+        image: 'PET.png',
+        detailPage: 'PET.html',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'MSC090326',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-03',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
+        id: 'MSC090426',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-04',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
+        id: 'MSC090526',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-05',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
+        id: 'MSC090626',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-06',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
+        id: 'MSC090726',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-07',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
+        id: 'MSC090826',
+        series: 'Xanadu Kink',
+        name: '@ MsC',
+        subtitle: '',
+        date: '2026-09-08',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MSC.png',
+        authRequired: false
+    },
+    {
         id: 'KinkyHPDinner',
         series: 'Xanadu Reserve',
         name: 'A Velvet Harvest Soirée',
@@ -92,6 +241,72 @@ const EVENTS_DATA = [
         detailPage: 'KinkyHPDinner.html',
         ticketUrl: 'https://forbiddentickets.com/events/xanadu-kink/2722b2f8f9',
         authRequired: true
+    },
+    {
+        id: 'EscapeToXanadu092626',
+        series: 'Escape to Xanadu',
+        name: 'Autumn Equinox',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-09-26',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu092626.png',
+        authRequired: true
+    },
+    {
+        id: 'DOMCON093026',
+        series: 'Xanadu Kink',
+        name: '@ DomCon',
+        subtitle: '',
+        date: '2026-09-30',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'DOMCON.png',
+        authRequired: false
+    },
+    {
+        id: 'DOMCON100126',
+        series: 'Xanadu Kink',
+        name: '@ DomCon',
+        subtitle: '',
+        date: '2026-10-01',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'DOMCON.png',
+        authRequired: false
+    },
+    {
+        id: 'DOMCON100226',
+        series: 'Xanadu Kink',
+        name: '@ DomCon',
+        subtitle: '',
+        date: '2026-10-02',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'DOMCON.png',
+        authRequired: false
+    },
+    {
+        id: 'DOMCON100326',
+        series: 'Xanadu Kink',
+        name: '@ DomCon',
+        subtitle: '',
+        date: '2026-10-03',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'DOMCON.png',
+        authRequired: false
+    },
+    {
+        id: 'DOMCON100426',
+        series: 'Xanadu Kink',
+        name: '@ DomCon',
+        subtitle: '',
+        date: '2026-10-04',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'DOMCON.png',
+        authRequired: false
     },
     {
         id: 'CocktailParty00926',
@@ -107,100 +322,28 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu042526',
-        series: 'Escape to Xanadu',
-        name: 'Toga Party',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-04-25',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'TogaParty.png',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu053026',
-        series: 'Escape to Xanadu',
-        name: 'Spring Soirée',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-05-30',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu082926',
-        series: 'Escape to Xanadu',
-        name: 'We\'re Baaaack',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-08-29',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu082926.png',
-        authRequired: true
-    },
-    {
-        id: 'EscapeToXanadu092626',
-        series: 'Escape to Xanadu',
-        name: 'Autumn Equinox',
-        subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-09-26',
-        time: '6:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu092626.png',
-        authRequired: true
-    },
-    {
-        id: 'PET053026',
+        id: 'PET101026',
         series: 'Power Exchange Together',
         name: 'Monthly Gathering',
         subtitle: '',
-        date: '2026-05-09',
+        date: '2026-10-10',
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
         detailPage: 'PET.html',
         ticketUrl: '',
-        authRequired: true
+        authRequired: false
     },
     {
-        id: 'PET060626',
-        series: 'Power Exchange Together',
-        name: 'Monthly Gathering',
-        subtitle: '',
-        date: '2026-06-06',
+        id: 'XanaduKinkAcademy102226',
+        series: 'Xanadu Kink Academy',
+        name: 'CLUED in the UK',
+        subtitle: 'Kinky Princess',
+        date: '2026-10-22',
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
-        image: 'PET.png',
-        detailPage: 'PET.html',
-        ticketUrl: '',
-        authRequired: true
-    },
-    {
-        id: 'PET090926',
-        series: 'Power Exchange Together',
-        name: 'Monthly Gathering',
-        subtitle: '',
-        date: '2026-08-29',
-        time: '2:00pm - 4:00pm',
-        audience: 'Open to all',
-        image: 'PET.png',
-        detailPage: 'PET.html',
-        ticketUrl: '',
-        authRequired: true
-    },
-    {
-        id: 'PET100326',
-        series: 'Power Exchange Together',
-        name: 'Monthly Gathering',
-        subtitle: '',
-        date: '2026-10-03',
-        time: '2:00pm - 4:00pm',
-        audience: 'Open to all',
-        image: 'PET.png',
-        detailPage: 'PET.html',
-        ticketUrl: '',
-        authRequired: true
+        image: 'XKA.png',
+        authRequired: false
     },
     {
         id: 'PET110726',
@@ -213,20 +356,63 @@ const EVENTS_DATA = [
         image: 'PET.png',
         detailPage: 'PET.html',
         ticketUrl: '',
-        authRequired: true
+        authRequired: false
     },
     {
         id: 'PET121226',
         series: 'Power Exchange Together',
-        name: 'Monthly Gathering',
+        name: 'Christmas Party',
         subtitle: '',
         date: '2026-12-12',
-        time: '2:00pm - 4:00pm',
+        time: '7:00pm - 10:00pm',
         audience: 'Open to all',
         image: 'PET.png',
         detailPage: 'PET.html',
         ticketUrl: '',
-        authRequired: true
+        authRequired: false
+    },
+    {
+        id: 'FORBIDDEN011527',
+        series: 'Xanadu Kink',
+        name: '@ Forbidden Frostland',
+        subtitle: '',
+        date: '2027-01-15',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'ForbiddenFrostland.png',
+        authRequired: false
+    },
+    {
+        id: 'FORBIDDEN011627',
+        series: 'Xanadu Kink',
+        name: '@ Forbidden Frostland',
+        subtitle: '',
+        date: '2027-01-16',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'ForbiddenFrostland.png',
+        authRequired: false
+    },
+    {
+        id: 'FORBIDDEN011727',
+        series: 'Xanadu Kink',
+        name: '@ Forbidden Frostland',
+        subtitle: '',
+        date: '2027-01-17',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'ForbiddenFrostland.png',
+        authRequired: false
+    },
+    {
+        id: 'FORBIDDEN011827',
+        series: 'Xanadu Kink',
+        name: '@ Forbidden Frostland',
+        subtitle: '',
+        date: '2027-01-18',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'ForbiddenFrostland.png',
+        authRequired: false
     }
-
 ];
