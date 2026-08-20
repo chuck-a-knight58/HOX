@@ -335,6 +335,17 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
+        id: 'EscapeToXanadu101726',
+        series: 'Escape to Xanadu',
+        name: 'Monster Mash Party',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-10-17',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu101726.png',
+        authRequired: true
+    },
+    {
         id: 'XanaduKinkAcademy102226',
         series: 'Xanadu Kink Academy',
         name: 'CLUED in the UK',
@@ -370,6 +381,30 @@ const EVENTS_DATA = [
         detailPage: 'PET.html',
         ticketUrl: '',
         authRequired: false
+    },
+    {
+        id: 'EscapeToXanadu122126',
+        series: 'Escape to Xanadu',
+        name: 'SnowCones Christmas Dash',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-12-21',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu122126.png',
+        authRequired: true
+    },
+    {
+        id: 'NYE2026',
+        series: 'Xanadu Reserve',
+        name: 'New Years Eve Party',
+        subtitle: 'Move Info to Follow',
+        date: '2026-12-31',
+        time: '7:00pm - 1:00am Est.',
+        audience: 'Xanadu Reserve Members Only',
+        image: 'NYE2026.jpg',
+        detailPage: '',
+        ticketUrl: '',
+        authRequired: true
     },
     {
         id: 'FORBIDDEN011527',
