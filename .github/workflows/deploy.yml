@@ -3,7 +3,15 @@ name: Deploy Website to cPanel
 on:
   push:
     branches:
-      - main  # Change to master if your default branch is master
+      - main
+  workflow_dispatch:  # lets you trigger a deploy by hand from the Actions tab
+
+# Never let two deploys run at once: the FTP action tracks what it has already
+# uploaded in .ftp-deploy-sync-state.json on the server, and overlapping runs
+# can corrupt that file and force a full 600MB+ resync.
+concurrency:
+  group: ftp-deploy
+  cancel-in-progress: false
 
 jobs:
   web-deploy:
@@ -12,12 +20,12 @@ jobs:
     steps:
     - name: Get latest code
       uses: actions/checkout@v4
-    
+
     - name: Sync files to cPanel
       uses: SamKirkland/FTP-Deploy-Action@v4.3.5
       with:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: /  # Replaces files inside your cPanel FTP root directory
-
+        server-dir: /  # this FTP account's root IS public_html, so "/" is correct
+        timeout: 120000  # 2 min per operation; the gallery has 30MB+ image files
