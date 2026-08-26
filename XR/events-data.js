@@ -370,6 +370,54 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
+        id: 'NN120326',
+        series: 'Xanadu Kink',
+        name: '@ Naughty Noel',
+        subtitle: '',
+        date: '2026-12-03',
+        time: 'All Day',
+        audience: 'Meet us there',
+        image: 'NN.jpg',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'NN120426',
+        series: 'Xanadu Kink',
+        name: '@ Naughty Noel',
+        subtitle: '',
+        date: '2026-12-04',
+        time: 'All Day',
+        audience: 'Meet us there',
+        image: 'NN.jpg',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'NN120526',
+        series: 'Xanadu Kink',
+        name: '@ Naughty Noel',
+        subtitle: '',
+        date: '2026-12-05',
+        time: 'All Day',
+        audience: 'Meet us there',
+        image: 'NN.jpg',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'NN120626',
+        series: 'Xanadu Kink',
+        name: '@ Naughty Noel',
+        subtitle: '',
+        date: '2026-12-06',
+        time: 'All Day',
+        audience: 'Meet us there',
+        image: 'NN.jpg',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
         id: 'PET121226',
         series: 'Power Exchange Together',
         name: 'Christmas Party',
