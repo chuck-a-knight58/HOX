@@ -370,6 +370,17 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
+        id: 'EscapeToXanadu112126',
+        series: 'Escape to Xanadu',
+        name: 'Play Party',
+        subtitle: 'Sponsorship Required - Please contact us',
+        date: '2026-11-21',
+        time: '6:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu090926.png',
+        authRequired: true
+    },
+    {
         id: 'NN120326',
         series: 'Xanadu Kink',
         name: '@ Naughty Noel',
@@ -453,6 +464,19 @@ const EVENTS_DATA = [
         detailPage: '',
         ticketUrl: '',
         authRequired: true
+    },
+    {
+        id: 'PET010227',
+        series: 'Power Exchange Together',
+        name: 'Monthly Gathering',
+        subtitle: '',
+        date: '2027-01-02',
+        time: '2:00pm - 4:00pm',
+        audience: 'Open to all',
+        image: 'PET.png',
+        detailPage: 'PET.html',
+        ticketUrl: '',
+        authRequired: false
     },
     {
         id: 'FORBIDDEN011527',
