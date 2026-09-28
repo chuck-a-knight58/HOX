@@ -374,11 +374,47 @@ const EVENTS_DATA = [
         series: 'Escape to Xanadu',
         name: 'Play Party',
         subtitle: 'Sponsorship Required - Please contact us',
-        date: '2026-11-21',
+        date: '2026-11-14',
         time: '6:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu090926.png',
         authRequired: true
+    },
+    {
+        id: 'MAM112026',
+        series: 'Xanadu Kink',
+        name: '@ Mid-Atlantic Mischief',
+        subtitle: '',
+        date: '2026-11-20',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MAM.png',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'MAM112126',
+        series: 'Xanadu Kink',
+        name: '@ Mid-Atlantic Mischief',
+        subtitle: '',
+        date: '2026-11-21',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MAM.png',
+        ticketUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'MAM112226',
+        series: 'Xanadu Kink',
+        name: '@ Mid-Atlantic Mischief',
+        subtitle: '',
+        date: '2026-11-22',
+        time: '12:00am - 11:59pm',
+        audience: 'Meet us there',
+        image: 'MAM.png',
+        ticketUrl: '',
+        authRequired: false
     },
     {
         id: 'NN120326',
