@@ -34,7 +34,7 @@ const EVENTS_DATA = [
         name: 'Toga Party',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-04-25',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'TogaParty.png',
         authRequired: true
@@ -71,7 +71,7 @@ const EVENTS_DATA = [
         name: 'Spring Soirée',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-05-30',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.jpeg',
         authRequired: true
@@ -145,7 +145,7 @@ const EVENTS_DATA = [
         name: 'We are Back from Summer',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-08-22',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu082226.png',
         authRequired: true
@@ -248,7 +248,7 @@ const EVENTS_DATA = [
         name: 'Autumn Equinox',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-09-26',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu092626.png',
         authRequired: true
@@ -340,7 +340,7 @@ const EVENTS_DATA = [
         name: 'Monster Mash Party',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-10-17',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu101726.png',
         authRequired: true
@@ -370,14 +370,14 @@ const EVENTS_DATA = [
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu112126',
+        id: 'EscapeToXanadu111426',
         series: 'Escape to Xanadu',
         name: 'Play Party',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-11-14',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu090926.png',
+        image: 'EscapeToXanadu111426.jpg',
         authRequired: true
     },
     {
@@ -483,9 +483,9 @@ const EVENTS_DATA = [
         name: 'SnowCones Christmas Dash',
         subtitle: 'Sponsorship Required - Please contact us',
         date: '2026-12-21',
-        time: '6:00pm - 1:00am',
+        time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu122126.png',
+        image: 'EscapeToXanadu122126.jpg',
         authRequired: true
     },
     {
