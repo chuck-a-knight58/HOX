@@ -509,6 +509,18 @@
   document.getElementById('page-title').textContent = CONFIG.title;
   document.getElementById('page-subtitle').textContent = CONFIG.subtitle;
   document.getElementById('page-generated').textContent = CONFIG.generated;
+  // Prefer the data file's own date (the server's Last-Modified header);
+  // CONFIG.generated stays when that isn't available, e.g. opened from file://.
+  if (window.fetch && location.protocol !== 'file:') {
+    fetch('community_calendar.js', { method: 'HEAD', cache: 'no-cache' }).then(function (r) {
+      var lm = r.ok && r.headers.get('Last-Modified');
+      var d = lm && new Date(lm);
+      if (!d || isNaN(d)) return;
+      var date = d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+      var time = d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+      document.getElementById('page-generated').textContent = date + ' at ' + time;
+    }).catch(function () {});
+  }
   var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
   var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
   var weekdays = ['S','M','T','W','T','F','S'];
