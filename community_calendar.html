@@ -388,13 +388,26 @@
   .dv-hint { text-align: center; color: var(--gold-soft); font-size: 0.8em; margin-bottom: 14px; }
   .card-time { font-size: 0.8em; font-weight: bold; color: var(--gold); margin-bottom: 2px; }
 
-  footer {
+  .generated-note {
     text-align: center;
     color: var(--gold-soft);
     font-size: 0.8em;
-    border-top: 1px solid #333;
-    padding: 16px;
+    padding: 0 16px;
   }
+  /* site footer, same as footer.html / style.css on events.html */
+  footer {
+    background-color: #000;
+    color: goldenrod;
+    border-top: 3px solid goldenrod;
+    width: 100%;
+    margin-top: 30px;
+  }
+  footer .row { display: flex; flex-direction: row; flex-wrap: wrap; gap: 20px; padding: 10px; }
+  footer a, footer a:visited { color: goldenrod; }
+  footer a:hover { color: #B0E0FF; }
+  .left_footer_column { flex: 1; padding: 5px; text-align: left; }
+  .middle_footer_column { flex: 1; padding: 5px; text-align: center; }
+  .right_footer_column { flex: 1; padding: 5px; text-align: right; }
   [hidden] { display: none !important; }
   @media (max-width: 640px) {
     h1 { font-size: 1.7em; }
@@ -407,6 +420,8 @@
     .wv-grid { grid-template-columns: 1fr; }
     .wv-col { min-height: 0; }
     .wv-col.out { display: none; }
+    footer .row { flex-direction: column; }
+    .left_footer_column, .middle_footer_column, .right_footer_column { text-align: center; }
   }
 </style>
 </head>
@@ -460,9 +475,25 @@
 <p id="empty" class="empty" hidden>No events match.</p>
 <div id="event-popup" class="event-popup" role="tooltip"></div>
 
-<footer>
+<p class="generated-note">
   Generated <span id="page-generated"></span> by FetLifeTools from FetLife's event search.
   Event details may have changed since — follow an event's link for the current listing.
+</p>
+
+<footer>
+    <div class="row">
+        <div class="left_footer_column">
+            <a href="index.html">Home</a> | <a href="ContactUs.html">Contact Us</a>
+        </div>
+        <div class="middle_footer_column">
+            © 2026 XanaduKink.com
+        </div>
+        <div class="right_footer_column">
+            <a href="https://www.facebook.com/knight.of.xanadu.n.thegirl.star"><img src="assets/facebook.png" alt="Facebook" width="32" height="32" /></a>
+            <a href="https://fetlife.com/Xanadu_Kink"><img src="assets/fetlife.png" alt="Fetlife" width="32" height="32" /></a>
+            <a href="https://www.xanadukink.com/wordpress"><img src="assets/wordpress.png" alt="WordPress" width="32" height="32" /></a>
+        </div>
+    </div>
 </footer>
 
 <script src="community_calendar.js"></script>

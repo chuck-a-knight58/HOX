@@ -2,31 +2,30 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
 
 :root {
-  /* black-tie: near-black surfaces, ivory ink, gold accents */
-  --color-ocean-deep: #ECE4CF;   /* warm ivory — body text */
-  --color-ocean: #C9A227;        /* gold */
-  --color-ocean-mid: #D9BC5C;    /* gold link */
-  --color-ocean-soft: #0A1330;   /* deepest royal blue — navbar/footer surface */
-  --color-sky: #2C3A6E;          /* subtle blue divider line */
-  --color-seafoam: #131F4A;      /* deep blue wash */
+  /* black & gold — matches the Xanadu Reserve (XR) palette */
+  --color-ocean-deep: goldenrod; /* body text */
+  --color-ocean: goldenrod;
+  --color-ocean-mid: #87CEFA;    /* links (same as XR) */
+  --color-ocean-soft: #000;      /* navbar/footer surface */
+  --color-sky: #8c7035;          /* subtle gold divider line */
+  --color-seafoam: #111;
 
   /* gold accents (named *pink for legacy compatibility) */
-  --color-pink: #C9A227;         /* classic gold — borders, buttons */
-  --color-pink-deep: #D9BC5C;    /* bright gold — headings & accents */
-  --color-pink-soft: #E6D6A0;    /* pale gold — soft borders & hovers */
-  --color-coral: #B8962F;        /* antique gold */
-  --color-peach: #16244F;        /* deep blue */
+  --color-pink: goldenrod;       /* borders, buttons */
+  --color-pink-deep: goldenrod;  /* headings & accents */
+  --color-pink-soft: #B0E0FF;    /* hovers (same as XR) */
+  --color-coral: #b07a2b;        /* bronze */
+  --color-peach: #111;
 
-  /* deep royal-blue neutrals */
-  --bg-sand: #0B1738;
-  --bg-cream: #F2ECDC;           /* warm ivory ink (text on dark surfaces) */
+  --bg-sand: #000;
+  --bg-cream: goldenrod;         /* text on dark surfaces */
 
   /* surfaces */
-  --bg-panel: #14245C;           /* royal-blue panel */
-  --bg-elevated: #1A2C66;        /* lighter royal-blue panel */
+  --bg-panel: #111;
+  --bg-elevated: #181818;
 
   --text: var(--color-ocean-deep);
-  --text-muted: #9A9079;
+  --text-muted: #8c7035;
 
   --serif: 'Cormorant Garamond', 'Playfair Display', Georgia, serif;
   --sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -47,10 +46,7 @@ body {
   font-size: 16px;
   line-height: 1.55;
   color: var(--text);
-  /* deep royal-blue backdrop */
-  background: linear-gradient(180deg, #16265E 0%, #0A1430 100%);
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: #000;
   min-height: 100vh;
 }
 
@@ -67,11 +63,11 @@ a {
 }
 
 a:visited {
-  color: var(--color-pink-deep);
+  color: #8c7035;
 }
 
 a:hover {
-  color: var(--color-pink);
+  color: #B0E0FF;
 }
 
 /* ---- Navbar ---- */
@@ -194,7 +190,7 @@ summary:focus-visible {
     text-align: left;
 }
 
-/* ---- 3-column text layout (used by Bios, PET, ContactUs) ---- */
+/* ---- 3-column text layout (used by Bios, XPE, ContactUs) ---- */
 .left_text_column {
     flex: 1 1 25%;
     min-width: 240px;
@@ -297,7 +293,7 @@ a.alt {
 }
 
 a.alt:visited {
-    color: var(--color-pink-deep);
+    color: #8c7035;
 }
 
 a.alt:hover {
@@ -311,7 +307,7 @@ a.black-background-link {
 }
 
 a.black-background-link:visited {
-    color: var(--color-pink-deep);
+    color: #8c7035;
 }
 
 a.black-background-link:hover {
@@ -370,7 +366,7 @@ p.copyright {
 .btn-gold {
   padding: 12px 40px;
   background: var(--color-pink);
-  color: #14140E;
+  color: #000;
   border: none;
   font-size: 16px;
   font-weight: bold;
@@ -380,7 +376,7 @@ p.copyright {
 }
 
 .btn-gold:hover {
-  background: var(--color-pink-deep);
+  background: var(--color-coral);
 }
 
 /* ---- Footer subscribe ---- */
@@ -393,7 +389,7 @@ p.copyright {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(58, 90, 112, 0.55);
+  background: rgba(0, 0, 0, 0.75);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -408,12 +404,12 @@ p.copyright {
 .modal-panel {
   position: relative;
   background: var(--bg-panel);
-  border: 2px solid var(--color-ocean-soft);
+  border: 2px solid var(--color-pink);
   color: var(--color-ocean-deep);
   max-width: 480px;
   width: 100%;
   padding: 32px 24px 24px;
-  box-shadow: 0 8px 24px rgba(58, 90, 112, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
   text-align: center;
 }
 
@@ -453,7 +449,7 @@ p.copyright {
   padding: 10px 12px;
   background: var(--bg-panel);
   color: var(--color-ocean-deep);
-  border: 1px solid var(--color-ocean-soft);
+  border: 1px solid var(--color-pink);
   font-size: 16px;
   font-family: var(--sans);
 }
@@ -472,7 +468,7 @@ p.copyright {
     max-width: 900px;
     margin: 20px auto;
     padding: 24px 28px;
-    background-color: rgba(18, 32, 78, 0.85);
+    background-color: #000;
     border: 1px solid var(--color-sky);
     border-top: 4px solid var(--color-pink);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
@@ -530,7 +526,7 @@ p.copyright {
     width: 600px;
     max-width: 90%;
     margin: 30px auto;
-    background: rgba(18, 32, 78, 0.9);
+    background: #000;
     border: 1px solid var(--color-sky);
     border-top: 4px solid var(--color-pink);
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
@@ -557,7 +553,7 @@ p.copyright {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(58, 90, 112, 0.55);
+    background: rgba(0, 0, 0, 0.75);
     color: var(--bg-cream);
     border: 1px solid var(--bg-cream);
     padding: 10px 15px;
@@ -567,7 +563,7 @@ p.copyright {
 
 .carousel .nav-btn:hover {
     background: var(--color-pink);
-    color: var(--bg-cream);
+    color: #000;
 }
 
 .carousel .prev { left: 10px; }
