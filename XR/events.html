@@ -40,359 +40,1002 @@
 
         <p class="page_title">Xanadu Reserve Events</p>
 
+        <!--
+          The events calendar, from events-data.js. Ported from
+          community_calendar.html: a calendar (an overview of every month with a
+          hover card per day, and Month / Week / Day views) and a list view, with
+          a search box, a legend that hides or shows each category, and a list of
+          words whose events are hidden. The chosen views are remembered.
+          Clicking a date opens that day's list in a separate tab, the same one
+          every time (events.html#day=YYYY-MM-DD).
+        -->
         <style>
-            .calendar-grid {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-                gap: 20px;
+            .xr-cal {
+                --gold: goldenrod;
+                --gold-soft: #8c7035;
+                --panel: #111;
+                --elevated: #1a1a1a;
+                --muted: #9a8350;
+                color: var(--gold);
+            }
+            .xr-cal .controls {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                justify-content: center;
+                align-items: center;
+                margin: 20px auto 6px;
+                padding: 0 16px;
+            }
+            .xr-cal .view-toggle { display: inline-flex; }
+            .xr-cal .view-toggle button {
+                padding: 8px 20px;
+                background: transparent;
+                color: var(--gold);
+                border: 1px solid var(--gold);
+                cursor: pointer;
+                font: inherit;
+                font-size: 14px;
+            }
+            .xr-cal .view-toggle button:first-child { border-radius: 4px 0 0 4px; border-right: none; }
+            .xr-cal .view-toggle button:last-child { border-radius: 0 4px 4px 0; }
+            .xr-cal .view-toggle button + button:not(:last-child) { border-right: none; }
+            .xr-cal .view-toggle button.active { background: var(--gold); color: #000; font-weight: bold; }
+            .xr-cal .search {
+                background: var(--panel);
+                color: var(--gold);
+                border: 1px solid var(--gold-soft);
+                border-radius: 4px;
+                padding: 8px 12px;
+                font: inherit;
+                font-size: 14px;
+                width: min(260px, 100%);
+            }
+            .xr-cal .search::placeholder { color: var(--gold-soft); }
+
+            .xr-cal .legend {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
+                margin: 12px auto 0;
+                padding: 0 16px;
                 max-width: 1100px;
-                margin: 20px auto 40px auto;
-                padding: 0 20px;
             }
-            .calendar-month {
-                border: 1px solid goldenrod;
-                padding: 10px;
-                background: #111;
+            .xr-cal .legend > button {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                background: transparent;
+                color: var(--gold);
+                border: 1px solid #333;
+                border-radius: 14px;
+                padding: 3px 12px;
+                font: inherit;
+                font-size: 0.85em;
+                cursor: pointer;
             }
-            .calendar-month-title {
-                text-align: center;
-                font-weight: bold;
-                margin-bottom: 8px;
-                border-bottom: 1px solid goldenrod;
-                padding-bottom: 6px;
-            }
-            .calendar-weekdays, .calendar-days {
-                display: grid;
-                grid-template-columns: repeat(7, 1fr);
-                gap: 2px;
-            }
-            .calendar-weekdays div {
-                text-align: center;
-                font-size: 0.75em;
-                opacity: 0.7;
-                padding: 4px 0;
-            }
-            .calendar-days div {
-                text-align: center;
-                padding: 6px 0;
+            .xr-cal .legend > button.off { opacity: 0.35; text-decoration: line-through; }
+            .xr-cal .swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; }
+
+            .xr-cal .exclude {
+                max-width: 1100px;
+                margin: 12px auto 0;
+                padding: 0 16px;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 8px;
                 font-size: 0.85em;
             }
-            .calendar-day-event {
-                background: goldenrod;
-                border-radius: 3px;
+            .xr-cal .exclude form { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+            .xr-cal .exclude input { width: min(220px, 60vw); font-size: 13px; padding: 5px 10px; }
+            .xr-cal .exclude button[type=submit] {
+                background: transparent;
+                color: var(--gold);
+                border: 1px solid var(--gold-soft);
+                border-radius: 4px;
+                padding: 4px 12px;
+                font: inherit;
+                cursor: pointer;
             }
-            .calendar-day-event a {
-                color: black;
-                text-decoration: none;
-                font-weight: bold;
+            .xr-cal .word {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                background: #2a1416;
+                color: #f0c0c0;
+                border: 1px solid #6b2e3d;
+                border-radius: 12px;
+                padding: 1px 4px 1px 10px;
+            }
+            .xr-cal .word button {
+                background: transparent;
+                border: 0;
+                color: inherit;
+                font-size: 1.1em;
+                line-height: 1;
+                cursor: pointer;
+                padding: 0 4px;
+            }
+            .xr-cal .word button:hover { color: #fff; }
+            .xr-cal .exclude-count { color: var(--gold-soft); }
+            .xr-cal .info { position: relative; display: inline-flex; }
+            .xr-cal .info-btn {
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                border: 1px solid var(--gold-soft);
+                background: transparent;
+                color: var(--gold);
+                font: italic 600 13px/1 var(--serif);
+                padding: 0;
+                cursor: pointer;
+            }
+            .xr-cal .info-btn:hover, .xr-cal .info-btn[aria-expanded="true"] { border-color: var(--gold); background: var(--elevated); }
+            .xr-cal .info-pop {
+                position: absolute;
+                top: calc(100% + 8px);
+                right: 0;
+                z-index: 20;
+                width: max-content;
+                max-width: min(280px, 80vw);
+                background: var(--elevated);
+                color: var(--gold);
+                border: 1px solid var(--gold-soft);
+                border-radius: 6px;
+                padding: 10px 12px;
+                font-size: 13px;
+                line-height: 1.45;
+                text-align: left;
+                box-shadow: 0 6px 18px rgba(0, 0, 0, 0.6);
+            }
+            .xr-cal .exclude-clear { color: var(--gold-soft); }
+
+            .xr-cal .calendar-grid {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(min(290px, 100%), 1fr));
+                gap: 20px;
+                max-width: 1100px;
+                margin: 20px auto 40px;
+                padding: 0 16px;
+            }
+            .xr-cal .calendar-month { border: 1px solid var(--gold); padding: 10px; background: var(--panel); }
+            .xr-cal .calendar-month-title {
+                text-align: center;
+                font-family: var(--serif);
+                font-size: 1.2em;
+                font-weight: 600;
+                margin-bottom: 8px;
+                border-bottom: 1px solid var(--gold);
+                padding-bottom: 6px;
+            }
+            /* minmax(0, 1fr): every day column the same width, however much a day holds. */
+            .xr-cal .calendar-weekdays, .xr-cal .calendar-days { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 2px; }
+            .xr-cal .calendar-weekdays div { text-align: center; font-size: 0.75em; opacity: 0.7; padding: 4px 0; }
+            .xr-cal .calendar-days > * {
                 display: block;
-                width: 100%;
-                height: 100%;
+                text-align: center;
+                padding: 5px 0 3px;
+                font-size: 0.85em;
+                min-height: 38px;
+                border-radius: 3px;
+                overflow: hidden;
             }
-            .calendar-day-event a:hover {
-                color: #1a1a1a;
-            }
-            .event-popup {
+            .xr-cal .calendar-days > .today { box-shadow: inset 0 0 0 1px var(--gold); }
+            /* No long-press link menu on phones: holding a day shows its card instead. */
+            .xr-cal .calendar-day-event { cursor: pointer; color: #000; font-weight: bold; text-decoration: none;
+                                          -webkit-touch-callout: none; -webkit-user-select: none; user-select: none; }
+            .xr-cal .calendar-day-event:hover, .xr-cal .calendar-day-event:visited { color: #000; }
+            .xr-cal .calendar-day-event:focus-visible { outline: 2px solid #fff; outline-offset: -2px; }
+            /* Only for a real hover: a tap would leave the outline stuck on. */
+            @media (hover: hover) { .xr-cal .calendar-day-event:hover { outline: 2px solid #fff; outline-offset: -2px; } }
+            /* Dots wrap onto a second line rather than widen the day. */
+            .xr-cal .dots { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 2px; margin: 2px 2px 0; min-height: 6px; }
+            .xr-cal .dots span { width: 6px; height: 6px; border-radius: 50%; border: 1px solid rgba(0,0,0,0.6); }
+            .xr-cal .dots b { font-size: 9px; line-height: 6px; }
+
+            .xr-cal .event-popup {
                 position: absolute;
                 display: none;
                 z-index: 1000;
-                width: 260px;
-                background: #1a1a1a;
-                color: goldenrod;
-                border: 1px solid goldenrod;
+                width: 300px;
+                max-width: calc(100vw - 16px);
+                background: var(--elevated);
+                color: var(--gold);
+                border: 1px solid var(--gold);
                 box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
                 padding: 12px;
                 font-size: 0.85em;
                 pointer-events: none;
             }
-            .event-popup img {
-                width: 100%;
-                height: auto;
-                display: block;
-                margin-bottom: 8px;
+            .xr-cal .ep-date { font-family: var(--serif); font-size: 1.2em; font-weight: 600; margin-bottom: 6px; }
+            .xr-cal .ep-item { border-top: 1px solid #333; padding: 6px 0; display: flex; gap: 8px; }
+            .xr-cal .ep-item img { width: 64px; height: 40px; object-fit: cover; flex: none; border-radius: 2px; }
+            .xr-cal .ep-title { font-weight: bold; }
+            .xr-cal .ep-sub { font-style: italic; opacity: 0.85; }
+            .xr-cal .ep-meta { color: var(--muted); }
+
+            .xr-cal .list-view { max-width: 1100px; margin: 10px auto 40px; padding: 0 16px; }
+            .xr-cal .list-day { margin-top: 26px; scroll-margin-top: 12px; }
+            .xr-cal .list-day h2 {
+                font-family: var(--serif);
+                font-weight: 600;
+                font-size: 1.35em;
+                margin: 0 0 10px;
+                border-bottom: 1px solid var(--gold-soft);
+                padding-bottom: 4px;
             }
-            .event-popup .ep-title {
-                font-weight: bold;
-                font-size: 1.05em;
-                margin-bottom: 4px;
-            }
-            .event-popup .ep-subtitle {
-                font-style: italic;
-                opacity: 0.85;
-                margin-bottom: 4px;
-            }
-            .event-popup .ep-meta {
-                margin: 2px 0;
-            }
-            .calendar-legend {
-                text-align: center;
-                margin: -20px auto 30px auto;
-                font-size: 0.9em;
-            }
-            .legend-swatch {
-                display: inline-block;
-                width: 14px;
-                height: 14px;
-                margin-right: 6px;
+            .xr-cal .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(480px, 100%), 1fr)); gap: 14px; }
+            .xr-cal .card {
+                display: grid;
+                grid-template-columns: 1fr;
+                background: var(--panel);
+                border: 1px solid #2a2a2a;
+                border-left: 4px solid var(--gold);
                 border-radius: 3px;
-                vertical-align: middle;
+                overflow: hidden;
             }
-            .view-toggle {
+            .xr-cal .card.has-image { grid-template-columns: 190px 1fr; }
+            .xr-cal .card-image { display: block; background: #222; }
+            .xr-cal .card-image img { width: 100%; height: 100%; min-height: 100%; object-fit: cover; display: block; }
+            .xr-cal .card-body { padding: 12px 14px 14px; }
+            .xr-cal .card-time { font-size: 0.8em; font-weight: bold; color: var(--gold); margin-bottom: 2px; }
+            .xr-cal .card-cat { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+            .xr-cal .card-title { font-family: var(--serif); font-size: 1.3em; font-weight: 600; line-height: 1.2; margin: 4px 0 8px; }
+            .xr-cal .card-title a { color: var(--gold); text-decoration: none; }
+            .xr-cal .card-title a:hover { text-decoration: underline; }
+            .xr-cal .card-sub { font-style: italic; opacity: 0.85; margin: -4px 0 6px; font-size: 0.9em; }
+            .xr-cal .card-line { font-size: 0.9em; margin: 2px 0; }
+            .xr-cal .card-line .label { color: var(--muted); }
+            .xr-cal .card-links { margin-top: 8px; font-size: 0.9em; display: flex; gap: 16px; }
+            .xr-cal .empty { text-align: center; color: var(--muted); margin: 40px 16px; }
+            .xr-cal .day-banner {
+                margin: 20px 0 0;
+                padding: 10px 14px;
+                border: 1px solid var(--gold-soft);
+                border-radius: 4px;
+                background: var(--panel);
                 text-align: center;
-                margin: 20px auto 10px auto;
             }
-            .view-toggle button {
-                padding: 8px 20px;
+
+            /* ---- Calendar sub-views: Overview / Month / Week / Day ---- */
+            .xr-cal .subviews { display: flex; justify-content: center; margin: 14px auto 0; padding: 0 16px; }
+            .xr-cal .subviews button { padding: 5px 14px; font-size: 13px; }
+            .xr-cal .cal-nav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 10px;
+                margin: 18px auto 0;
+                padding: 0 16px;
+            }
+            .xr-cal .cal-nav button {
                 background: transparent;
-                color: goldenrod;
-                border: 1px solid goldenrod;
-                cursor: pointer;
+                color: var(--gold);
+                border: 1px solid var(--gold-soft);
+                border-radius: 4px;
+                padding: 5px 12px;
+                font: inherit;
                 font-size: 14px;
-                font-family: inherit;
+                cursor: pointer;
             }
-            .view-toggle button:first-child {
-                border-radius: 4px 0 0 4px;
-                border-right: none;
+            .xr-cal .cal-nav button:disabled { opacity: 0.3; cursor: default; }
+            .xr-cal .cal-nav-label {
+                font-family: var(--serif);
+                font-size: 1.45em;
+                font-weight: 600;
+                min-width: 15em;
+                text-align: center;
             }
-            .view-toggle button:last-child {
-                border-radius: 0 4px 4px 0;
+            .xr-cal .period { max-width: 1100px; margin: 14px auto 40px; padding: 0 16px; }
+            .xr-cal .date-link, .xr-cal .date-link:visited { color: var(--gold); text-decoration: none; }
+            .xr-cal .date-link:hover { color: #fff; text-decoration: underline; }
+            .xr-cal .chip, .xr-cal .chip:visited {
+                display: block;
+                color: #eee;
+                text-decoration: none;
+                background: #1c1c1c;
+                border-left: 3px solid var(--gold);
+                border-radius: 2px;
+                padding: 1px 5px;
+                margin-top: 3px;
+                font-size: 0.75em;
+                line-height: 1.35;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
             }
-            .view-toggle button.active {
-                background: goldenrod;
-                color: black;
-                font-weight: bold;
+            .xr-cal a.chip:hover { color: #fff; background: #262626; }
+            .xr-cal .chip .t { color: var(--muted); }
+
+            .xr-cal .mv-weekdays, .xr-cal .mv-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 3px; }
+            .xr-cal .mv-weekdays div { text-align: center; font-size: 0.8em; color: var(--muted); padding: 4px 0; }
+            .xr-cal .mv-cell {
+                min-height: 112px;
+                background: var(--panel);
+                border: 1px solid #2a2a2a;
+                border-radius: 3px;
+                padding: 4px 5px 6px;
+                cursor: pointer;
+            }
+            .xr-cal .mv-cell:hover { border-color: var(--gold-soft); }
+            .xr-cal .mv-cell.today { border-color: var(--gold); }
+            .xr-cal .mv-cell.blank { background: transparent; border-color: transparent; cursor: default; }
+            .xr-cal .mv-cell.out { opacity: 0.3; cursor: default; }
+            .xr-cal .mv-cell.out:hover { border-color: #2a2a2a; }
+            .xr-cal .mv-date { font-weight: bold; font-size: 0.9em; }
+            .xr-cal .mv-more { font-size: 0.72em; color: var(--muted); margin-top: 3px; }
+            .xr-cal .mv-cell .dotrow { display: none; flex-wrap: wrap; gap: 2px; margin-top: 4px; }
+            .xr-cal .mv-cell .dotrow span { width: 7px; height: 7px; border-radius: 50%; }
+
+            .xr-cal .wv-grid { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 6px; }
+            .xr-cal .wv-col { background: var(--panel); border: 1px solid #2a2a2a; border-radius: 3px; min-height: 220px; }
+            .xr-cal .wv-col.today { border-color: var(--gold); }
+            .xr-cal .wv-col.out { opacity: 0.3; }
+            .xr-cal .wv-head { text-align: center; padding: 6px 4px; border-bottom: 1px solid #2a2a2a; }
+            .xr-cal .wv-head .dn { display: block; font-size: 0.75em; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+            .xr-cal .wv-head .dd { font-family: var(--serif); font-size: 1.5em; font-weight: 600; line-height: 1.1; }
+            .xr-cal .wv-body { padding: 4px; }
+            .xr-cal .wv-ev, .xr-cal .wv-ev:visited {
+                display: block;
+                text-decoration: none;
+                color: #eee;
+                background: #1c1c1c;
+                border-left: 3px solid var(--gold);
+                border-radius: 2px;
+                padding: 4px 6px;
+                margin-bottom: 5px;
+                font-size: 0.8em;
+                line-height: 1.3;
+            }
+            .xr-cal a.wv-ev:hover { background: #262626; color: #fff; }
+            .xr-cal .wv-ev .t { display: block; color: var(--muted); font-size: 0.92em; }
+            .xr-cal .wv-ev .n { display: block; font-weight: bold; overflow-wrap: anywhere; }
+            .xr-cal .wv-ev .p { display: block; color: var(--muted); overflow-wrap: anywhere; }
+            .xr-cal .wv-none { color: #555; font-size: 0.8em; text-align: center; padding: 10px 0; }
+
+            .xr-cal .dv-hint { text-align: center; color: var(--gold-soft); font-size: 0.8em; margin-bottom: 14px; }
+
+            .xr-cal [hidden] { display: none !important; }
+            @media (max-width: 640px) {
+                .xr-cal .card.has-image { grid-template-columns: 1fr; }
+                .xr-cal .card-image img { aspect-ratio: 1.91 / 1; height: auto; }
+                .xr-cal .cal-nav-label { min-width: 0; font-size: 1.15em; }
+                .xr-cal .mv-cell { min-height: 64px; padding: 3px; }
+                .xr-cal .mv-cell .chip, .xr-cal .mv-cell .mv-more { display: none; }
+                .xr-cal .mv-cell .dotrow { display: flex; }
+                .xr-cal .wv-grid { grid-template-columns: 1fr; }
+                .xr-cal .wv-col { min-height: 0; }
+                .xr-cal .wv-col.out { display: none; }
             }
         </style>
 
-        <div class="view-toggle">
-            <button id="btn-view-calendar" class="active" onclick="setEventsView('calendar')">Calendar</button>
-            <button id="btn-view-list" onclick="setEventsView('list')">List</button>
+        <div class="xr-cal">
+            <div class="controls">
+                <div class="view-toggle" role="group" aria-label="View">
+                    <button id="btn-view-calendar" class="active" type="button">Calendar</button>
+                    <button id="btn-view-list" type="button">List</button>
+                </div>
+                <input id="search" class="search" type="search" placeholder="Filter by name or series" aria-label="Filter events">
+            </div>
+            <div id="legend" class="legend"></div>
+            <div class="exclude">
+                <form id="exclude-form">
+                    <label for="exclude-input">Hide events containing</label>
+                    <input id="exclude-input" class="search" type="text" placeholder="word or phrase, …" autocomplete="off">
+                    <button type="submit">Hide</button>
+                    <span class="info">
+                        <button type="button" id="exclude-info-btn" class="info-btn" aria-label="How hiding works"
+                                aria-expanded="false" aria-controls="exclude-info">i</button>
+                        <span id="exclude-info" class="info-pop" role="note" hidden>To hide events containing a word or phrase, type it in the box and click Hide. To remove a word from your filter later, click the × on its bubble.</span>
+                    </span>
+                </form>
+                <span id="exclude-words"></span>
+                <span id="exclude-count" class="exclude-count"></span>
+            </div>
+
+            <div id="calendar-view">
+                <div class="subviews">
+                    <div class="view-toggle" role="group" aria-label="Calendar view">
+                        <button type="button" data-sub="overview" class="active">Overview</button>
+                        <button type="button" data-sub="month">Month</button>
+                        <button type="button" data-sub="week">Week</button>
+                        <button type="button" data-sub="day">Day</button>
+                    </div>
+                </div>
+                <div id="cal-nav" class="cal-nav" hidden>
+                    <button id="nav-prev" type="button" aria-label="Previous">&#8249; Prev</button>
+                    <div id="nav-label" class="cal-nav-label"></div>
+                    <button id="nav-next" type="button" aria-label="Next">Next &#8250;</button>
+                </div>
+                <div id="overview" class="calendar-grid"></div>
+                <div id="period" class="period" hidden></div>
+            </div>
+            <div id="list-view" class="list-view" hidden></div>
+            <p id="empty" class="empty" hidden>No events match.</p>
+            <div id="event-popup" class="event-popup" role="tooltip"></div>
         </div>
-
-        <div id="calendar-view" class="calendar-grid"></div>
-
-        <div id="event-popup" class="event-popup"></div>
-
-        <div id="event-cards" class="row" style="display: none;"></div>
-
-        <script>
-            function setEventsView(mode) {
-                var calEl = document.getElementById('calendar-view');
-                var legendEl = document.querySelector('.calendar-legend');
-                var cardsEl = document.getElementById('event-cards');
-                var btnCal = document.getElementById('btn-view-calendar');
-                var btnList = document.getElementById('btn-view-list');
-
-                if (mode === 'list') {
-                    calEl.style.display = 'none';
-                    if (legendEl) legendEl.style.display = 'none';
-                    cardsEl.style.display = '';
-                    btnCal.classList.remove('active');
-                    btnList.classList.add('active');
-                } else {
-                    calEl.style.display = '';
-                    if (legendEl) legendEl.style.display = '';
-                    cardsEl.style.display = 'none';
-                    btnCal.classList.add('active');
-                    btnList.classList.remove('active');
-                }
-                try { localStorage.setItem('eventsView', mode); } catch (e) {}
-            }
-
-            // Restore saved preference on load
-            (function () {
-                try {
-                    var saved = localStorage.getItem('eventsView');
-                    if (saved === 'list') {
-                        // Defer until renderer has built the legend element
-                        setTimeout(function () { setEventsView('list'); }, 0);
-                    }
-                } catch (e) {}
-            })();
-        </script>
 
         <script>
             (function () {
                 var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+                var dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
                 var weekdays = ['S','M','T','W','T','F','S'];
+                var MAX_POPUP = 6;
+                var MAX_CHIPS = 3;
 
-                function escapeHtml(s) {
+                function esc(s) {
                     return String(s == null ? '' : s)
                         .replace(/&/g, '&amp;').replace(/</g, '&lt;')
                         .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
                 }
-
-                function ordinal(n) {
-                    var s = ['th', 'st', 'nd', 'rd'];
-                    var v = n % 100;
-                    return n + (s[(v - 20) % 10] || s[v] || s[0]);
+                function parse(iso) { var p = iso.split('-'); return new Date(+p[0], +p[1] - 1, +p[2]); }
+                function iso(d) {
+                    return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
                 }
-
-                function formatDate(iso) {
-                    var d = new Date(iso + 'T00:00:00');
-                    return monthNames[d.getMonth()] + ' ' + ordinal(d.getDate()) + ', ' + d.getFullYear();
+                function addDays(d, n) { return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+                function longDate(isoDay) {
+                    var d = parse(isoDay);
+                    return dayNames[d.getDay()] + ', ' + monthNames[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear();
                 }
+                function shortDate(isoDay) { var d = parse(isoDay); return monthNames[d.getMonth()].slice(0, 3) + ' ' + d.getDate(); }
 
-                // ---- Series color assignment ----
-                // Goldenrod is reserved for Xanadu Reserve; other series get colors
-                // from the fallback palette in first-seen order.
-                var SERIES_COLORS = {
-                    'Xanadu Reserve': 'goldenrod',
-                    'Power Exchange Together': '#d9534f'
+                // Dates written as "2026-08-8" still land on the right day.
+                var EVENTS = EVENTS_DATA.map(function (e) {
+                    var copy = {};
+                    for (var key in e) copy[key] = e[key];
+                    copy.date = iso(parse(e.date));
+                    copy.category = e.category || 'Other';
+                    return copy;
+                }).sort(function (a, b) { return a.date < b.date ? -1 : a.date > b.date ? 1 : 0; });
+
+                // ---- Category colors ----
+                // Goldenrod is reserved for Xanadu Reserve; the others match the
+                // community calendar's, and any new category gets a color from the
+                // fallback palette in first-seen order.
+                var CATEGORY_COLORS = {
+                    'Xanadu Reserve': '#daa520',
+                    'Educational': '#7fb3d5',
+                    'BDSM Party': '#d9534f',
+                    'Conferences': '#5fb3a1',
+                    'Power Exchange Together': '#c98ad6'
                 };
-                var FALLBACK_PALETTE = ['#5fb3a1', '#c98ad6', '#e8a3a3', '#7fb3d5', '#a3d977', '#f0a868'];
-                var assignedColors = {};
-                var paletteIndex = 0;
-                function colorForSeries(series) {
-                    if (SERIES_COLORS[series]) return SERIES_COLORS[series];
-                    if (!assignedColors[series]) {
-                        assignedColors[series] = FALLBACK_PALETTE[paletteIndex % FALLBACK_PALETTE.length];
-                        paletteIndex++;
+                var FALLBACK_PALETTE = ['#e8a3a3', '#a3d977', '#f0a868'];
+                var categoryList = [], paletteIndex = 0;
+                EVENTS.forEach(function (e) {
+                    if (categoryList.indexOf(e.category) !== -1) return;
+                    categoryList.push(e.category);
+                    if (!CATEGORY_COLORS[e.category]) {
+                        CATEGORY_COLORS[e.category] = FALLBACK_PALETTE[paletteIndex++ % FALLBACK_PALETTE.length];
                     }
-                    return assignedColors[series];
+                });
+                function colorOf(ev) { return CATEGORY_COLORS[ev.category]; }
+
+                // The start time in an event's time ("2:00pm - 4:00pm"), as minutes
+                // and as text; an event running 12:00am - 11:59pm is all day.
+                function startTime(ev) {
+                    if (/^\s*12:00\s*am\s*-\s*11:59\s*pm/i.test(ev.time || '')) return { minutes: -1, text: 'All day' };
+                    var m = /(\d{1,2})(?::(\d\d))?\s*([ap]m)/i.exec(ev.time || '');
+                    if (!m) return null;
+                    var mm = m[2] || '00';
+                    var h = +m[1] % 12 + (m[3].toLowerCase() === 'pm' ? 12 : 0);
+                    return { minutes: h * 60 + +mm, text: m[1] + ':' + mm + ' ' + m[3].toUpperCase() };
                 }
-
-                // ---- Calendar view ----
-                var byMonth = {};
-                EVENTS_DATA.forEach(function (e) {
-                    var parts = e.date.split('-');
-                    var key = parts[0] + '-' + parts[1];
-                    if (!byMonth[key]) byMonth[key] = [];
-                    byMonth[key].push({ day: parseInt(parts[2], 10), eventId: e.id });
-                });
-
-                var calendarEl = document.getElementById('calendar-view');
-                Object.keys(byMonth).sort().forEach(function (key) {
-                    var year = parseInt(key.split('-')[0], 10);
-                    var month = parseInt(key.split('-')[1], 10) - 1;
-                    var firstDay = new Date(year, month, 1).getDay();
-                    var daysInMonth = new Date(year, month + 1, 0).getDate();
-                    var eventMap = {};
-                    byMonth[key].forEach(function (e) { eventMap[e.day] = e; });
-
-                    var html = '<div class="calendar-month">';
-                    html += '<div class="calendar-month-title">' + monthNames[month] + ' ' + year + '</div>';
-                    html += '<div class="calendar-weekdays">';
-                    weekdays.forEach(function (w) { html += '<div>' + w + '</div>'; });
-                    html += '</div><div class="calendar-days">';
-                    for (var i = 0; i < firstDay; i++) html += '<div></div>';
-                    for (var d = 1; d <= daysInMonth; d++) {
-                        if (eventMap[d]) {
-                            var ev = getEventById(eventMap[d].eventId);
-                            var bg = colorForSeries(ev.series);
-                            var inner = ev.detailPage
-                                ? '<a href="' + escapeHtml(ev.detailPage) + '">' + d + '</a>'
-                                : '<span style="display:block; width:100%; height:100%; color:black; font-weight:bold;">' + d + '</span>';
-                            html += '<div class="calendar-day-event" data-event-id="' + escapeHtml(eventMap[d].eventId) + '" style="background:' + bg + ';">' + inner + '</div>';
-                        } else {
-                            html += '<div>' + d + '</div>';
-                        }
-                    }
-                    html += '</div></div>';
-                    calendarEl.insertAdjacentHTML('beforeend', html);
-                });
-
-                // ---- Legend ----
-                var seriesSeen = {};
-                var legendItems = [];
-                EVENTS_DATA.forEach(function (e) {
-                    if (!seriesSeen[e.series]) {
-                        seriesSeen[e.series] = true;
-                        legendItems.push({ series: e.series, color: colorForSeries(e.series) });
-                    }
-                });
-                if (legendItems.length > 1) {
-                    var legendHtml = '<div class="calendar-legend">';
-                    legendItems.forEach(function (item) {
-                        legendHtml += '<span class="legend-swatch" style="background:' + item.color + ';"></span>' + escapeHtml(item.series) + '&nbsp;&nbsp;';
+                function timeText(ev) { var t = startTime(ev); return t ? t.text : ''; }
+                // A day's events in time order; all-day events first.
+                function sorted(evs) {
+                    return evs.slice().sort(function (a, b) {
+                        return (startTime(a) || { minutes: 1440 }).minutes - (startTime(b) || { minutes: 1440 }).minutes;
                     });
-                    legendHtml += '</div>';
-                    calendarEl.insertAdjacentHTML('afterend', legendHtml);
+                }
+                function imageSrc(ev) { return ev.image ? 'assets/' + ev.image : ''; }
+                // An event's own page, or nothing when it has none.
+                function eventLinkOpen(ev, cls, extra) {
+                    return ev.detailPage
+                        ? '<a class="' + cls + '" href="' + esc(ev.detailPage) + '"' + (extra || '') + '>'
+                        : '<span class="' + cls + '"' + (extra || '') + '>';
+                }
+                function eventLinkClose(ev) { return ev.detailPage ? '</a>' : '</span>'; }
+
+                // Clicking a date opens that day's list in a separate browser tab: this
+                // same page, with the day in the URL's #fragment. The tab is named, so
+                // later dates replace the day in it instead of opening more tabs.
+                // (The page's <base> points at the folder, so the file is named.)
+                var DAY_TAB = 'xr-events-day';
+                function dayHref(k) { return 'events.html#day=' + k; }
+                function openDayTab(k) {
+                    var tab = window.open(dayHref(k), DAY_TAB);
+                    if (tab) tab.focus();
                 }
 
-                // ---- Hover popup ----
-                var popup = document.getElementById('event-popup');
+                var hiddenCategories = {};
+                var query = '';
+                function haystack(ev) { return [ev.name, ev.subtitle, ev.series, ev.category, ev.audience].join(' ').toLowerCase(); }
 
-                function getEventById(id) {
-                    for (var i = 0; i < EVENTS_DATA.length; i++) {
-                        if (EVENTS_DATA[i].id === id) return EVENTS_DATA[i];
+                // ---- Hidden words: events mentioning any of them are left out everywhere.
+                // Kept in this browser's storage, so the list survives reloads.
+                var WORDS_KEY = 'eventsHiddenWords';
+                var hiddenWords = [], wordPatterns = [];
+                function loadWords() {
+                    try {
+                        var saved = JSON.parse(localStorage.getItem(WORDS_KEY) || '[]');
+                        hiddenWords = Array.isArray(saved) ? saved.filter(function (w) { return typeof w === 'string' && w; }) : [];
+                    } catch (e) { hiddenWords = []; }
+                    // Whole words only: hiding "tea" keeps "steam". Case is ignored.
+                    wordPatterns = hiddenWords.map(function (w) {
+                        return new RegExp('(^|[^\\p{L}\\p{N}])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}\\p{N}])', 'iu');
+                    });
+                }
+                function saveWords() {
+                    try { localStorage.setItem(WORDS_KEY, JSON.stringify(hiddenWords)); } catch (e) {}
+                    loadWords();
+                }
+                function hiddenByWord(ev) {
+                    var text = haystack(ev);
+                    return wordPatterns.some(function (re) { return re.test(text); });
+                }
+                loadWords();
+
+                function visible(ev) {
+                    if (hiddenCategories[ev.category]) return false;
+                    if (hiddenByWord(ev)) return false;
+                    if (!query) return true;
+                    return haystack(ev).indexOf(query) !== -1;
+                }
+
+                var wordsEl = document.getElementById('exclude-words');
+                function renderWords() {
+                    wordsEl.innerHTML = hiddenWords.map(function (w, i) {
+                        return '<span class="word">' + esc(w) + '<button type="button" data-i="' + i + '" aria-label="Stop hiding ' + esc(w) + '">×</button></span>';
+                    }).join(' ') + (hiddenWords.length > 1 ? ' <a href="#" class="exclude-clear" id="exclude-clear">clear all</a>' : '');
+                    var n = EVENTS.filter(hiddenByWord).length;
+                    document.getElementById('exclude-count').textContent =
+                        hiddenWords.length ? n + ' event' + (n === 1 ? '' : 's') + ' hidden' : '';
+                }
+                document.getElementById('exclude-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var input = document.getElementById('exclude-input');
+                    // Several at once, comma-separated.
+                    input.value.split(',').forEach(function (w) {
+                        w = w.trim().replace(/\s+/g, ' ').toLowerCase();
+                        if (w && hiddenWords.indexOf(w) === -1) hiddenWords.push(w);
+                    });
+                    input.value = '';
+                    saveWords();
+                    render();
+                });
+                wordsEl.addEventListener('click', function (e) {
+                    if (e.target.id === 'exclude-clear') {
+                        e.preventDefault();
+                        hiddenWords = [];
+                    } else if (e.target.hasAttribute('data-i')) {
+                        hiddenWords.splice(+e.target.getAttribute('data-i'), 1);
+                    } else {
+                        return;
                     }
-                    return null;
+                    saveWords();
+                    render();
+                });
+                // The (i) buttons: each toggles its note; a click elsewhere or Escape closes it.
+                function infoButtons() { return Array.prototype.slice.call(document.querySelectorAll('.xr-cal .info-btn')); }
+                function infoPopOf(b) { return document.getElementById(b.getAttribute('aria-controls')); }
+                function showInfo(b, open) {
+                    infoPopOf(b).hidden = !open;
+                    b.setAttribute('aria-expanded', open ? 'true' : 'false');
+                }
+                document.addEventListener('click', function (e) {
+                    var clicked = e.target.closest('.info-btn');
+                    var inside = e.target.closest('.info');
+                    infoButtons().forEach(function (b) {
+                        if (b === clicked) showInfo(b, infoPopOf(b).hidden);
+                        else if (!inside || !inside.contains(b)) showInfo(b, false);
+                    });
+                });
+                document.addEventListener('keydown', function (e) {
+                    if (e.key !== 'Escape') return;
+                    infoButtons().forEach(function (b) {
+                        if (!infoPopOf(b).hidden) { showInfo(b, false); b.focus(); }
+                    });
+                });
+
+                // Another tab (say, a day opened from the calendar) changed the list.
+                window.addEventListener('storage', function (e) {
+                    if (e.key === WORDS_KEY) { loadWords(); render(); }
+                });
+
+                // ---- Legend: one toggle per category ----
+                var legendEl = document.getElementById('legend');
+                categoryList.forEach(function (cat) {
+                    var n = EVENTS.filter(function (e) { return e.category === cat; }).length;
+                    var b = document.createElement('button');
+                    b.type = 'button';
+                    b.setAttribute('aria-pressed', 'true');
+                    b.innerHTML = '<span class="swatch" style="background:' + esc(CATEGORY_COLORS[cat]) + '"></span>' + esc(cat) + ' (' + n + ')';
+                    b.addEventListener('click', function () {
+                        hiddenCategories[cat] = !hiddenCategories[cat];
+                        b.classList.toggle('off', !!hiddenCategories[cat]);
+                        b.setAttribute('aria-pressed', hiddenCategories[cat] ? 'false' : 'true');
+                        render();
+                    });
+                    legendEl.appendChild(b);
+                });
+                if (categoryList.length > 1) {
+                    legendEl.insertAdjacentHTML('beforeend', '<span class="info">'
+                        + '<button type="button" id="legend-info-btn" class="info-btn" aria-label="How the categories work"'
+                        + ' aria-expanded="false" aria-controls="legend-info">i</button>'
+                        + '<span id="legend-info" class="info-pop" role="note" hidden>Click a category to hide or show it</span></span>');
                 }
 
+                // ---- The months covered: the first event's through the last's ----
+                var today = new Date(); today = new Date(today.getFullYear(), today.getMonth(), today.getDate());
+                var todayKey = iso(today);
+                var rangeStart = EVENTS.length ? parse(EVENTS[0].date) : today;
+                var rangeEnd = EVENTS.length ? parse(EVENTS[EVENTS.length - 1].date) : today;
+                rangeStart = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), 1);
+                rangeEnd = new Date(rangeEnd.getFullYear(), rangeEnd.getMonth() + 1, 0);
+                function inRange(d) { return d >= rangeStart && d <= rangeEnd; }
+                function eventsByDay(list) {
+                    var map = {};
+                    list.forEach(function (ev) { (map[ev.date] = map[ev.date] || []).push(ev); });
+                    return map;
+                }
+                var byDay = {};
+
+                // ---- One event as a card (list and day views) ----
+                // A logged-out visitor's members-only Tickets link goes to the join page.
+                function cardHtml(ev) {
+                    var t = timeText(ev);
+                    var img = imageSrc(ev);
+                    var links = [];
+                    if (ev.detailPage) links.push('<a href="' + esc(ev.detailPage) + '">More info</a>');
+                    if (ev.ticketUrl) links.push('<a href="' + esc(ev.ticketUrl) + '"' + (ev.authRequired ? ' data-auth-required' : '') + '>Tickets</a>');
+                    return '<article class="card' + (img ? ' has-image' : '') + '" style="border-left-color:' + esc(colorOf(ev)) + '">'
+                        + (img ? eventLinkOpen(ev, 'card-image', ' tabindex="-1"') + '<img src="' + esc(img) + '" alt="" loading="lazy">' + eventLinkClose(ev) : '')
+                        + '<div class="card-body">'
+                        + (t ? '<div class="card-time">' + esc(t) + '</div>' : '')
+                        + '<div class="card-cat" style="color:' + esc(colorOf(ev)) + '">' + esc(ev.category) + ' · ' + esc(ev.series) + '</div>'
+                        + '<div class="card-title">' + (ev.detailPage ? '<a href="' + esc(ev.detailPage) + '">' + esc(ev.name) + '</a>' : esc(ev.name)) + '</div>'
+                        + (ev.subtitle ? '<div class="card-sub">' + esc(ev.subtitle) + '</div>' : '')
+                        + (ev.time ? '<div class="card-line"><span class="label">When:</span> ' + esc(ev.time) + '</div>' : '')
+                        + (ev.audience ? '<div class="card-line"><span class="label">Who:</span> ' + esc(ev.audience) + '</div>' : '')
+                        + (links.length ? '<div class="card-links">' + links.join('') + '</div>' : '')
+                        + '</div></article>';
+                }
+                document.querySelector('.xr-cal').addEventListener('click', function (e) {
+                    var a = e.target.closest('a[data-auth-required]');
+                    if (a && !document.body.classList.contains('user-logged-in')) {
+                        e.preventDefault();
+                        window.location.href = 'join.html';
+                    }
+                });
+
+                // ---- Calendar: Overview (every month in range, compact) ----
+                var overviewEl = document.getElementById('overview');
+                function renderOverview() {
+                    var html = '';
+                    var m = new Date(rangeStart.getFullYear(), rangeStart.getMonth(), 1);
+                    for (; m <= rangeEnd; m = new Date(m.getFullYear(), m.getMonth() + 1, 1)) {
+                        var year = m.getFullYear(), month = m.getMonth();
+                        var firstDay = m.getDay();
+                        var daysInMonth = new Date(year, month + 1, 0).getDate();
+                        html += '<div class="calendar-month"><div class="calendar-month-title">' + monthNames[month] + ' ' + year + '</div>';
+                        html += '<div class="calendar-weekdays">';
+                        weekdays.forEach(function (w) { html += '<div>' + w + '</div>'; });
+                        html += '</div><div class="calendar-days">';
+                        for (var i = 0; i < firstDay; i++) html += '<div></div>';
+                        for (var d = 1; d <= daysInMonth; d++) {
+                            var k = iso(new Date(year, month, d));
+                            var evs = byDay[k];
+                            var todayCls = k === todayKey ? ' today' : '';
+                            if (evs && evs.length) {
+                                var colors = [];
+                                evs.forEach(function (ev) { var c = colorOf(ev); if (colors.indexOf(c) === -1) colors.push(c); });
+                                var bg = colors.length === 1 ? colors[0] : '#daa520';
+                                // One dot per event (in its category's color) when there's more than one.
+                                var dots = evs.length > 1
+                                    ? evs.slice(0, 5).map(function (ev) { return '<span style="background:' + esc(colorOf(ev)) + '"></span>'; }).join('')
+                                      + (evs.length > 5 ? '<b>+</b>' : '')
+                                    : '';
+                                html += '<a class="calendar-day-event' + todayCls + '" href="' + dayHref(k) + '" target="' + DAY_TAB + '" data-day="' + k + '" style="background:' + esc(bg) + '"'
+                                    + ' aria-label="' + esc(longDate(k) + ': ' + evs.length + ' event' + (evs.length === 1 ? '' : 's') + ' (opens in the day tab)') + '">'
+                                    + d + '<div class="dots">' + dots + '</div></a>';
+                            } else {
+                                html += '<div' + (todayCls ? ' class="today"' : '') + '>' + d + '</div>';
+                            }
+                        }
+                        html += '</div></div>';
+                    }
+                    overviewEl.innerHTML = html;
+                }
+
+                // ---- Hover card for an Overview day ----
+                var popup = document.getElementById('event-popup');
                 function showPopup(cell) {
-                    var ev = getEventById(cell.getAttribute('data-event-id'));
-                    if (!ev) return;
-                    var subtitle = ev.subtitle ? '<div class="ep-subtitle">' + escapeHtml(ev.subtitle) + '</div>' : '';
-                    popup.innerHTML =
-                        '<img src="assets/' + escapeHtml(ev.image) + '" alt="">' +
-                        '<div class="ep-title">' + escapeHtml(ev.name) + '</div>' +
-                        subtitle +
-                        '<div class="ep-meta">' + escapeHtml(formatDate(ev.date)) + '</div>' +
-                        '<div class="ep-meta">' + escapeHtml(ev.time) + '</div>' +
-                        '<div class="ep-meta">' + escapeHtml(ev.audience) + '</div>';
+                    var k = cell.getAttribute('data-day');
+                    var evs = sorted(byDay[k] || []);
+                    var html = '<div class="ep-date">' + esc(longDate(k)) + '</div>';
+                    evs.slice(0, MAX_POPUP).forEach(function (ev) {
+                        var img = imageSrc(ev);
+                        html += '<div class="ep-item">'
+                            + (img ? '<img src="' + esc(img) + '" alt="">' : '')
+                            + '<div><div class="ep-title" style="color:' + esc(colorOf(ev)) + '">' + esc(ev.name) + '</div>'
+                            + (ev.subtitle ? '<div class="ep-sub">' + esc(ev.subtitle) + '</div>' : '')
+                            + '<div class="ep-meta">' + esc(ev.category) + ' · ' + esc(ev.series) + '</div>'
+                            + '<div>' + esc(ev.time) + '</div>'
+                            + (ev.audience ? '<div class="ep-meta">' + esc(ev.audience) + '</div>' : '')
+                            + '</div></div>';
+                    });
+                    if (evs.length > MAX_POPUP) {
+                        html += '<div class="ep-meta">+ ' + (evs.length - MAX_POPUP) + ' more — click the day to see them all</div>';
+                    }
+                    popup.innerHTML = html;
                     popup.style.display = 'block';
 
                     var rect = cell.getBoundingClientRect();
-                    var popupWidth = popup.offsetWidth;
-                    var popupHeight = popup.offsetHeight;
-                    var scrollX = window.pageXOffset || document.documentElement.scrollLeft;
-                    var scrollY = window.pageYOffset || document.documentElement.scrollTop;
-
-                    var left = rect.left + scrollX + (rect.width / 2) - (popupWidth / 2);
+                    var scrollX = window.pageXOffset, scrollY = window.pageYOffset;
+                    var w = popup.offsetWidth, h = popup.offsetHeight;
+                    var left = rect.left + scrollX + rect.width / 2 - w / 2;
                     var top = rect.bottom + scrollY + 6;
-
-                    // Keep within viewport horizontally
-                    var maxLeft = scrollX + document.documentElement.clientWidth - popupWidth - 8;
-                    if (left < scrollX + 8) left = scrollX + 8;
+                    var maxLeft = scrollX + document.documentElement.clientWidth - w - 8;
                     if (left > maxLeft) left = maxLeft;
-
-                    // Flip above the cell if there isn't room below
-                    if (rect.bottom + popupHeight + 12 > document.documentElement.clientHeight) {
-                        top = rect.top + scrollY - popupHeight - 6;
+                    if (left < scrollX + 8) left = scrollX + 8;
+                    if (rect.bottom + h + 12 > document.documentElement.clientHeight && rect.top > h + 12) {
+                        top = rect.top + scrollY - h - 6;
                     }
-
                     popup.style.left = left + 'px';
                     popup.style.top = top + 'px';
                 }
+                function hidePopup() { popup.style.display = 'none'; }
+                // A mouse shows the card while it's over a day. A finger shows it while it
+                // touches a day and hides it on lifting: touch screens never send the
+                // "pointer left" a mouse does, so the card would stay.
+                overviewEl.addEventListener('pointerover', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell && e.pointerType === 'mouse') showPopup(cell);
+                });
+                overviewEl.addEventListener('pointerout', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell && e.pointerType === 'mouse' && !cell.contains(e.relatedTarget)) hidePopup();
+                });
+                overviewEl.addEventListener('pointerdown', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell && e.pointerType !== 'mouse') showPopup(cell);
+                });
+                ['pointerup', 'pointercancel'].forEach(function (type) {
+                    document.addEventListener(type, function (e) { if (e.pointerType !== 'mouse') hidePopup(); });
+                });
+                // Keyboard focus shows it too, but not the focus a tap leaves behind.
+                function keyboardFocused(el) {
+                    try { return el.matches(':focus-visible'); } catch (err) { return true; }
+                }
+                overviewEl.addEventListener('focusin', function (e) {
+                    var cell = e.target.closest('.calendar-day-event');
+                    if (cell && keyboardFocused(cell)) showPopup(cell);
+                });
+                overviewEl.addEventListener('focusout', hidePopup);
+                overviewEl.addEventListener('click', hidePopup);
 
-                function hidePopup() {
-                    popup.style.display = 'none';
+                // ---- Calendar: Month / Week / Day, one period at a time ----
+                var periodEl = document.getElementById('period');
+                var navEl = document.getElementById('cal-nav');
+                var cursor = inRange(today) ? today : rangeStart;
+                var sub = 'overview';
+
+                function weekStart(d) { return addDays(d, -d.getDay()); }
+                function chipHtml(ev) {
+                    var t = timeText(ev);
+                    return eventLinkOpen(ev, 'chip', ' style="border-left-color:' + esc(colorOf(ev)) + '"'
+                            + ' title="' + esc(ev.name + (t ? ' — ' + t : '')) + '"')
+                        + (t ? '<span class="t">' + esc(t) + '</span> ' : '') + esc(ev.name) + eventLinkClose(ev);
                 }
 
-                calendarEl.addEventListener('mouseover', function (e) {
-                    var cell = e.target.closest('.calendar-day-event');
-                    if (cell) showPopup(cell);
-                });
-                calendarEl.addEventListener('mouseout', function (e) {
-                    var cell = e.target.closest('.calendar-day-event');
-                    if (cell && !cell.contains(e.relatedTarget)) hidePopup();
+                function renderMonth() {
+                    var first = new Date(cursor.getFullYear(), cursor.getMonth(), 1);
+                    var daysInMonth = new Date(first.getFullYear(), first.getMonth() + 1, 0).getDate();
+                    var html = '<div class="mv-weekdays">';
+                    dayNames.forEach(function (n) { html += '<div>' + n.slice(0, 3) + '</div>'; });
+                    html += '</div><div class="mv-grid">';
+                    for (var i = 0; i < first.getDay(); i++) html += '<div class="mv-cell blank"></div>';
+                    for (var d = 1; d <= daysInMonth; d++) {
+                        var k = iso(new Date(first.getFullYear(), first.getMonth(), d));
+                        var evs = sorted(byDay[k] || []);
+                        html += '<div class="mv-cell' + (k === todayKey ? ' today' : '') + '" data-day="' + k + '">'
+                            + '<a class="mv-date date-link" href="' + dayHref(k) + '" target="' + DAY_TAB + '" title="Open ' + esc(longDate(k)) + ' in the day tab">' + d + '</a>';
+                        evs.slice(0, MAX_CHIPS).forEach(function (ev) { html += chipHtml(ev); });
+                        if (evs.length > MAX_CHIPS) html += '<div class="mv-more">+ ' + (evs.length - MAX_CHIPS) + ' more</div>';
+                        if (evs.length) {
+                            html += '<div class="dotrow">' + evs.map(function (ev) { return '<span style="background:' + esc(colorOf(ev)) + '"></span>'; }).join('') + '</div>';
+                        }
+                        html += '</div>';
+                    }
+                    periodEl.innerHTML = html + '</div>';
+                    return esc(monthNames[first.getMonth()] + ' ' + first.getFullYear());
+                }
+
+                function renderWeek() {
+                    var ws = weekStart(cursor), we = addDays(ws, 6);
+                    var html = '<div class="wv-grid">';
+                    for (var i = 0; i < 7; i++) {
+                        var day = addDays(ws, i), k = iso(day);
+                        var evs = inRange(day) ? sorted(byDay[k] || []) : [];
+                        html += '<div class="wv-col' + (inRange(day) ? '' : ' out') + (k === todayKey ? ' today' : '') + '"><div class="wv-head">'
+                            + '<span class="dn">' + dayNames[day.getDay()].slice(0, 3) + '</span>'
+                            + (inRange(day)
+                                ? '<a class="dd date-link" href="' + dayHref(k) + '" target="' + DAY_TAB + '" title="Open ' + esc(longDate(k)) + ' in the day tab">' + day.getDate() + '</a>'
+                                : '<span class="dd">' + day.getDate() + '</span>')
+                            + '</div><div class="wv-body">';
+                        evs.forEach(function (ev) {
+                            var t = timeText(ev);
+                            html += eventLinkOpen(ev, 'wv-ev', ' style="border-left-color:' + esc(colorOf(ev)) + '"')
+                                + (t ? '<span class="t">' + esc(t) + '</span>' : '')
+                                + '<span class="n">' + esc(ev.name) + '</span>'
+                                + '<span class="p">' + esc(ev.series) + '</span>'
+                                + eventLinkClose(ev);
+                        });
+                        if (inRange(day) && !evs.length) html += '<div class="wv-none">No events</div>';
+                        html += '</div></div>';
+                    }
+                    periodEl.innerHTML = html + '</div>';
+                    return esc((ws.getFullYear() === we.getFullYear()
+                        ? shortDate(iso(ws)) : shortDate(iso(ws)) + ', ' + ws.getFullYear())
+                        + ' – ' + shortDate(iso(we)) + ', ' + we.getFullYear());
+                }
+
+                function renderDay() {
+                    var k = iso(cursor);
+                    var evs = sorted(byDay[k] || []);
+                    var html = '<div class="dv-hint">' + evs.length + ' event' + (evs.length === 1 ? '' : 's') + ' · click the date to open this day in the day tab</div>';
+                    html += evs.length
+                        ? '<div class="cards">' + evs.map(cardHtml).join('') + '</div>'
+                        : '<p class="empty">No events on this day.</p>';
+                    periodEl.innerHTML = html;
+                    return '<a class="date-link" href="' + dayHref(k) + '" target="' + DAY_TAB + '" title="Open this day in the day tab">' + esc(longDate(k)) + '</a>';
+                }
+
+                // The period before/after the cursor, and whether it still touches the range.
+                function shifted(step) {
+                    if (sub === 'month') return new Date(cursor.getFullYear(), cursor.getMonth() + step, 1);
+                    if (sub === 'week') return addDays(weekStart(cursor), 7 * step);
+                    return addDays(cursor, step);
+                }
+                function touchesRange(d) {
+                    if (sub === 'month') {
+                        var a = new Date(d.getFullYear(), d.getMonth(), 1), b = new Date(d.getFullYear(), d.getMonth() + 1, 0);
+                        return b >= rangeStart && a <= rangeEnd;
+                    }
+                    if (sub === 'week') { var ws = weekStart(d); return addDays(ws, 6) >= rangeStart && ws <= rangeEnd; }
+                    return inRange(d);
+                }
+                function clampToRange(d) { return d < rangeStart ? rangeStart : d > rangeEnd ? rangeEnd : d; }
+
+                function renderPeriod() {
+                    if (sub === 'overview') return;
+                    var label = sub === 'month' ? renderMonth() : sub === 'week' ? renderWeek() : renderDay();
+                    document.getElementById('nav-label').innerHTML = label;
+                    document.getElementById('nav-prev').disabled = !touchesRange(shifted(-1));
+                    document.getElementById('nav-next').disabled = !touchesRange(shifted(1));
+                }
+                function step(n) {
+                    var d = shifted(n);
+                    if (!touchesRange(d)) return;
+                    cursor = clampToRange(d);
+                    renderPeriod();
+                }
+                document.getElementById('nav-prev').addEventListener('click', function () { step(-1); });
+                document.getElementById('nav-next').addEventListener('click', function () { step(1); });
+
+                // In the Month view, a click anywhere in a day's box (other than on an
+                // event) opens that day in the day tab, like its date.
+                periodEl.addEventListener('click', function (e) {
+                    if (e.target.closest('a')) return;
+                    var cell = e.target.closest('.mv-cell[data-day]');
+                    if (cell) openDayTab(cell.getAttribute('data-day'));
                 });
 
-                // ---- Card grid (Xanadu Reserve only, sorted chronologically) ----
-                var cardsEl = document.getElementById('event-cards');
-                var sortedEvents = EVENTS_DATA
-                    .filter(function (e) { return e.series === 'Xanadu Reserve'; })
-                    .sort(function (a, b) {
-                        return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
-                    });
-                sortedEvents.forEach(function (e) {
-                    var subtitle = e.subtitle ? escapeHtml(e.subtitle) + '<br>' : '';
-                    var ticketClass = e.authRequired ? ' class="auth-required"' : '';
-                    var html = '<div class="cell" vertical-align="middle" align="center">';
-                    html += '<a href="' + escapeHtml(e.detailPage) + '"><img class="small_image" src="assets/' + escapeHtml(e.image) + '" alt="' + escapeHtml(e.series + ': ' + e.name) + '" /></a><br>';
-                    html += escapeHtml(e.series) + '<br>';
-                    html += escapeHtml(e.name) + '<br>';
-                    html += subtitle;
-                    html += escapeHtml(formatDate(e.date)) + '<br>';
-                    html += escapeHtml(e.time) + '<br>';
-                    html += escapeHtml(e.audience) + '<br>';
-                    html += '<br>';
-                    html += '<a href="' + escapeHtml(e.detailPage) + '">More info</a><br>';
-                    html += '<a' + ticketClass + ' href="' + escapeHtml(e.ticketUrl) + '">Tickets</a>';
-                    html += '<p></p></div>';
-                    cardsEl.insertAdjacentHTML('beforeend', html);
+                var subButtons = document.querySelectorAll('.xr-cal [data-sub]');
+                function setSub(mode) {
+                    sub = mode;
+                    hidePopup();
+                    subButtons.forEach(function (b) { b.classList.toggle('active', b.getAttribute('data-sub') === mode); });
+                    overviewEl.hidden = mode !== 'overview';
+                    periodEl.hidden = navEl.hidden = mode === 'overview';
+                    renderPeriod();
+                    try { localStorage.setItem('eventsCalendarView', mode); } catch (e) {}
+                }
+                subButtons.forEach(function (b) {
+                    b.addEventListener('click', function () { setSub(b.getAttribute('data-sub')); });
                 });
+
+                // ---- List view: upcoming events, grouped by day ----
+                // With a day in the URL (#day=YYYY-MM-DD, how a clicked date opens), only
+                // that day's events are listed.
+                var listEl = document.getElementById('list-view');
+                var onlyDay = null;
+                function renderList(list) {
+                    var html = '';
+                    if (onlyDay) {
+                        var evs = sorted(byDay[onlyDay] || []);
+                        html += '<div class="day-banner">Showing ' + esc(longDate(onlyDay)) + ' only · <a href="#" id="show-all">Show all events</a></div>'
+                            + '<section class="list-day"><h2>' + esc(longDate(onlyDay)) + '</h2>'
+                            + (evs.length ? '<div class="cards">' + evs.map(cardHtml).join('') + '</div>'
+                                          : '<p class="empty">No events on this day.</p>')
+                            + '</section>';
+                        listEl.innerHTML = html;
+                        return;
+                    }
+                    var groups = {}, order = [];
+                    list.forEach(function (ev) {
+                        if (ev.date < todayKey) return;
+                        if (!groups[ev.date]) { groups[ev.date] = []; order.push(ev.date); }
+                        groups[ev.date].push(ev);
+                    });
+                    order.forEach(function (k) {
+                        html += '<section class="list-day" id="day-' + k + '"><h2>' + esc(longDate(k)) + '</h2><div class="cards">'
+                            + sorted(groups[k]).map(cardHtml).join('')
+                            + '</div></section>';
+                    });
+                    listEl.innerHTML = html || '<p class="empty">No upcoming events match.</p>';
+                }
+                listEl.addEventListener('click', function (e) {
+                    if (e.target.id !== 'show-all') return;
+                    e.preventDefault();
+                    history.replaceState(null, '', location.pathname + location.search);
+                    readHash();
+                });
+
+                // ---- View switching (remembered per browser) ----
+                var calendarEl = document.getElementById('calendar-view');
+                function setView(mode, remember) {
+                    var list = mode === 'list';
+                    hidePopup();
+                    calendarEl.hidden = list;
+                    listEl.hidden = !list;
+                    document.getElementById('btn-view-calendar').classList.toggle('active', !list);
+                    document.getElementById('btn-view-list').classList.toggle('active', list);
+                    if (remember !== false) {
+                        try { localStorage.setItem('eventsView', mode); } catch (e) {}
+                    }
+                }
+                document.getElementById('btn-view-calendar').addEventListener('click', function () { setView('calendar'); });
+                document.getElementById('btn-view-list').addEventListener('click', function () { setView('list'); });
+                document.getElementById('search').addEventListener('input', function (e) {
+                    query = e.target.value.trim().toLowerCase();
+                    render();
+                });
+
+                function render() {
+                    var list = EVENTS.filter(visible);
+                    byDay = eventsByDay(list);
+                    renderOverview();
+                    renderPeriod();
+                    renderList(list);
+                    renderWords();
+                    document.getElementById('empty').hidden = list.length > 0;
+                }
+
+                var baseTitle = document.title;
+                function readHash() {
+                    var m = /^#day=(\d{4}-\d\d-\d\d)$/.exec(location.hash);
+                    onlyDay = m ? m[1] : null;
+                    document.title = onlyDay ? longDate(onlyDay) + ' — ' + baseTitle : baseTitle;
+                    if (onlyDay) cursor = clampToRange(parse(onlyDay));
+                    render();
+                    if (onlyDay) { setView('list', false); window.scrollTo(0, 0); }
+                }
+                window.addEventListener('hashchange', readHash);
+
+                try {
+                    var savedSub = localStorage.getItem('eventsCalendarView');
+                    if (savedSub && document.querySelector('.xr-cal [data-sub="' + savedSub + '"]')) sub = savedSub;
+                } catch (e) {}
+                setSub(sub);
+                readHash();
+                if (!onlyDay) {
+                    try { if (localStorage.getItem('eventsView') === 'list') setView('list'); } catch (e) {}
+                }
             })();
         </script>
 
