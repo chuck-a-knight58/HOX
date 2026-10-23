@@ -266,6 +266,16 @@
             .xr-cal .ep-title { font-weight: bold; }
             .xr-cal .ep-sub { font-style: italic; opacity: 0.85; }
             .xr-cal .ep-meta { color: var(--muted); }
+            /* Long descriptions are cut to four lines so the card stays compact. */
+            .xr-cal .ep-desc {
+                margin-top: 4px;
+                color: #ccc;
+                white-space: pre-line;
+                display: -webkit-box;
+                -webkit-line-clamp: 4;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
 
             .xr-cal .list-view { max-width: 1100px; margin: 10px auto 40px; padding: 0 16px; }
             .xr-cal .list-day { margin-top: 26px; scroll-margin-top: 12px; }
@@ -775,6 +785,7 @@
                             + '<div class="ep-meta">' + esc(ev.category) + ' · ' + esc(ev.series) + '</div>'
                             + '<div>' + esc(ev.time) + '</div>'
                             + (ev.audience ? '<div class="ep-meta">' + esc(ev.audience) + '</div>' : '')
+                            + (ev.description ? '<div class="ep-desc">' + esc(ev.description) + '</div>' : '')
                             + '</div></div>';
                     });
                     if (evs.length > MAX_POPUP) {
