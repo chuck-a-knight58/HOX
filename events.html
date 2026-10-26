@@ -302,7 +302,6 @@
             .xr-cal .card-image img { width: 100%; height: 100%; min-height: 100%; object-fit: cover; display: block; }
             .xr-cal .card-body { padding: 12px 14px 14px; }
             .xr-cal .card-time { font-size: 0.8em; font-weight: bold; color: var(--gold); margin-bottom: 2px; }
-            .xr-cal .card-cat { font-size: 0.75em; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
             .xr-cal .card-title { font-family: var(--serif); font-size: 1.3em; font-weight: 600; line-height: 1.2; margin: 4px 0 8px; }
             .xr-cal .card-title a { color: var(--gold); text-decoration: none; }
             .xr-cal .card-title a:hover { text-decoration: underline; }
@@ -520,7 +519,7 @@
                     'Educational': '#7fb3d5',
                     'BDSM Party': '#d9534f',
                     'Conferences': '#5fb3a1',
-                    'Xanadu Power Exchange': '#c98ad6'
+                    'Power Exchange Together': '#c98ad6'
                 };
                 var FALLBACK_PALETTE = ['#e8a3a3', '#a3d977', '#f0a868'];
                 var categoryList = [], paletteIndex = 0;
@@ -710,12 +709,12 @@
                     var img = imageSrc(ev);
                     var links = [];
                     if (ev.detailPage) links.push('<a href="' + esc(ev.detailPage) + '">More info</a>');
+                    if (ev.EventUrl) links.push('<a href="' + esc(ev.EventUrl) + '" target="_blank" rel="noopener">Event website</a>');
                     if (ev.ticketUrl) links.push('<a href="' + esc(ev.ticketUrl) + '"' + (ev.authRequired ? ' data-auth-required' : '') + '>Tickets</a>');
                     return '<article class="card' + (img ? ' has-image' : '') + '" style="border-left-color:' + esc(colorOf(ev)) + '">'
                         + (img ? eventLinkOpen(ev, 'card-image', ' tabindex="-1"') + '<img src="' + esc(img) + '" alt="" loading="lazy">' + eventLinkClose(ev) : '')
                         + '<div class="card-body">'
                         + (t ? '<div class="card-time">' + esc(t) + '</div>' : '')
-                        + '<div class="card-cat" style="color:' + esc(colorOf(ev)) + '">' + esc(ev.category) + ' · ' + esc(ev.series) + '</div>'
                         + '<div class="card-title">' + (ev.detailPage ? '<a href="' + esc(ev.detailPage) + '">' + esc(ev.name) + '</a>' : esc(ev.name)) + '</div>'
                         + (ev.subtitle ? '<div class="card-sub">' + esc(ev.subtitle) + '</div>' : '')
                         + (ev.time ? '<div class="card-line"><span class="label">When:</span> ' + esc(ev.time) + '</div>' : '')
@@ -782,7 +781,6 @@
                             + (img ? '<img src="' + esc(img) + '" alt="">' : '')
                             + '<div><div class="ep-title" style="color:' + esc(colorOf(ev)) + '">' + esc(ev.name) + '</div>'
                             + (ev.subtitle ? '<div class="ep-sub">' + esc(ev.subtitle) + '</div>' : '')
-                            + '<div class="ep-meta">' + esc(ev.category) + ' · ' + esc(ev.series) + '</div>'
                             + '<div>' + esc(ev.time) + '</div>'
                             + (ev.audience ? '<div class="ep-meta">' + esc(ev.audience) + '</div>' : '')
                             + (ev.description ? '<div class="ep-desc">' + esc(ev.description) + '</div>' : '')

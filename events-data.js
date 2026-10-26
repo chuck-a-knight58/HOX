@@ -15,7 +15,7 @@
 //   image        - filename in assets/ for the card thumbnail
 //   detailPage   - HTML file linked from "More info" and the image
 //   ticketUrl    - external ticket purchase URL
-//   url          - optional web page for the event (empty string if none)
+//   EventUrl     - optional web page for the event (empty string if none)
 //   authRequired - true if the Tickets link should redirect logged-out users to join.html
 
 const EVENTS_DATA = [
@@ -32,24 +32,24 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET110726',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
-        subtitle: 'Scene Negotiation',
-        presenters: 'M-A-T-E-327 and TBD',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
+        subtitle: 'Beyond Compromise: The Art of BDSM Alignment',
+        presenters: 'M-A-T-E-327 and Grr_Bear',
         description: 'Learn how to negotiate a scene with clarity and confidence: limits, desires, safewords, and aftercare, with practical tools you can use right away.',
         date: '2026-11-07',
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
-        image: 'PET-2026-11-07.png',
-        detailPage: 'PET.html',
+        image: 'PET.png',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -65,23 +65,8 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
-    },
-    {
-        id: 'EscapeToXanadu111426',
-        series: 'Escape to Xanadu',
-        category: 'BDSM Party',
-        name: 'Play Party',
-        subtitle: 'Escape to Xanadu Play Party',
-        presenters: 'Knight_of_Xanadu and theGirl_Star',
-        description: 'All our parties are vetted events and require a promo code to purchase tickets. To receive a code you must REGISTER at Forbidden Ticket to start the vetting process and receive the promo code to open the ticketing.\n\nAfter you receive your Promo Code you can then purchase your tickets at Forbidden Ticket\n\nCapacity will be 16 attendees\n\nInvitation: If you received this event as an invite, that means that you have been vetted by Xanadu KINK and you can contact Xanadu Kink for your promo code to purchase your ticket.',
-        date: '2026-11-21',
-        time: '7:00pm - 1:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu111426.jpg',
-        url: '',
-        authRequired: true
     },
     {
         id: 'MAM112026',
@@ -96,8 +81,23 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'MAM.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
+    },
+    {
+        id: 'ETX112126',
+        series: 'Escape to Xanadu',
+        category: 'BDSM Party',
+        name: 'Play Party',
+        subtitle: 'Escape to Xanadu Play Party',
+        presenters: 'Knight_of_Xanadu and theGirl_Star',
+        description: 'All our parties are vetted events and require a promo code to purchase tickets. To receive a code you must REGISTER at Forbidden Ticket to start the vetting process and receive the promo code to open the ticketing.\n\nAfter you receive your Promo Code you can then purchase your tickets at Forbidden Ticket\n\nCapacity will be 16 attendees\n\nInvitation: If you received this event as an invite, that means that you have been vetted by Xanadu KINK and you can contact Xanadu Kink for your promo code to purchase your ticket.',
+        date: '2026-11-21',
+        time: '7:00pm - 1:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu111426.jpg',
+        EventUrl: '',
+        authRequired: true
     },
     {
         id: 'VDM112626',
@@ -112,7 +112,7 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -128,7 +128,7 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -144,7 +144,7 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -160,11 +160,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu011627',
+        id: 'ETX120526',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -174,8 +174,8 @@ const EVENTS_DATA = [
         date: '2026-12-05',
         time: '9:00pm - 11:00pm',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -191,8 +191,23 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
+    },
+    {
+        id: 'ETX121226',
+        series: 'Escape to Xanadu',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'SnowCones Christmas Dash',
+        subtitle: '🎄 You\u0027re Invited to the Xanadu Kink presents Power Exchange Together Christmas Party! 🎄',
+        presenters: 'Knight_of_Xanadu and TheGirl_Star',
+        description: 'Dust off your ugliest sweater and bring your appetite. Our annual holiday bash is back, and this year its bigger, merrier and a little bit sillier!\n🍪 Food Games: Test your taste buds, your speed and your nerve. Glory (and bragging rights) await!\n🎁 White Elephant Gift Exchange: Bring a wrapped gift and be ready to steal, swap and scheme your way to the best prize in the room.\n🎭 And maybe, just maybe... a little play! We\u0027re not promising anything, but rumor has it there may be costumes, drama and at least one questionable act.\nCome for the cheer, stay for the chaos. We can\u0027t wait to celebrate with you!',
+        date: '2026-12-12',
+        time: '6:00pm - 12:00am',
+        audience: 'Xanadu Reserve & Escape Members',
+        image: 'EscapeToXanadu122126.jpg',
+        EventUrl: '',
+        authRequired: true
     },
     {
         id: 'VSM121626',
@@ -207,23 +222,8 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
-    },
-    {
-        id: 'EscapeToXanadu122126',
-        series: 'Escape to Xanadu',
-        category: 'Xanadu Power Exchange',
-        name: 'SnowCones Christmas Dash',
-        subtitle: '🎄 You\u0027re Invited to the Xanadu Power Exchange Christmas Party! 🎄',
-        presenters: 'Knight_of_Xanadu and TheGirl_Star',
-        description: 'Dust off your ugliest sweater and bring your appetite. Our annual holiday bash is back, and this year its bigger, merrier and a little bit sillier!\n🍪 Food Games: Test your taste buds, your speed and your nerve. Glory (and bragging rights) await!\n🎁 White Elephant Gift Exchange: Bring a wrapped gift and be ready to steal, swap and scheme your way to the best prize in the room.\n🎭 And maybe, just maybe... a little play! We\u0027re not promising anything, but rumor has it there may be costumes, drama and at least one questionable act.\nCome for the cheer, stay for the chaos. We can\u0027t wait to celebrate with you!',
-        date: '2026-12-12',
-        time: '6:00pm - 12:00am',
-        audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu122126.jpg',
-        url: '',
-        authRequired: true
     },
     {
         id: 'VDM122426',
@@ -238,11 +238,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'NYE2026',
+        id: 'NYE123126',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'New Years Eve Party',
@@ -255,14 +255,14 @@ const EVENTS_DATA = [
         image: 'NYE2026.png',
         detailPage: '',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: true
     },
     {
         id: 'PET010227',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Contracts and Written Agreements',
         presenters: 'Skipinpa',
         description: 'Curious about power exchange and thinking about starting your own dynamic? Then you need to know about contracts. A good BDSM contract sets out your roles, limits and expectations, and gives you a framework for honest conversation and lasting trust. Join Skipinpa for a practical talk on how to build one that works for you.',
@@ -270,9 +270,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -288,11 +288,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'FORBIDDEN011527',
+        id: 'FF011527',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ Forbidden Frostland',
@@ -303,11 +303,11 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'FORBIDDEN011627',
+        id: 'FF011627',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ Forbidden Frostland',
@@ -318,11 +318,11 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu011627',
+        id: 'ETX011627',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -332,12 +332,12 @@ const EVENTS_DATA = [
         date: '2027-01-16',
         time: '9:00pm - 11:00pm',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
-        id: 'FORBIDDEN011727',
+        id: 'FF011727',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ Forbidden Frostland',
@@ -348,11 +348,11 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'FORBIDDEN011827',
+        id: 'FF011827',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ Forbidden Frostland',
@@ -363,7 +363,7 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -379,14 +379,14 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET020627',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Finding Your Dynamic: D/s, M/s, Owner/property and More',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'A tour of the different relationship structures, what sets each one apart, and how to work out which fits you.',
@@ -394,9 +394,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -412,11 +412,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'Korral021927',
+        id: 'XR021927',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Korral Field Trip - Kink Night at the Korral',
@@ -429,11 +429,11 @@ const EVENTS_DATA = [
         image: 'XR.png',
         detailPage: '',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu022027',
+        id: 'ETX022027',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -443,12 +443,12 @@ const EVENTS_DATA = [
         date: '2027-02-20',
         time: '7:00pm - 2:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
-        id: 'Korral022027',
+        id: 'XR022027',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Korral Field Trip - Kink Night at the Korral',
@@ -461,7 +461,7 @@ const EVENTS_DATA = [
         image: 'XR.png',
         detailPage: '',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -477,11 +477,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'CocktailParty030527',
+        id: 'XR030527',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Cocktail Party',
@@ -494,14 +494,14 @@ const EVENTS_DATA = [
         image: 'CocktailParty_1.png',
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET030627',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Consent in a TPE Relationship',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'How ongoing consent works when one partner has given up broad authority, plus \"consensual non-consent\" and the safeguards that keep it ethical.',
@@ -509,9 +509,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -527,11 +527,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu032027',
+        id: 'ETX031327',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -541,8 +541,8 @@ const EVENTS_DATA = [
         date: '2027-03-13',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -558,14 +558,14 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET040327',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'The Responsibilities of Holding Authority',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'What it takes to lead well: self-care, decision-making, accountability and avoiding the "Dom burnout" trap.',
@@ -573,9 +573,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -591,11 +591,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu041727',
+        id: 'ETX041027',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -605,8 +605,8 @@ const EVENTS_DATA = [
         date: '2027-04-10',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -622,11 +622,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'CocktailParty043027',
+        id: 'XR043027',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Cocktail Party',
@@ -639,14 +639,14 @@ const EVENTS_DATA = [
         image: 'CocktailParty_1.png',
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET050127',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Service and Surrender',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'The emotional side of submission and slavery: finding fulfillment in service, keeping your identity, and speaking up within the dynamic.',
@@ -654,9 +654,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -672,11 +672,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu051527',
+        id: 'ETX050827',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -686,8 +686,8 @@ const EVENTS_DATA = [
         date: '2027-05-08',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -703,14 +703,14 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET060527',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'When Things Go Wrong: Abuse vs. Power Exchange',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'Spotting red flags, telling a healthy dynamic from an abusive one, and building check-ins and exit plans.',
@@ -718,9 +718,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -736,11 +736,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu061927',
+        id: 'ETX061227',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -750,8 +750,8 @@ const EVENTS_DATA = [
         date: '2027-06-12',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -767,11 +767,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'TESFEST070127',
+        id: 'TF070127',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ TESFest',
@@ -782,11 +782,11 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'TESFest.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'TESFEST070227',
+        id: 'TF070227',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ TESFest',
@@ -797,11 +797,11 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'TESFest.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'TESFEST070327',
+        id: 'TF070327',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ TESFest',
@@ -812,14 +812,14 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'TESFest.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'PET010227',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        id: 'PET070327',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Littles After Hours at TESFest',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'Pour a glass of champagne and settle into the Littles room for an evening of indulgence. Daddy Chuck reads slutty bedtime stories aloud, so lean back, let your inhibitions slip, and enjoy the bubbles.',
@@ -827,13 +827,13 @@ const EVENTS_DATA = [
         time: '11:00pm - 12:00am',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'TESFEST070427',
+        id: 'TF070427',
         series: 'Xanadu Kink',
         category: 'Conferences',
         name: '@ TESFest',
@@ -844,7 +844,7 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'TESFest.png',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -860,11 +860,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu071727',
+        id: 'ETX071027',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -874,8 +874,8 @@ const EVENTS_DATA = [
         date: '2027-07-10',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -891,11 +891,27 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu082127',
+        id: 'VSM081127',
+        series: 'Virtual Submissives Meetup',
+        category: 'Educational',
+        name: 'Virtual Submissives Meetup',
+        subtitle: 'When Life Intervenes: Illness, Disability and Caregiving',
+        presenters: 'theGirl_Star',
+        description: 'When does support become control? How authority can adapt when one partner’s health or abilities change, without losing the dynamic or the dignity of either person.',
+        date: '2027-08-11',
+        time: '8:00pm - 10:00pm',
+        audience: 'Online',
+        image: 'VirtualSubmissivesMeetup.png',
+        ticketUrl: '',
+        EventUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'ETX081427',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -905,8 +921,8 @@ const EVENTS_DATA = [
         date: '2027-08-14',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -922,27 +938,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'VSM082627',
-        series: 'Virtual Submissives Meetup',
-        category: 'Educational',
-        name: 'Virtual Submissives Meetup',
-        subtitle: 'When Life Intervenes: Illness, Disability and Caregiving',
-        presenters: 'theGirl_Star',
-        description: 'When does support become control? How authority can adapt when one partner’s health or abilities change, without losing the dynamic or the dignity of either person.',
-        date: '2027-08-11',
-        time: '8:00pm - 10:00pm',
-        audience: 'Online',
-        image: 'VirtualSubmissivesMeetup.png',
-        ticketUrl: '',
-        url: '',
-        authRequired: false
-    },
-    {
-        id: 'CocktailParty090327',
+        id: 'XR091027',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Cocktail Party',
@@ -955,14 +955,14 @@ const EVENTS_DATA = [
         image: 'CocktailParty_1.png',
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'PET090427',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        id: 'PET091127',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Training and Shaping Behavior',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'How dominants can teach new skills and habits effectively, using reinforcement, clear expectations and patience instead of relying on punishment.',
@@ -970,9 +970,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -988,11 +988,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu091827',
+        id: 'ETX091827',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -1002,8 +1002,8 @@ const EVENTS_DATA = [
         date: '2027-09-18',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -1019,14 +1019,14 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET100227',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Communication Tools for Power Exchange Couples',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'Practical tools like journals, weekly check-ins, "state of the union" talks and color/status systems that keep the dynamic honest and connected.',
@@ -1034,9 +1034,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1052,11 +1052,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu101627',
+        id: 'ETX100927',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -1066,8 +1066,8 @@ const EVENTS_DATA = [
         date: '2027-10-09',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -1083,11 +1083,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'CocktailParty110527',
+        id: 'XR110527',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'Cocktail Party',
@@ -1100,14 +1100,14 @@ const EVENTS_DATA = [
         image: 'CocktailParty_1.png',
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
         id: 'PET110627',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Monthly Gathering',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Ownership and Objectification',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
         description: 'The psychology of being owned or treated as property: what makes it fulfilling, how to explore it safely, and how to keep the person at the heart of the dynamic.',
@@ -1115,9 +1115,9 @@ const EVENTS_DATA = [
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
         image: 'PET.png',
-        detailPage: 'PET.html',
+        detailPage: 'XPE.html',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1133,11 +1133,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu112027',
+        id: 'ETX111327',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -1147,8 +1147,8 @@ const EVENTS_DATA = [
         date: '2027-11-13',
         time: '7:00pm - 1:00am',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
     },
     {
@@ -1164,7 +1164,7 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1180,7 +1180,7 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1196,7 +1196,7 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1212,11 +1212,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'EscapeToXanadu011627',
+        id: 'ETX120427',
         series: 'Escape to Xanadu',
         category: 'BDSM Party',
         name: 'Play Party',
@@ -1226,26 +1226,9 @@ const EVENTS_DATA = [
         date: '2027-12-04',
         time: '9:00pm - 11:00pm',
         audience: 'Xanadu Reserve & Escape Members',
-        image: 'EscapeToXanadu.jpeg',
-        url: '',
+        image: 'EscapeToXanadu.png',
+        EventUrl: '',
         authRequired: true
-    },
-    {
-        id: 'PET120427',
-        series: 'Xanadu Power Exchange',
-        category: 'Xanadu Power Exchange',
-        name: 'Christmas Party',
-        subtitle: '🎄 You\u0027re Invited to the Xanadu Power Exchange Christmas Party! 🎄',
-        presenters: 'Knight_of_Xanadu and TheGirl_Star',
-        description: 'Dust off your ugliest sweater and bring your appetite. Our annual holiday bash is back, and this year its bigger, merrier and a little bit sillier!\n🍪 Food Games: Test your taste buds, your speed and your nerve. Glory (and bragging rights) await!\n🎁 White Elephant Gift Exchange: Bring a wrapped gift and be ready to steal, swap and scheme your way to the best prize in the room.\n🎭 And maybe, just maybe... a little play! We\u0027re not promising anything, but rumor has it there may be costumes, drama and at least one questionable act.\nCome for the cheer, stay for the chaos. We can\u0027t wait to celebrate with you!',
-        date: '2027-12-11',
-        time: '6:00pm - 12:00am',
-        audience: 'Open to all',
-        image: 'PET.png',
-        detailPage: 'PET.html',
-        ticketUrl: '',
-        url: '',
-        authRequired: false
     },
     {
         id: 'NN120527',
@@ -1260,7 +1243,24 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'NN.jpg',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
+        authRequired: false
+    },
+    {
+        id: 'PET121127',
+        series: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Xanadu Kink presents Power Exchange Together',
+        name: 'Christmas Party',
+        subtitle: '🎄 You\u0027re Invited to the Xanadu Kink presents Power Exchange Together Christmas Party! 🎄',
+        presenters: 'Knight_of_Xanadu and TheGirl_Star',
+        description: 'Dust off your ugliest sweater and bring your appetite. Our annual holiday bash is back, and this year its bigger, merrier and a little bit sillier!\n🍪 Food Games: Test your taste buds, your speed and your nerve. Glory (and bragging rights) await!\n🎁 White Elephant Gift Exchange: Bring a wrapped gift and be ready to steal, swap and scheme your way to the best prize in the room.\n🎭 And maybe, just maybe... a little play! We\u0027re not promising anything, but rumor has it there may be costumes, drama and at least one questionable act.\nCome for the cheer, stay for the chaos. We can\u0027t wait to celebrate with you!',
+        date: '2027-12-11',
+        time: '6:00pm - 12:00am',
+        audience: 'Open to all',
+        image: 'PET.png',
+        detailPage: 'XPE.html',
+        ticketUrl: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1276,7 +1276,7 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
@@ -1292,11 +1292,11 @@ const EVENTS_DATA = [
         audience: 'Online',
         image: 'VirtualDominantsMeetup.png',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: false
     },
     {
-        id: 'NYE2027',
+        id: 'NYE123127',
         series: 'Xanadu Reserve',
         category: 'Xanadu Reserve',
         name: 'New Years Eve Party',
@@ -1309,7 +1309,7 @@ const EVENTS_DATA = [
         image: 'NYE2027.png',
         detailPage: '',
         ticketUrl: '',
-        url: '',
+        EventUrl: '',
         authRequired: true
     }
 ];
