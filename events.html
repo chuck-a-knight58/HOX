@@ -308,6 +308,7 @@
             .xr-cal .card-sub { font-style: italic; opacity: 0.85; margin: -4px 0 6px; font-size: 0.9em; }
             .xr-cal .card-line { font-size: 0.9em; margin: 2px 0; }
             .xr-cal .card-line .label { color: var(--muted); }
+            .xr-cal .card-desc { font-size: 0.9em; margin: 6px 0; color: #ccc; white-space: pre-line; }
             .xr-cal .card-links { margin-top: 8px; font-size: 0.9em; display: flex; gap: 16px; }
             .xr-cal .empty { text-align: center; color: var(--muted); margin: 40px 16px; }
             .xr-cal .day-banner {
@@ -550,6 +551,7 @@
                     });
                 }
                 function imageSrc(ev) { return ev.image ? 'assets/' + ev.image : ''; }
+                function whereText(ev) { return [ev.location, ev.address, ev.cityStateCountry].filter(Boolean).join(', '); }
                 // An event's own page, or nothing when it has none.
                 function eventLinkOpen(ev, cls, extra) {
                     return ev.detailPage
@@ -707,6 +709,7 @@
                 function cardHtml(ev) {
                     var t = timeText(ev);
                     var img = imageSrc(ev);
+                    var where = whereText(ev);
                     var links = [];
                     if (ev.detailPage) links.push('<a href="' + esc(ev.detailPage) + '">More info</a>');
                     if (ev.EventUrl) links.push('<a href="' + esc(ev.EventUrl) + '" target="_blank" rel="noopener">Event website</a>');
@@ -719,6 +722,9 @@
                         + (ev.subtitle ? '<div class="card-sub">' + esc(ev.subtitle) + '</div>' : '')
                         + (ev.time ? '<div class="card-line"><span class="label">When:</span> ' + esc(ev.time) + '</div>' : '')
                         + (ev.audience ? '<div class="card-line"><span class="label">Who:</span> ' + esc(ev.audience) + '</div>' : '')
+                        + (ev.description ? '<div class="card-desc">' + esc(ev.description) + '</div>' : '')
+                        + (where ? '<div class="card-line"><span class="label">Where:</span> ' + esc(where) + '</div>' : '')
+                        + (ev.dressCode ? '<div class="card-line"><span class="label">Dress code:</span> ' + esc(ev.dressCode) + '</div>' : '')
                         + (links.length ? '<div class="card-links">' + links.join('') + '</div>' : '')
                         + '</div></article>';
                 }
@@ -777,6 +783,7 @@
                     var html = '<div class="ep-date">' + esc(longDate(k)) + '</div>';
                     evs.slice(0, MAX_POPUP).forEach(function (ev) {
                         var img = imageSrc(ev);
+                        var where = whereText(ev);
                         html += '<div class="ep-item">'
                             + (img ? '<img src="' + esc(img) + '" alt="">' : '')
                             + '<div><div class="ep-title" style="color:' + esc(colorOf(ev)) + '">' + esc(ev.name) + '</div>'
@@ -784,6 +791,8 @@
                             + '<div>' + esc(ev.time) + '</div>'
                             + (ev.audience ? '<div class="ep-meta">' + esc(ev.audience) + '</div>' : '')
                             + (ev.description ? '<div class="ep-desc">' + esc(ev.description) + '</div>' : '')
+                            + (where ? '<div class="ep-meta">' + esc(where) + '</div>' : '')
+                            + (ev.dressCode ? '<div class="ep-meta">Dress code: ' + esc(ev.dressCode) + '</div>' : '')
                             + '</div></div>';
                     });
                     if (evs.length > MAX_POPUP) {

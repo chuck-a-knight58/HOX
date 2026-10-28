@@ -17,6 +17,11 @@
 //   ticketUrl    - external ticket purchase URL
 //   EventUrl     - optional web page for the event (empty string if none)
 //   authRequired - true if the Tickets link should redirect logged-out users to join.html
+//   dressCode    - optional dress code shown on the card
+//   location     - optional venue name
+//   address      - optional street address
+//   cityStateCountry - optional "City, State, Country"
+//                  (location, address and cityStateCountry are joined into the card's "Where:" line)
 
 const EVENTS_DATA = [
     {
@@ -38,7 +43,7 @@ const EVENTS_DATA = [
     {
         id: 'PET110726',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Beyond Compromise: The Art of BDSM Alignment',
         presenters: 'M-A-T-E-327 and Grr_Bear',
@@ -50,7 +55,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Country club casual",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM111126',
@@ -82,7 +91,10 @@ const EVENTS_DATA = [
         image: 'MAM.png',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Mid-Atlantic Mischief Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'ETX112126',
@@ -97,7 +109,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu111426.jpg',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM112626',
@@ -129,7 +144,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120426',
@@ -145,7 +164,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120526',
@@ -161,7 +184,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'ETX120526',
@@ -176,7 +203,11 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120626',
@@ -192,12 +223,16 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'ETX121226',
         series: 'Escape to Xanadu',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'SnowCones Christmas Dash',
         subtitle: '🎄 You\u0027re Invited to the Xanadu Kink presents Power Exchange Together Christmas Party! 🎄',
         presenters: 'Knight_of_Xanadu and TheGirl_Star',
@@ -207,7 +242,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu122126.jpg',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM121626',
@@ -244,7 +282,7 @@ const EVENTS_DATA = [
     {
         id: 'NYE123126',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'New Years Eve Party',
         subtitle: 'Move Info to Follow',
         presenters: '',
@@ -256,12 +294,16 @@ const EVENTS_DATA = [
         detailPage: '',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'PET010227',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Contracts and Written Agreements',
         presenters: 'Skipinpa',
@@ -273,7 +315,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Country club casual",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM010627',
@@ -304,7 +350,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Forbidden Frostland Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'FF011627',
@@ -318,8 +368,12 @@ const EVENTS_DATA = [
         time: '12:00am - 12:00am',
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
+        dressCode: "Vanilla to the door, fetish inside",
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Forbidden Frostland Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'ETX011627',
@@ -334,7 +388,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        location: 'Forbidden Frostland Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'FF011727',
@@ -349,7 +406,10 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Forbidden Frostland Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'FF011827',
@@ -364,7 +424,10 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'ForbiddenFrostland.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Forbidden Frostland Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'VDM012827',
@@ -385,7 +448,7 @@ const EVENTS_DATA = [
     {
         id: 'PET020627',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Finding Your Dynamic: D/s, M/s, Owner/property and More',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -397,7 +460,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM021027',
@@ -418,7 +485,7 @@ const EVENTS_DATA = [
     {
         id: 'XR021927',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Korral Field Trip - Kink Night at the Korral',
         subtitle: '',
         presenters: '',
@@ -430,7 +497,11 @@ const EVENTS_DATA = [
         detailPage: '',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'The Korral',
+        address: '5932 Colonial Valley Road',
+        cityStateCountry: 'Spring Grove, Pennsylvania, United States'
     },
     {
         id: 'ETX022027',
@@ -445,12 +516,16 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'The Korral',
+        address: '5932 Colonial Valley Road',
+        cityStateCountry: 'Spring Grove, Pennsylvania, United States'
     },
     {
         id: 'XR022027',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Korral Field Trip - Kink Night at the Korral',
         subtitle: '',
         presenters: '',
@@ -462,7 +537,11 @@ const EVENTS_DATA = [
         detailPage: '',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'The Korral',
+        address: '5932 Colonial Valley Road',
+        cityStateCountry: 'Spring Grove, Pennsylvania, United States'
     },
     {
         id: 'VDM022527',
@@ -483,7 +562,7 @@ const EVENTS_DATA = [
     {
         id: 'XR030527',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Cocktail Party',
         subtitle: '',
         presenters: '',
@@ -495,12 +574,16 @@ const EVENTS_DATA = [
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'PET030627',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Consent in a TPE Relationship',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -512,7 +595,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM031027',
@@ -543,7 +630,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM032527',
@@ -564,7 +654,7 @@ const EVENTS_DATA = [
     {
         id: 'PET040327',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'The Responsibilities of Holding Authority',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -576,7 +666,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM040727',
@@ -607,7 +701,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM042227',
@@ -628,7 +725,7 @@ const EVENTS_DATA = [
     {
         id: 'XR043027',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Cocktail Party',
         subtitle: '',
         presenters: '',
@@ -640,12 +737,16 @@ const EVENTS_DATA = [
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'PET050127',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Service and Surrender',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -657,7 +758,10 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM050527',
@@ -688,7 +792,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM052727',
@@ -709,7 +816,7 @@ const EVENTS_DATA = [
     {
         id: 'PET060527',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'When Things Go Wrong: Abuse vs. Power Exchange',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -721,7 +828,10 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM060927',
@@ -752,7 +862,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM062427',
@@ -783,7 +896,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'TESFest.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'TESFest Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'TF070227',
@@ -798,7 +915,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'TESFest.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'TESFest Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'TF070327',
@@ -813,12 +934,16 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'TESFest.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'TESFest Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'PET070327',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Littles After Hours at TESFest',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -830,7 +955,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'TESFest Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'TF070427',
@@ -845,7 +974,11 @@ const EVENTS_DATA = [
         audience: 'Meet us there',
         image: 'TESFest.png',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'TESFest Conference',
+        address: '21 Kingsbridge Rd',
+        cityStateCountry: 'Piscataway, New Jersey, United States'
     },
     {
         id: 'VSM070727',
@@ -861,7 +994,10 @@ const EVENTS_DATA = [
         image: 'VirtualSubmissivesMeetup.png',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'ETX071027',
@@ -876,7 +1012,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM072227',
@@ -923,7 +1062,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM082627',
@@ -944,7 +1086,7 @@ const EVENTS_DATA = [
     {
         id: 'XR091027',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Cocktail Party',
         subtitle: '',
         presenters: '',
@@ -956,12 +1098,16 @@ const EVENTS_DATA = [
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'PET091127',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Training and Shaping Behavior',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -973,7 +1119,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM091527',
@@ -1004,7 +1154,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM092327',
@@ -1025,11 +1178,11 @@ const EVENTS_DATA = [
     {
         id: 'PET100227',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Communication Tools for Power Exchange Couples',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
-        description: 'Practical tools like journals, weekly check-ins, "state of the union" talks and color/status systems that keep the dynamic honest and connected.',
+        description: 'Practical tools like journals, weekly check-ins, state-of-the-union talks and color/status systems that keep the dynamic honest and connected.',
         date: '2027-10-02',
         time: '2:00pm - 4:00pm',
         audience: 'Open to all',
@@ -1037,7 +1190,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM100627',
@@ -1068,7 +1225,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM102827',
@@ -1089,7 +1249,7 @@ const EVENTS_DATA = [
     {
         id: 'XR110527',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'Cocktail Party',
         subtitle: '',
         presenters: '',
@@ -1101,12 +1261,16 @@ const EVENTS_DATA = [
         detailPage: 'CocktailParty.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'PET110627',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Xanadu Kink presents Power Exchange Together',
         subtitle: 'Ownership and Objectification',
         presenters: 'Knight_of_Xanadu and theGirl_Star',
@@ -1118,7 +1282,11 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: 'Country club casual',
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM111027',
@@ -1149,7 +1317,10 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'House of Xanadu',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VDM112527',
@@ -1181,7 +1352,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120327',
@@ -1197,7 +1372,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120427',
@@ -1213,7 +1392,11 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'ETX120427',
@@ -1228,7 +1411,11 @@ const EVENTS_DATA = [
         audience: 'Xanadu Reserve & Escape Members',
         image: 'EscapeToXanadu.png',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Vanilla to the door, fetish inside",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'NN120527',
@@ -1244,12 +1431,15 @@ const EVENTS_DATA = [
         image: 'NN.jpg',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
         id: 'PET121127',
         series: 'Xanadu Kink presents Power Exchange Together',
-        category: 'Xanadu Kink presents Power Exchange Together',
+        category: 'Educational',
         name: 'Christmas Party',
         subtitle: '🎄 You\u0027re Invited to the Xanadu Kink presents Power Exchange Together Christmas Party! 🎄',
         presenters: 'Knight_of_Xanadu and TheGirl_Star',
@@ -1261,7 +1451,10 @@ const EVENTS_DATA = [
         detailPage: 'XPE.html',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: false
+        authRequired: false,
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
         id: 'VSM121527',
@@ -1298,7 +1491,7 @@ const EVENTS_DATA = [
     {
         id: 'NYE123127',
         series: 'Xanadu Reserve',
-        category: 'Xanadu Reserve',
+        category: 'Social',
         name: 'New Years Eve Party',
         subtitle: 'More Info to Follow',
         presenters: '',
@@ -1310,6 +1503,10 @@ const EVENTS_DATA = [
         detailPage: '',
         ticketUrl: '',
         EventUrl: '',
-        authRequired: true
+        authRequired: true,
+        dressCode: "Black tie optional",
+        location: 'Hawk Pointe Golf Club',
+        address: '4 Clubhouse Drive',
+        cityStateCountry: 'Washington, New Jersey, United States'
     }
 ];
