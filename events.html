@@ -712,7 +712,7 @@
                     var where = whereText(ev);
                     var links = [];
                     if (ev.detailPage) links.push('<a href="' + esc(ev.detailPage) + '">More info</a>');
-                    if (ev.EventUrl) links.push('<a href="' + esc(ev.EventUrl) + '" target="_blank" rel="noopener">Event website</a>');
+                    if (ev.Url) links.push('<a href="' + esc(ev.Url) + '" target="_blank" rel="noopener">Event website</a>');
                     if (ev.ticketUrl) links.push('<a href="' + esc(ev.ticketUrl) + '"' + (ev.authRequired ? ' data-auth-required' : '') + '>Tickets</a>');
                     return '<article class="card' + (img ? ' has-image' : '') + '" style="border-left-color:' + esc(colorOf(ev)) + '">'
                         + (img ? eventLinkOpen(ev, 'card-image', ' tabindex="-1"') + '<img src="' + esc(img) + '" alt="" loading="lazy">' + eventLinkClose(ev) : '')
