@@ -243,6 +243,7 @@ summary:focus-visible {
     letter-spacing: 0.04em;
     color: var(--color-ocean-deep);
     text-align: center;
+    margin: 1em 0;  /* same spacing whether it is a <p> or the page's <h1> */
 }
 
 /* ---- Body text classes ---- */
