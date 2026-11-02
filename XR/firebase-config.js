@@ -31,6 +31,8 @@ const db = firebase.firestore();
 
 function initAuthUI() {
     var authLink = document.getElementById('auth-link');
+    // Keep the page's own Login href (events.html lives outside XR/).
+    var loginHref = authLink ? (authLink.getAttribute('href') || 'login.html') : 'login.html';
     var userName = document.getElementById('auth-user-name');
     var gated = document.getElementById('auth-gated');
     var loginPrompt = document.getElementById('login-prompt');
@@ -71,7 +73,7 @@ function initAuthUI() {
             // Logged out
             if (authLink) {
                 authLink.textContent = 'Login';
-                authLink.href = 'login.html';
+                authLink.href = loginHref;
                 authLink.onclick = null;
             }
             if (userName) {

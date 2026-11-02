@@ -12,7 +12,7 @@
 <link rel="canonical" href="https://www.xanadukink.com/events.html">
 <link rel="icon" href="/favicon.ico?v=2" sizes="any">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-<link rel="manifest" href="site.webmanifest">
+<link rel="manifest" href="XR/site.webmanifest">
 <meta name="theme-color" content="#daa520">
 <title>Upcoming Events — Xanadu Reserve</title>
 
@@ -29,7 +29,7 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
-<script src="firebase-config.js"></script>
+<script src="XR/firebase-config.js"></script>
 <script src="events-data.js"></script>
 </head>
 
@@ -41,7 +41,7 @@
             <p class="page_title" style="vertical-align: top;">Xanadu Reserve Events</p>
             <span class="auth-nav">
                 <span id="auth-user-name" style="display:none;"></span>
-                <a id="auth-link" href="login.html">Login</a>
+                <a id="auth-link" href="XR/login.html">Login</a>
                 <div id="auth-gated" style="display: none; text-align: center; font-weight: bold;">
                     Member's only features available
                 </div>
@@ -733,7 +733,7 @@
                     var a = e.target.closest('a[data-auth-required]');
                     if (a && !document.body.classList.contains('user-logged-in')) {
                         e.preventDefault();
-                        window.location.href = 'join.html';
+                        window.location.href = 'XR/join.html';
                     }
                 });
 

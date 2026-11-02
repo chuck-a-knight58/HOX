@@ -20,8 +20,10 @@
 
   var css =
     '@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500&display=swap");' +
+    // The opaque panel covers the page; content is not hidden, so search
+    // engines (which never pass the gate) still see it as visible text.
     'html.xk-gated, html.xk-gated body { overflow: hidden; }' +
-    'html.xk-gated body > *:not(#xk-age-gate) { visibility: hidden; }' +
+    'html.xk-gated::after { content: ""; position: fixed; inset: 0; background: #000; z-index: 2147483646; }' +
     '#xk-age-gate { position: fixed; inset: 0; z-index: 2147483647; overflow-y: auto; background: #000;' +
     '  color: goldenrod; font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;' +
     '  display: flex; align-items: center; justify-content: center; padding: 24px 16px; box-sizing: border-box; }' +
@@ -96,6 +98,9 @@
       '<div><button type="submit">SUBMIT</button></div>' +
       '<p class="xk-error" role="alert"></p>' +
       '</form>';
+    // Keep keyboard and screen-reader users inside the gate.
+    var behind = Array.prototype.slice.call(document.body.children);
+    behind.forEach(function (el) { el.inert = true; });
     document.body.appendChild(gate);
 
     var form = gate.querySelector('form');
@@ -117,6 +122,7 @@
       }
 
       remember(form.remember.checked ? 'localStorage' : 'sessionStorage');
+      behind.forEach(function (el) { el.inert = false; });
       gate.parentNode.removeChild(gate);
       root.classList.remove('xk-gated');
     });
