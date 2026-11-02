@@ -88,14 +88,14 @@ const EVENTS_DATA = [
         cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
-        id: 'VDM112626',
+        id: 'VDM111926',
         series: 'Virtual Dominants Meetup',
         category: 'Educational',
         name: 'Virtual Dominants Meetup',
         subtitle: 'Scene Negotiation',
         cohosts: 'DimpledSadist Knight_of_Xanadu',
         description: 'Learn how to negotiate a scene with clarity and confidence: limits, desires, safewords, and aftercare, with practical tools you can use right away.',
-        date: '2026-11-26',
+        date: '2026-11-19',
         time: '8:00pm - 10:00pm',
         audience: 'Online',
         image: 'VirtualDominantsMeetup.jpg',
