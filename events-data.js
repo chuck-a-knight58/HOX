@@ -91,7 +91,8 @@ const EVENTS_DATA = [
         descriptionFile: 'PlayParty_description.txt',
         ticketUrl: 'https://forbiddentickets.com/events/xanadu-kink/83e47d23ac',
         Url: 'https://fetlife.com/events/2026/11/05/thanksgiving-play-party-gqkqfi',
-        cost: '$25 per person Donation through Forbidden Ticket'
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM111926',
@@ -236,14 +237,14 @@ const EVENTS_DATA = [
         cityStateCountry: 'Washington, New Jersey, United States'
     },
     {
-        id: 'VDM122426',
+        id: 'VDM121726',
         series: 'Virtual Dominants Meetup',
         category: 'Educational',
         name: 'Virtual Dominants Meetup',
-        subtitle: 'The importance of presence and intention',
+        subtitle: 'The Importance of Presence and Intention',
         cohosts: 'DimpledSadist Knight_of_Xanadu',
         description: 'This meeting we will discuss the importance of presence and intention in a dynamic and in scenes.',
-        date: '2026-12-24',
+        date: '2026-12-17',
         time: '8:00pm - 10:00pm',
         audience: 'Online',
         image: 'VirtualDominantsMeetup.jpg',
@@ -253,8 +254,7 @@ const EVENTS_DATA = [
         coverImage: 'VDMSq.jpg',
         requestOnly: false,
         privacy: 'public',
-        ticketUrl: '',
-        Url: '',
+        Url: 'https://fetlife.com/events/2026/12/17/virtual-dominants-meetup-lt1qhe',
         authRequired: false,
         wheelchairAccessible: false
     },
@@ -535,7 +535,9 @@ const EVENTS_DATA = [
         dressCode: "Vanilla to the door, fetish inside",
         location: 'The Korral',
         address: '5932 Colonial Valley Road',
-        cityStateCountry: 'Spring Grove, Pennsylvania, United States'
+        cityStateCountry: 'Spring Grove, Pennsylvania, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'XR022027',
@@ -668,7 +670,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM032527',
@@ -757,7 +761,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM042227',
@@ -867,7 +873,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM052727',
@@ -955,7 +963,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM062427',
@@ -1120,7 +1130,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM072227',
@@ -1185,7 +1197,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM082627',
@@ -1296,7 +1310,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM092327',
@@ -1385,7 +1401,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM102827',
@@ -1496,7 +1514,9 @@ const EVENTS_DATA = [
         wheelchairAccessible: true,
         dressCode: "Vanilla to the door, fetish inside",
         location: 'House of Xanadu',
-        cityStateCountry: 'Washington, New Jersey, United States'
+        cityStateCountry: 'Washington, New Jersey, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'VDM112527',
@@ -1602,7 +1622,9 @@ const EVENTS_DATA = [
         dressCode: "Vanilla to the door, fetish inside",
         location: 'Naughty Noel Conference',
         address: '2634 Emmitsburg Road',
-        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States',
+        cost: 'Paid',
+        costDetails: '$25 per person Donation through Forbidden Ticket'
     },
     {
         id: 'NN120527',
