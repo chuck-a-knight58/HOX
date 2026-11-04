@@ -259,6 +259,28 @@ const EVENTS_DATA = [
         wheelchairAccessible: false
     },
     {
+        id: 'VDM121726a',
+        series: 'Test Event',
+        category: 'Educational',
+        name: 'Test Event',
+        subtitle: 'The Importance of Presence and Intention2',
+        cohosts: 'DimpledSadist Knight_of_Xanadu',
+        description: 'This meeting we will discuss the importance of presence and intention in a dynamic and in scenes.',
+        date: '2026-12-18',
+        time: '8:00pm - 10:00pm',
+        audience: 'Online',
+        image: 'VirtualDominantsMeetup.jpg',
+        location: 'To be announced prior to event',
+        descriptionFile: 'VDMSq_description.txt',
+        dressCode: 'Please be dressed on camera.',
+        coverImage: 'VDMSq.jpg',
+        requestOnly: false,
+        privacy: 'public',
+        Url: 'https://fetlife.com/events/2026/12/18/test-event-kssg5d',
+        authRequired: false,
+        wheelchairAccessible: false
+    },
+    {
         id: 'NYE123126',
         series: 'Xanadu Reserve',
         category: 'Social',
