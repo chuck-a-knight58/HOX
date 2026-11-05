@@ -31,34 +31,6 @@
 <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
 <script src="XR/firebase-config.js"></script>
 <script src="events-data.js"></script>
-</head>
-
-<body style="color: rgb(171, 119, 14);">
-
-    <div>
-
-        <div class="page-header">
-            <h1 class="page_title" style="vertical-align: top;">Xanadu Reserve Events</h1>
-            <span class="auth-nav">
-                <span id="auth-user-name" style="display:none;"></span>
-                <a id="auth-link" href="XR/login.html">Login</a>
-                <div id="auth-gated" style="display: none; text-align: center; font-weight: bold;">
-                    Member's only features available
-                </div>
-            </span>
-        </div>
-
-        <div w3-include-html="nav.html"></div>
-
-        <!--
-          The events calendar, from events-data.js. Ported from
-          community_calendar.html: a calendar (an overview of every month with a
-          hover card per day, and Month / Week / Day views) and a list view, with
-          a search box, a legend that hides or shows each category, and a list of
-          words whose events are hidden. The chosen views are remembered.
-          Clicking a date opens that day's list in a separate tab, the same one
-          every time (events.html#day=YYYY-MM-DD).
-        -->
         <style>
             .xr-cal {
                 --gold: goldenrod;
@@ -432,6 +404,34 @@
                 .xr-cal .wv-col.out { display: none; }
             }
         </style>
+</head>
+
+<body style="color: rgb(171, 119, 14);">
+
+    <div>
+
+        <div class="page-header">
+            <h1 class="page_title" style="vertical-align: top;">Xanadu Reserve Events</h1>
+            <div class="auth-nav">
+                <span id="auth-user-name" style="display:none;"></span>
+                <a id="auth-link" href="XR/login.html">Login</a>
+                <div id="auth-gated" style="display: none; text-align: center; font-weight: bold;">
+                    Member's only features available
+                </div>
+            </div>
+        </div>
+
+        <div data-w3-include-html="nav.html"></div>
+
+        <!--
+          The events calendar, from events-data.js. Ported from
+          community_calendar.html: a calendar (an overview of every month with a
+          hover card per day, and Month / Week / Day views) and a list view, with
+          a search box, a legend that hides or shows each category, and a list of
+          words whose events are hidden. The chosen views are remembered.
+          Clicking a date opens that day's list in a separate tab, the same one
+          every time (events.html#day=YYYY-MM-DD).
+        -->
 
         <div class="xr-cal">
             <div class="controls">
@@ -1067,7 +1067,7 @@
             })();
         </script>
 
-        <div w3-include-html="footer.html"></div>
+        <div data-w3-include-html="footer.html"></div>
         <script>
             includeHTML();
             initAuthUI();

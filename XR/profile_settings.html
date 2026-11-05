@@ -66,6 +66,10 @@
         margin-bottom: 4px;
         opacity: 0.85;
     }
+    .m-card label > span.readonly-field {
+        margin-bottom: 0;
+        opacity: 1;
+    }
     .readonly-field {
         padding: 8px;
         background: #1a1a1a;
@@ -118,7 +122,7 @@
             </span>
         </div>
 
-        <div w3-include-html="nav.html"></div>
+        <div data-w3-include-html="nav.html"></div>
 
         <div id="page-loading">Loading...</div>
 
@@ -136,10 +140,10 @@
                 <form id="profile-form" onsubmit="return saveProfile(event);">
 
                     <label><span>Name</span>
-                        <div class="readonly-field" id="f-name">&mdash;</div>
+                        <span class="readonly-field" id="f-name">&mdash;</span>
                     </label>
                     <label><span>Email</span>
-                        <div class="readonly-field" id="f-email">&mdash;</div>
+                        <span class="readonly-field" id="f-email">&mdash;</span>
                     </label>
 
                     <label><span>Preferred Name / Nickname</span>
@@ -272,7 +276,7 @@
             }
         </script>
 
-        <div w3-include-html="footer.html"></div>
+        <div data-w3-include-html="footer.html"></div>
         <script>
             includeHTML();
             initAuthUI();
