@@ -9,6 +9,8 @@
 //   subtitle     - optional extra line under the name (empty string if none)
 //   cohosts      - optional FetLife nicknames of co-hosts, separated by spaces (empty string if none)
 //   description  - optional longer description of the event (empty string if none)
+//   descriptionFile - optional text file in assets/ shown after description
+//                  (the combined text is cut to 25 lines on the cards and hover card)
 //   date         - ISO date "YYYY-MM-DD" (drives the calendar and is auto-formatted)
 //   time         - free-form time range string for the card
 //   audience     - free-form audience/membership line
