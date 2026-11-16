@@ -14,11 +14,20 @@
 //   date         - ISO date "YYYY-MM-DD" (drives the calendar and is auto-formatted)
 //   time         - free-form time range string for the card
 //   audience     - free-form audience/membership line
-//   image        - filename in  for the card thumbnail
+//   image        - filename in assets/ for the card thumbnail
+//   coverImage   - optional filename in assets/ for the FetLife event's cover image
+//                  (post-event uses image when there is none; not shown on this site)
 //   detailPage   - HTML file linked from "More info" and the image
 //   ticketUrl    - external ticket purchase URL
-//   Url          - optional web page for the event, such as its FetLife event (empty string if none)
+//   Url          - optional web page for the event, such as its FetLife event (empty string if none;
+//                  every entry should have the field, even when empty)
 //   authRequired - true if the Tickets link should redirect logged-out users to join.html
+//   cost         - optional 'free' or 'paid' (FetLife only; without it, post-event treats an
+//                  event with a ticketUrl as paid and any other as free)
+//   costDetails  - optional note about cost shown on the FetLife event (e.g. "Please order food")
+//   requestOnly  - true if the FetLife event is request-to-attend (FetLife only)
+//   privacy      - 'public', 'fetlifers', 'friends' or 'private'; recorded for reference,
+//                  not read by this site or post-event
 //   wheelchairAccessible - true if the venue is wheelchair accessible (post-event marks the FetLife event so)
 //   dressCode    - optional dress code shown on the card
 //   location     - optional venue name
@@ -386,6 +395,7 @@ const EVENTS_DATA = [
         audience: 'Open to all',
         coverImage: 'StoryTime.jpg',
         image: 'StoryTime.jpg',
+        Url: '',
         authRequired: false,
         wheelchairAccessible: true,
         dressCode: "See venue requirements",
@@ -1070,6 +1080,7 @@ const EVENTS_DATA = [
         audience: 'Open to all',
         coverImage: 'StoryTime.jpg',
         image: 'StoryTime.jpg',
+        Url: '',
         authRequired: false,
         wheelchairAccessible: true,
         dressCode: "See venue requirements",
