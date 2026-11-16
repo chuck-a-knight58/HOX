@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex">
+<title>BroMeter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --red: #ff1f3d;
+        --red-hot: #ff6b7d;
+        --red-mid: #c4102a;
+        --red-dim: #4a0610;
+        --red-off: #23050a;
+        --amber: #ffb02e;
+        --panel: #17171a;
+        --panel-2: #222227;
+        --steel: #3a3a42;
+        --steel-hi: #6b6b78;
+        --label: #c9c9d2;
+        --ink: #ffe3e7;
+    }
+    * { box-sizing: border-box; }
+    body {
+        margin: 0;
+        min-height: 100vh;
+        padding: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background:
+            radial-gradient(ellipse at center, #2a0007 0%, #0a0002 70%),
+            #0a0002;
+        color: var(--ink);
+        font-family: "Share Tech Mono", ui-monospace, Menlo, monospace;
+        overflow-x: hidden;
+    }
+
+    /* ---------- Chassis ---------- */
+    .chassis {
+        position: relative;
+        width: 100%;
+        max-width: 980px;
+        padding: 22px;
+        border-radius: 10px;
+        background:
+            repeating-linear-gradient(90deg, rgba(255, 255, 255, .025) 0 1px, transparent 1px 3px),
+            linear-gradient(180deg, #2c2c33, #16161a 40%, #1d1d22);
+        border: 2px solid #050506;
+        box-shadow:
+            inset 0 1px 0 rgba(255, 255, 255, .12),
+            inset 0 0 0 6px #101013,
+            0 0 0 2px #333,
+            0 0 60px rgba(255, 20, 50, .35),
+            0 30px 80px rgba(0, 0, 0, .9);
+    }
+    .rivet {
+        position: absolute;
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #9a9aa6, #3a3a42 60%, #111);
+        box-shadow: 0 1px 1px rgba(0, 0, 0, .8);
+    }
+    .rivet::after { content: ""; position: absolute; left: 2px; right: 2px; top: 5px; height: 2px; background: #1a1a1f; transform: rotate(35deg); }
+    .rivet.tl { top: 8px; left: 8px; } .rivet.tr { top: 8px; right: 8px; }
+    .rivet.bl { bottom: 8px; left: 8px; } .rivet.br { bottom: 8px; right: 8px; }
+
+    .grid { display: grid; gap: 14px; grid-template-columns: minmax(0, 1fr) minmax(0, 1.6fr) minmax(0, 1fr); }
+    @media (max-width: 820px) { .grid { grid-template-columns: 1fr; } }
+
+    .module {
+        position: relative;
+        background: linear-gradient(180deg, var(--panel-2), var(--panel));
+        border: 1px solid #000;
+        border-radius: 6px;
+        padding: 12px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, .07), inset 0 0 18px rgba(0, 0, 0, .7);
+    }
+    .plate {
+        display: inline-block;
+        font-size: .68rem;
+        letter-spacing: .18em;
+        color: var(--label);
+        background: #0c0c0e;
+        border: 1px solid #44444c;
+        padding: 2px 8px;
+        border-radius: 2px;
+        margin-bottom: 10px;
+        text-transform: uppercase;
+    }
+
+    /* ---------- Header ---------- */
+    header.module {
+        grid-column: 1 / -1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        flex-wrap: wrap;
+    }
+    h1 {
+        margin: 0;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 900;
+        font-size: clamp(2rem, 7vw, 3.4rem);
+        letter-spacing: .14em;
+        color: var(--red);
+        text-shadow: 0 0 6px var(--red), 0 0 22px rgba(255, 31, 61, .8), 0 0 44px rgba(255, 31, 61, .5);
+        animation: flicker 7s infinite;
+    }
+    @keyframes flicker {
+        0%, 92%, 94%, 97%, 100% { opacity: 1; }
+        93%, 96% { opacity: .55; }
+    }
+    .model { font-size: .75rem; color: var(--label); letter-spacing: .2em; line-height: 1.6; text-align: right; }
+    .model b { color: var(--red-hot); font-weight: normal; }
+
+    /* ---------- LEDs ---------- */
+    .led {
+        width: 12px; height: 12px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 35% 35%, #4a1018, var(--red-off) 70%);
+        border: 1px solid #000;
+        box-shadow: inset 0 0 2px #000;
+        transition: background .06s, box-shadow .06s;
+    }
+    .led.on {
+        background: radial-gradient(circle at 35% 35%, #fff 0%, var(--red-hot) 25%, var(--red) 60%, var(--red-mid));
+        box-shadow: 0 0 6px var(--red), 0 0 14px rgba(255, 31, 61, .7);
+    }
+    .led.amber.on {
+        background: radial-gradient(circle at 35% 35%, #fff 0%, #ffd27a 25%, var(--amber) 60%, #a86400);
+        box-shadow: 0 0 6px var(--amber), 0 0 14px rgba(255, 176, 46, .6);
+    }
+    .bank { display: grid; gap: 6px; justify-content: center; }
+    .bank.wide { grid-template-columns: repeat(16, 12px); }
+    .bank.narrow { grid-template-columns: repeat(8, 12px); }
+    .bank + .bank { margin-top: 12px; }
+    .bank-row-label { display: flex; justify-content: space-between; font-size: .6rem; color: #7c7c88; margin-top: 4px; letter-spacing: .1em; }
+
+    /* ---------- Equalizer ---------- */
+    .eq {
+        display: flex;
+        gap: 4px;
+        align-items: flex-end;
+        height: 150px;
+        padding: 8px;
+        background: #070708;
+        border: 1px solid #000;
+        border-radius: 3px;
+        box-shadow: inset 0 0 20px #000;
+    }
+    .eq .col { flex: 1; display: flex; flex-direction: column-reverse; gap: 2px; height: 100%; }
+    .eq .seg { flex: 1; border-radius: 1px; background: #200308; }
+    .eq .seg.on { background: var(--red); box-shadow: 0 0 6px rgba(255, 31, 61, .8); }
+    .eq .seg.on.top { background: var(--red-hot); }
+    .eq .seg.peak { background: #fff; box-shadow: 0 0 6px #fff; }
+    .fill { display: flex; flex-direction: column; align-items: flex-start; }
+    .fill .eq { flex: 1; width: 100%; min-height: 150px; height: auto; }
+    .fill .eq-scale { width: 100%; }
+    .eq-scale { display: flex; justify-content: space-between; font-size: .6rem; color: #7c7c88; margin-top: 4px; letter-spacing: .08em; }
+
+    /* ---------- Main meter ---------- */
+    .meter-wrap {
+        background: radial-gradient(ellipse at 50% 100%, #2a0309, #0b0103 70%);
+        border: 1px solid #000;
+        border-radius: 4px;
+        box-shadow: inset 0 0 30px #000, inset 0 0 0 3px #1a1a1f;
+        padding: 10px 10px 0;
+    }
+    svg.dial { width: 100%; height: auto; display: block; }
+    .dial-num { fill: var(--red-hot); font-size: 13px; font-family: "Share Tech Mono", monospace; }
+    .dial-end { fill: var(--red); font-family: "Orbitron", sans-serif; font-weight: 900; font-size: 40px; }
+    #needle {
+        transform-origin: 250px 240px;
+        transform: rotate(-90deg);
+        transition: transform 3s cubic-bezier(.3, 1.5, .45, 1);
+    }
+
+    /* 7-segment-style readout */
+    .readout-row { display: flex; align-items: stretch; gap: 10px; margin-top: 12px; }
+    .readout {
+        flex: 1;
+        min-width: 0;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        position: relative;
+        background: #0a0003;
+        border: 2px solid #000;
+        border-radius: 4px;
+        box-shadow: inset 0 0 20px #000, 0 0 0 1px #44444c;
+        text-align: right;
+        padding: 6px 16px;
+        font-family: "Orbitron", sans-serif;
+        font-weight: 700;
+        font-size: clamp(2.2rem, 7vw, 3.4rem);
+        line-height: 1.1;
+        white-space: nowrap;
+        color: var(--red);
+        text-shadow: 0 0 8px var(--red), 0 0 24px rgba(255, 31, 61, .7);
+        font-variant-numeric: tabular-nums;
+        overflow: hidden;
+    }
+    /* Fixed-width character cells ("DD.D%") so the display never changes size
+       as the number changes; each cell shows its unlit segments behind it. */
+    .readout .cell { position: relative; display: inline-block; text-align: center; width: .82em; }
+    .readout .cell.dot { width: .32em; }
+    .readout .cell.pct { width: .95em; }
+    .readout .cell::before {
+        content: attr(data-ghost);
+        position: absolute;
+        inset: 0;
+        color: rgba(255, 31, 61, .08);
+        text-shadow: none;
+    }
+    .readout .cell span { position: relative; }
+    .readout.scramble { color: var(--red-hot); }
+    .status {
+        width: 110px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 6px;
+        font-size: .65rem;
+        letter-spacing: .12em;
+        color: var(--label);
+    }
+    .status div { display: flex; align-items: center; gap: 6px; }
+
+    /* ---------- Switches ---------- */
+    .switches { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; margin-top: 12px; }
+    .switch { text-align: center; font-size: .55rem; color: #7c7c88; letter-spacing: .08em; }
+    .toggle {
+        position: relative;
+        width: 22px; height: 34px;
+        margin: 0 auto 4px;
+        border-radius: 4px;
+        background: linear-gradient(180deg, #0c0c0e, #26262c);
+        border: 1px solid #000;
+    }
+    .toggle::after {
+        content: "";
+        position: absolute;
+        left: 5px;
+        width: 10px; height: 18px;
+        border-radius: 5px;
+        background: linear-gradient(90deg, #6b6b78, #d8d8e0, #6b6b78);
+        top: 2px;
+        transition: top .15s;
+    }
+    .toggle.down::after { top: 14px; }
+
+    /* ---------- Terminal ---------- */
+    .terminal {
+        height: 150px;
+        overflow: hidden;
+        background: #070001;
+        border: 1px solid #000;
+        border-radius: 3px;
+        padding: 6px 8px;
+        font-size: .72rem;
+        line-height: 1.35;
+        color: var(--red);
+        text-shadow: 0 0 4px rgba(255, 31, 61, .8);
+        box-shadow: inset 0 0 20px #000;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        white-space: nowrap;
+    }
+    .terminal .hot { color: #fff; text-shadow: 0 0 6px var(--red); }
+
+    /* ---------- Oscilloscope ---------- */
+    canvas.scope {
+        width: 100%;
+        height: 110px;
+        display: block;
+        background:
+            linear-gradient(rgba(255, 31, 61, .12) 1px, transparent 1px) 0 0 / 100% 20%,
+            linear-gradient(90deg, rgba(255, 31, 61, .12) 1px, transparent 1px) 0 0 / 10% 100%,
+            #070001;
+        border: 1px solid #000;
+        border-radius: 3px;
+        box-shadow: inset 0 0 20px #000;
+    }
+
+    /* ---------- Hazard strip ---------- */
+    .hazard {
+        grid-column: 1 / -1;
+        height: 14px;
+        border-radius: 3px;
+        background: repeating-linear-gradient(-45deg, var(--red) 0 14px, #111 14px 28px);
+        background-size: 40px 40px;
+        animation: march 1s linear infinite;
+        opacity: .9;
+        box-shadow: 0 0 12px rgba(255, 31, 61, .5);
+    }
+    @keyframes march { to { background-position: 40px 0; } }
+
+    /* CRT scanlines over everything */
+    .scanlines {
+        position: fixed; inset: 0; pointer-events: none; z-index: 10;
+        background: repeating-linear-gradient(180deg, rgba(0, 0, 0, .18) 0 1px, transparent 1px 3px);
+        mix-blend-mode: multiply;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        h1, .hazard { animation: none; }
+        #needle { transition-duration: .01s; }
+    }
+</style>
+</head>
+<body>
+<div class="scanlines" aria-hidden="true"></div>
+
+<div class="chassis">
+    <span class="rivet tl"></span><span class="rivet tr"></span>
+    <span class="rivet bl"></span><span class="rivet br"></span>
+
+    <div class="grid">
+        <header class="module">
+            <h1>BROMETER</h1>
+            <div class="model">
+                MODEL <b>BX-9000</b> · QUANTUM BRO ANALYZER<br>
+                SERIAL <b id="serial">----</b> · CORE <b id="core">NOMINAL</b>
+            </div>
+        </header>
+
+        <!-- Left column: light banks + switches -->
+        <section class="module" aria-hidden="true">
+            <span class="plate">Core Matrix</span>
+            <div class="bank wide" id="bank1"></div>
+            <div class="bank-row-label"><span>00</span><span>CH-A</span><span>0F</span></div>
+            <div class="bank wide" id="bank2"></div>
+            <div class="bank-row-label"><span>10</span><span>CH-B</span><span>1F</span></div>
+            <div class="switches" id="switches"></div>
+            <div class="bank narrow" id="bank3" style="margin-top:12px"></div>
+            <div class="bank-row-label"><span>ACCUM</span><span>REG 7</span></div>
+        </section>
+
+        <!-- Centre: the meter -->
+        <section class="module">
+            <span class="plate">Primary Bro Flux Indicator</span>
+            <div class="meter-wrap">
+                <svg class="dial" viewBox="0 0 500 270" role="img" aria-labelledby="meter-desc">
+                    <desc id="meter-desc">A dial from 0% (S) to 100% (G)</desc>
+                    <defs>
+                        <filter id="glow" filterUnits="userSpaceOnUse" x="-50" y="-50" width="600" height="370">
+                            <feGaussianBlur stdDeviation="2.5" result="b"/>
+                            <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+                        </filter>
+                        <linearGradient id="arc" x1="0" y1="0" x2="1" y2="0">
+                            <stop offset="0" stop-color="#5a0612"/>
+                            <stop offset=".6" stop-color="#ff1f3d"/>
+                            <stop offset="1" stop-color="#ff8a98"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 240 A200 200 0 0 1 450 240" fill="none" stroke="#1a0206" stroke-width="22"/>
+                    <path d="M50 240 A200 200 0 0 1 450 240" fill="none" stroke="url(#arc)" stroke-width="8" filter="url(#glow)"/>
+                    <g id="dial-leds"></g>
+                    <g id="ticks"></g>
+                    <text class="dial-end" x="50" y="268" text-anchor="middle" filter="url(#glow)">S</text>
+                    <text class="dial-end" x="450" y="268" text-anchor="middle" filter="url(#glow)">G</text>
+                    <g id="needle" filter="url(#glow)">
+                        <line x1="250" y1="240" x2="250" y2="58" stroke="#ff1f3d" stroke-width="4" stroke-linecap="round"/>
+                        <line x1="250" y1="240" x2="250" y2="58" stroke="#fff" stroke-width="1.2" stroke-linecap="round"/>
+                    </g>
+                    <circle cx="250" cy="240" r="18" fill="#26262c" stroke="#6b6b78" stroke-width="2"/>
+                    <circle cx="250" cy="240" r="7" fill="#ff1f3d" filter="url(#glow)"/>
+                </svg>
+            </div>
+            <div class="readout-row">
+                <div class="readout scramble" id="readout" aria-live="polite"><span id="digits"><span class="cell" data-ghost="8"><span></span></span><span class="cell" data-ghost="8"><span></span></span><span class="cell dot" data-ghost="."><span></span></span><span class="cell" data-ghost="8"><span></span></span><span class="cell pct" data-ghost="%"><span>%</span></span></span></div>
+                <div class="status" aria-hidden="true">
+                    <div><span class="led on" id="st-pwr"></span>PWR</div>
+                    <div><span class="led amber" id="st-calc"></span>CALC</div>
+                    <div><span class="led" id="st-lock"></span>LOCK</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right column: equalizer + scope + terminal -->
+        <section class="module fill" aria-hidden="true">
+            <span class="plate">Harmonic Spectrum</span>
+            <div class="eq" id="eq"></div>
+            <div class="eq-scale"><span>31</span><span>125</span><span>500</span><span>2K</span><span>8K</span><span>16K</span></div>
+        </section>
+
+        <section class="module" aria-hidden="true" style="grid-column: span 1">
+            <span class="plate">Waveform</span>
+            <canvas class="scope" id="scope"></canvas>
+        </section>
+        <section class="module" aria-hidden="true">
+            <span class="plate">System Log</span>
+            <div class="terminal" id="terminal"></div>
+        </section>
+        <section class="module" aria-hidden="true">
+            <span class="plate">Aux Banks</span>
+            <div class="bank narrow" id="bank4"></div>
+            <div class="bank narrow" id="bank5"></div>
+            <div class="bank narrow" id="bank6"></div>
+            <div class="bank-row-label"><span>SECTOR 9</span><span>PARITY</span></div>
+        </section>
+
+        <div class="hazard" aria-hidden="true"></div>
+    </div>
+</div>
+
+<script>
+    var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function $(id) { return document.getElementById(id); }
+    function rnd(n) { return Math.floor(Math.random() * n); }
+
+    // ---------- The reading: bell curve centred on 15%, never above 45 ----------
+    // Normal distribution (mean 15, std dev 10), redrawn until it falls in 0–45.
+    var MEAN = 15, SD = 10, MIN = 0, MAX = 45;
+    function bellValue() {
+        var v;
+        do {
+            var u = 1 - Math.random(), w = Math.random();   // Box-Muller
+            v = MEAN + SD * Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * w);
+        } while (v < MIN || v > MAX);
+        return Math.round(v * 10) / 10;
+    }
+    // A reading can be passed in the URL, e.g. BroMeter.html?pct=23.5
+    // (0 to 99.9, one decimal place; the display has room for "DD.D%"). Without a
+    // valid one, the bell curve picks it.
+    function urlValue() {
+        var raw = new URLSearchParams(location.search).get('pct');
+        if (raw === null) return null;
+        var v = parseFloat(raw.replace('%', ''));
+        if (!isFinite(v)) return null;
+        return Math.round(Math.max(0, Math.min(99.9, v)) * 10) / 10;
+    }
+    var fromUrl = urlValue();
+    var TARGET = fromUrl !== null ? fromUrl : bellValue();
+
+    // ---------- Light banks ----------
+    function makeBank(id, n, amberEvery) {
+        var el = $(id), leds = [];
+        for (var i = 0; i < n; i++) {
+            var d = document.createElement('span');
+            d.className = 'led' + (amberEvery && i % amberEvery === amberEvery - 1 ? ' amber' : '');
+            el.appendChild(d); leds.push(d);
+        }
+        return leds;
+    }
+    var banks = [
+        { leds: makeBank('bank1', 48, 0), mode: 'random', rate: .18 },
+        { leds: makeBank('bank2', 48, 8), mode: 'counter', n: 0 },
+        { leds: makeBank('bank3', 16, 4), mode: 'chase', n: 0 },
+        { leds: makeBank('bank4', 24, 0), mode: 'random', rate: .35 },
+        { leds: makeBank('bank5', 24, 3), mode: 'scan', n: 0 },
+        { leds: makeBank('bank6', 24, 0), mode: 'random', rate: .1 }
+    ];
+    function tickBanks() {
+        banks.forEach(function (b) {
+            var L = b.leds;
+            if (b.mode === 'random') {
+                L.forEach(function (d) { if (Math.random() < b.rate) d.classList.toggle('on'); });
+            } else if (b.mode === 'counter') {   // binary counter across each row of 16
+                b.n = (b.n + 1) % 65536;
+                for (var r = 0; r < L.length / 16; r++)
+                    for (var i = 0; i < 16; i++)
+                        L[r * 16 + 15 - i].classList.toggle('on', ((b.n * (r + 1) * 7919) >> i & 1) === 1);
+            } else if (b.mode === 'chase') {
+                b.n = (b.n + 1) % L.length;
+                L.forEach(function (d, i) { d.classList.toggle('on', (i - b.n + L.length) % L.length < 3); });
+            } else if (b.mode === 'scan') {
+                b.n = (b.n + 1) % (L.length * 2 - 2);
+                var p = b.n < L.length ? b.n : L.length * 2 - 2 - b.n;
+                L.forEach(function (d, i) { d.classList.toggle('on', Math.abs(i - p) < 2); });
+            }
+        });
+    }
+
+    // ---------- Toggle switches ----------
+    var switchNames = ['ION', 'FLUX', 'BRO', 'AUX', 'GAIN', 'SYNC'], toggles = [];
+    switchNames.forEach(function (n) {
+        var s = document.createElement('div'); s.className = 'switch';
+        var t = document.createElement('div'); t.className = 'toggle' + (Math.random() < .5 ? ' down' : '');
+        s.appendChild(t); s.appendChild(document.createTextNode(n));
+        $('switches').appendChild(s); toggles.push(t);
+    });
+
+    // ---------- Equalizer ----------
+    var EQ_COLS = 16, EQ_SEGS = 18, eqCols = [], eqLevel = [], eqPeak = [];
+    for (var c = 0; c < EQ_COLS; c++) {
+        var col = document.createElement('div'); col.className = 'col';
+        var segs = [];
+        for (var s = 0; s < EQ_SEGS; s++) { var sg = document.createElement('div'); sg.className = 'seg'; col.appendChild(sg); segs.push(sg); }
+        $('eq').appendChild(col); eqCols.push(segs); eqLevel.push(0); eqPeak.push(0);
+    }
+    var t0 = performance.now();
+    function tickEq(now) {
+        var t = (now - t0) / 1000;
+        for (var c = 0; c < EQ_COLS; c++) {
+            var base = .55 + .35 * Math.sin(t * (2.1 + c * .37) + c) * Math.sin(t * 1.3 + c * .8);
+            var target = Math.max(0, Math.min(1, base + (Math.random() - .5) * .45 - c * .015));
+            eqLevel[c] += (target - eqLevel[c]) * .45;
+            var lit = Math.round(eqLevel[c] * EQ_SEGS);
+            if (lit >= eqPeak[c]) eqPeak[c] = lit; else eqPeak[c] = Math.max(lit, eqPeak[c] - .25);
+            var pk = Math.min(EQ_SEGS - 1, Math.round(eqPeak[c]));
+            for (var s = 0; s < EQ_SEGS; s++) {
+                var seg = eqCols[c][s];
+                seg.className = 'seg' + (s < lit ? ' on' + (s > EQ_SEGS * .75 ? ' top' : '') : '') + (s === pk && pk >= lit ? ' peak' : '');
+            }
+        }
+    }
+
+    // ---------- Oscilloscope ----------
+    var scope = $('scope'), sctx = scope.getContext('2d');
+    function sizeScope() {
+        var d = window.devicePixelRatio || 1, r = scope.getBoundingClientRect();
+        scope.width = r.width * d; scope.height = r.height * d; sctx.setTransform(d, 0, 0, d, 0, 0);
+    }
+    addEventListener('resize', sizeScope); sizeScope();
+    function tickScope(now) {
+        var w = scope.clientWidth, h = scope.clientHeight, t = now / 1000;
+        if (scope.width !== Math.round(w * (window.devicePixelRatio || 1))) sizeScope();
+        sctx.clearRect(0, 0, w, h);
+        sctx.lineWidth = 2; sctx.strokeStyle = '#ff1f3d'; sctx.shadowColor = '#ff1f3d'; sctx.shadowBlur = 8;
+        sctx.beginPath();
+        for (var x = 0; x <= w; x += 2) {
+            var p = x / w;
+            var y = h / 2 + Math.sin(p * 18 + t * 6) * h * .22 * Math.sin(t * 1.7)
+                          + Math.sin(p * 47 - t * 9) * h * .09 + (Math.random() - .5) * 3;
+            if (x === 0) sctx.moveTo(x, y); else sctx.lineTo(x, y);
+        }
+        sctx.stroke();
+    }
+
+    // ---------- System log ----------
+    var term = $('terminal'), LINES = [
+        'INIT BRO-CORE ......... OK', 'LOAD FLUX TABLES ...... OK', 'CALIBRATE S/G AXIS .... OK',
+        'SPIN UP TACHYON BUS', 'HANDSHAKE 0x{h}', 'SAMPLING AURA @ {n} kHz', 'FIST-BUMP COEFF {f}',
+        'CROSS-REF PROTEIN LOG', 'CHECKSUM 0x{h}{h}', 'BUFFER {n}% FULL', 'DEFRAG VIBES ...... OK',
+        'QUERY GYM SCHEDULE', 'NORMALIZING SWAGGER', 'PING CREW NODE {n}', 'SECTOR {n} CLEAR'
+    ];
+    function fill(s) {
+        return s.replace(/\{h\}/g, function () { return (0x1000 + rnd(0xefff)).toString(16).toUpperCase(); })
+                .replace(/\{n\}/g, function () { return rnd(990) + 10; })
+                .replace(/\{f\}/g, function () { return (Math.random() * 9).toFixed(3); });
+    }
+    function log(text, hot) {
+        var line = document.createElement('div');
+        line.textContent = '> ' + text;
+        if (hot) line.className = 'hot';
+        term.appendChild(line);
+        while (term.children.length > 12) term.removeChild(term.firstChild);
+    }
+
+    // ---------- Dial decoration ----------
+    (function () {
+        var NS = 'http://www.w3.org/2000/svg';
+        function pt(p, r) { var a = Math.PI * (1 - p / 100); return [250 + r * Math.cos(a), 240 - r * Math.sin(a)]; }
+        function el(n, a, parent) { var e = document.createElementNS(NS, n); for (var k in a) e.setAttribute(k, a[k]); parent.appendChild(e); return e; }
+        var g = $('ticks');
+        for (var p = 0; p <= 100; p += 2) {
+            var major = p % 10 === 0, a = pt(p, 188), b = pt(p, major ? 166 : 178);
+            el('line', { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: major ? '#ff6b7d' : '#7a1020', 'stroke-width': major ? 2.5 : 1 }, g);
+            if (major && p > 0 && p < 100) {
+                var q = pt(p, 148);
+                el('text', { x: q[0], y: q[1] + 4, 'text-anchor': 'middle', 'class': 'dial-num' }, g).textContent = p;
+            }
+        }
+        // A ring of LEDs around the dial that light up to the reading.
+        var dl = $('dial-leds');
+        window.dialLeds = [];
+        for (var i = 0; i <= 40; i++) {
+            var c = pt(i * 2.5, 212);
+            dialLeds.push(el('circle', { cx: c[0], cy: c[1], r: 4, fill: '#2a0309', stroke: '#000' }, dl));
+        }
+    })();
+    function setDialLeds(pct) {
+        dialLeds.forEach(function (c, i) {
+            var on = i * 2.5 <= pct;
+            c.setAttribute('fill', on ? '#ff1f3d' : '#2a0309');
+            c.setAttribute('filter', on ? 'url(#glow)' : '');
+        });
+    }
+
+    // ---------- Measurement sequence ----------
+    var digits = $('digits'), readout = $('readout'), phase = 'calc', shown = 0;
+    var cells = digits.querySelectorAll('.cell > span');
+    // Write a number into the fixed cells as "DD.D" (a leading zero stays unlit).
+    function showNumber(v) {
+        var s = Math.min(v, 99.9).toFixed(1);
+        if (s.length < 4) s = ' ' + s;
+        cells[0].textContent = s[0] === ' ' ? '' : s[0];
+        cells[1].textContent = s[1];
+        cells[2].textContent = '.';
+        cells[3].textContent = s[3];
+    }
+    showNumber(0);
+    $('serial').textContent = 'BX-' + (10000 + rnd(89999));
+    LINES.slice(0, 3).forEach(function (l) { log(l); });
+
+    function measure() {
+        log('BEGIN BRO MEASUREMENT', true);
+        $('needle').style.transform = 'rotate(' + (-90 + 180 * TARGET / 100) + 'deg)';
+        setTimeout(function () {
+            phase = 'lock';
+            readout.classList.remove('scramble');
+            showNumber(TARGET);
+            setDialLeds(TARGET);
+            $('st-calc').classList.remove('on');
+            $('st-lock').classList.add('on');
+            $('core').textContent = 'LOCKED';
+            log('RESULT ' + TARGET.toFixed(1) + '% (S→G AXIS)', true);
+            log('READING LOCKED', true);
+        }, 3200);
+    }
+
+    var last = 0, frame = 0;
+    function loop(now) {
+        frame++;
+        if (now - last > 90) {
+            last = now;
+            tickBanks();
+            if (phase === 'calc') {
+                $('st-calc').classList.toggle('on');
+                shown = Math.random() * 99;
+                showNumber(shown);
+                setDialLeds(Math.random() * 100);
+            }
+            if (Math.random() < .25) log(fill(LINES[3 + rnd(LINES.length - 3)]));
+            if (Math.random() < .04) toggles[rnd(toggles.length)].classList.toggle('down');
+        }
+        tickEq(now);
+        tickScope(now);
+        if (!reduced) requestAnimationFrame(loop);
+    }
+    requestAnimationFrame(loop);
+    if (reduced) { tickBanks(); tickEq(performance.now()); }
+    setTimeout(measure, 300);
+</script>
+</body>
+</html>
