@@ -168,6 +168,26 @@ const EVENTS_DATA = [
         cityStateCountry: 'Gettysburg, Pennsylvania, United States'
     },
     {
+        id: 'TEA120426',
+        series: 'Xanadu Kink',
+        category: 'Educational',
+        name: '@ Naughty Noel',
+        subtitle: 'The Naughty List - Afternoon Tea',
+        cohosts: 'Knight_of_Xanadu theGirl_Star',
+        description: '',
+        date: '2026-12-04',
+        time: '12:00am - 12:00am',
+        audience: 'Meet us there',
+        image: 'NaughtyListTea.jpg',
+        Url: '',
+        authRequired: false,
+        wheelchairAccessible: true,
+        dressCode: "Elevated dress, fetish wear encouraged",
+        location: 'Naughty Noel Conference',
+        address: '2634 Emmitsburg Road',
+        cityStateCountry: 'Gettysburg, Pennsylvania, United States'
+    },
+    {
         id: 'NN120526',
         series: 'Xanadu Kink',
         category: 'Conferences',
