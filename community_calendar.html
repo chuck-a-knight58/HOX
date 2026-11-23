@@ -448,7 +448,7 @@
     <span class="info">
       <button type="button" id="exclude-info-btn" class="info-btn" aria-label="How hiding works"
               aria-expanded="false" aria-controls="exclude-info">i</button>
-      <span id="exclude-info" class="info-pop" role="note" hidden>To hide posts containing a word or phrase, type it in the box and click Hide. To remove a word from your filter later, click the × on its bubble.</span>
+      <span id="exclude-info" class="info-pop" role="note" hidden>To hide posts containing a word or phrase, type it in the box and click Hide. Use * to stand for any letters (play*party hides both "play party" and "playparty") or put it in "double quotes" to hide only that exact word. To remove a word from your filter later, click the × on its bubble.</span>
     </span>
   </form>
   <span id="exclude-words"></span>
@@ -584,7 +584,24 @@
   }
 
   var hiddenCats = {};
-  var query = '';
+  // Turns a search term into a pattern. Plain text matches anywhere ("tea"
+  // finds "steam"); * stands for any run of characters and ? for any one
+  // character; wrapping the term in double quotes ("tea") matches it only as a
+  // whole word or phrase. Case is ignored.
+  function termPattern(term) {
+    term = term.trim();
+    var exact = term.length > 1 && term.charAt(0) === '"' && term.charAt(term.length - 1) === '"';
+    if (exact) term = term.slice(1, -1).trim();
+    if (!term) return null;
+    var body = term.split('').map(function (c) {
+      if (c === '*') return '[\\s\\S]*';
+      if (c === '?') return '[\\s\\S]';
+      return c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    }).join('');
+    if (exact) body = '(?:^|[^\\p{L}\\p{N}])' + body + '(?:$|[^\\p{L}\\p{N}])';
+    return new RegExp(body, 'iu');
+  }
+  var query = null;
   function haystack(ev) { return [ev.name, ev.venue, ev.city, ev.category].join(' ').toLowerCase(); }
 
   // ---- Hidden words: events mentioning any of them are left out everywhere.
@@ -597,10 +614,8 @@
       var saved = JSON.parse(localStorage.getItem(WORDS_KEY) || '[]');
       hiddenWords = Array.isArray(saved) ? saved.filter(function (w) { return typeof w === 'string' && w; }) : [];
     } catch (e) { hiddenWords = []; }
-    // Whole words only: hiding "rope" keeps "Europe". Case is ignored.
-    wordPatterns = hiddenWords.map(function (w) {
-      return new RegExp('(^|[^\\p{L}\\p{N}])' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '($|[^\\p{L}\\p{N}])', 'iu');
-    });
+    // Same rules as the search box: substrings, * and ? wildcards, "quotes" for exact.
+    wordPatterns = hiddenWords.map(termPattern).filter(Boolean);
   }
   function saveWords() {
     try { localStorage.setItem(WORDS_KEY, JSON.stringify(hiddenWords)); } catch (e) {}
@@ -616,7 +631,7 @@
     if (hiddenCats[ev.category]) return false;
     if (hiddenByWord(ev)) return false;
     if (!query) return true;
-    return haystack(ev).indexOf(query) !== -1;
+    return query.test(haystack(ev));
   }
 
   var wordsEl = document.getElementById('exclude-words');
@@ -1037,7 +1052,7 @@
   document.getElementById('btn-view-calendar').addEventListener('click', function () { setView('calendar'); });
   document.getElementById('btn-view-list').addEventListener('click', function () { setView('list'); });
   document.getElementById('search').addEventListener('input', function (e) {
-    query = e.target.value.trim().toLowerCase();
+    query = termPattern(e.target.value);
     render();
   });
 
