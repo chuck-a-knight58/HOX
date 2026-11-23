@@ -144,6 +144,7 @@
             }
             .xr-cal .word button:hover { color: #fff; }
             .xr-cal .exclude-count { color: var(--gold-soft); }
+            .xr-cal .search-wrap { display: inline-flex; align-items: center; gap: 6px; }
             .xr-cal .info { position: relative; display: inline-flex; }
             .xr-cal .info-btn {
                 width: 20px;
@@ -450,7 +451,14 @@
                     <button id="btn-view-calendar" class="active" type="button">Calendar</button>
                     <button id="btn-view-list" type="button">List</button>
                 </div>
-                <input id="search" class="search" type="search" placeholder="Filter by name or series" aria-label="Filter events">
+                <span class="search-wrap">
+                    <input id="search" class="search" type="search" placeholder="Filter by name or series" aria-label="Filter events">
+                    <span class="info">
+                        <button type="button" id="search-info-btn" class="info-btn" aria-label="How filtering works"
+                                aria-expanded="false" aria-controls="search-info">i</button>
+                        <span id="search-info" class="info-pop" role="note" hidden>Type in the box to show only events whose name, subtitle, series, category or audience contains your text — any part of a word counts, so "tea" also finds "steam". Use * to stand for any run of letters and ? for any single letter: play*party finds both "play party" and "playparty", and b?nd finds "bind" and "bond". Put your text in "double quotes" to match only that exact word or phrase: "tea" finds "high tea" but not "steam". Upper and lower case are treated the same.</span>
+                    </span>
+                </span>
             </div>
             <div id="legend" class="legend"></div>
             <div class="exclude">
