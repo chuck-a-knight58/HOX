@@ -2,7 +2,8 @@
 <!--
   Community calendar. The events come from community_calendar.js in the same
   folder, written by FetLifeTools' `fetlife events-calendar`; this page itself
-  is edited by hand. Self-contained otherwise: no external requests (pictures
+  is edited by hand. Self-contained otherwise apart from the site nav (nav.html via utils.js) and the
+  site's Google Fonts (as in style.css): no other external requests (pictures
   are embedded in the data or left out). Styled after the Xanadu Reserve events
   page, black and goldenrod. A calendar (an overview of every month with a
   hover card per day, and Month / Week / Day views) and a list view; the chosen
@@ -13,10 +14,12 @@
 <html lang="en">
 <head>
 <script src="age-gate.js"></script>
+<script src="utils.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Events</title>
+<title>Xanadu Kink - Local Events</title>
 <style>
   :root {
     --gold: #daa520;
@@ -425,9 +428,18 @@
     footer .row { flex-direction: column; }
     .left_footer_column, .middle_footer_column, .right_footer_column { text-align: center; }
   }
+  /* Site navbar (nav.html), matching style.css */
+  .navbar { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; padding: 8px 10px;
+    background-color: #000; border-bottom: 3px solid goldenrod; }
+  .navbar a { color: goldenrod; text-decoration: none; padding: 5px 10px;
+    font-family: var(--serif); font-size: 1.05em; letter-spacing: 0.04em; }
+  .navbar a:hover { color: #b0e0ff; text-decoration: underline; }
+  .navbar a.active { border-bottom: 2px solid goldenrod; padding-bottom: 3px; }
+  .navbar a.active:hover { color: goldenrod; }
 </style>
 </head>
 <body>
+<div data-w3-include-html="nav.html"></div>
 <header>
   <h1 id="page-title"></h1>
   <p id="page-subtitle" class="subtitle"></p>
@@ -1097,5 +1109,6 @@
   }
 })();
 </script>
+<script>includeHTML();</script>
 </body>
 </html>

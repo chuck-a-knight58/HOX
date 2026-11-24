@@ -14,13 +14,13 @@
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="manifest" href="XR/site.webmanifest">
 <meta name="theme-color" content="#daa520">
-<title>Upcoming Events — Xanadu Reserve</title>
+<title>Upcoming Xanadu Events</title>
 
 <!-- Open Graph -->
 <meta property="og:title" content="Upcoming Events — Xanadu Reserve" />
 <meta property="og:description" content="High Protocol dinners, Royal Afternoon Teas, Cocktail Parties, and curated gatherings." />
 <meta property="og:type" content="website" />
-<meta property="og:image" content="assets/XR.png" />
+<meta property="og:image" content="https://www.xanadukink.com/assets/XR.png" />
 <meta property="og:site_name" content="Xanadu Reserve" />
 <link rel="stylesheet" href="style.css">
 <script type="text/javascript" src="utils.js"></script>
@@ -554,15 +554,15 @@
                 }
 
                 // ---- Category colors ----
-                // Goldenrod is reserved for Xanadu Reserve; the others match the
-                // community calendar's, and any new category gets a color from the
-                // fallback palette in first-seen order.
+                // The same colors as the community calendar's categories (its
+                // "Conference / Festival" is "Conferences" here); any new category
+                // gets a color from the fallback palette in first-seen order.
                 var CATEGORY_COLORS = {
-                    'Xanadu Reserve': '#daa520',
+                    'Social': '#daa520',
                     'Educational': '#7fb3d5',
                     'BDSM Party': '#d9534f',
                     'Conferences': '#5fb3a1',
-                    'Power Exchange Together': '#c98ad6'
+                    'Sex Party': '#c98ad6'
                 };
                 var FALLBACK_PALETTE = ['#e8a3a3', '#a3d977', '#f0a868'];
                 var categoryList = [], paletteIndex = 0;
@@ -576,9 +576,10 @@
                 function colorOf(ev) { return CATEGORY_COLORS[ev.category]; }
 
                 // The start time in an event's time ("2:00pm - 4:00pm"), as minutes
-                // and as text; an event running 12:00am - 11:59pm is all day.
+                // and as text; an event running 12:00am - 11:59pm (or 12:00am -
+                // 12:00am) is all day.
                 function startTime(ev) {
-                    if (/^\s*12:00\s*am\s*-\s*11:59\s*pm/i.test(ev.time || '')) return { minutes: -1, text: 'All day' };
+                    if (/^\s*12:00\s*am\s*-\s*(11:59\s*pm|12:00\s*am)/i.test(ev.time || '')) return { minutes: -1, text: 'All day' };
                     var m = /(\d{1,2})(?::(\d\d))?\s*([ap]m)/i.exec(ev.time || '');
                     if (!m) return null;
                     var mm = m[2] || '00';
