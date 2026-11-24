@@ -5517,7 +5517,7 @@ var EVENTS = [
     },
     {
         "url": "https://fetlife.com/events/2026/11/19/virtual-dominants-meetup-olxl47",
-        "name": "Virtual Dominants Meetup",
+        "name": "The House of Ard Rí and Xanadu Kink present Virtual Dominants Roundtable",
         "start": "2026-11-19",
         "end": "2026-11-19",
         "category": "Educational",
@@ -22233,7 +22233,7 @@ var EVENTS = [
     },
     {
         "url": "https://fetlife.com/events/2026/12/17/virtual-dominants-meetup-lt1qhe",
-        "name": "Virtual Dominants Meetup",
+        "name": "The House of Ard Rí and Xanadu Kink present Virtual Dominants Roundtable",
         "start": "2026-12-17",
         "end": "2026-12-17",
         "category": "Educational",
