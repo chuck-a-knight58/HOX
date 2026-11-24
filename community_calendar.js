@@ -743,7 +743,7 @@ var EVENTS = [
     },
     {
         "url": "https://fetlife.com/events/2026/11/14/medusa-s-playhouse-presents-red-carpet-gala-3rd-anniversary-red-carpet-gala-trlpbw",
-        "name": "MEDUSA'S PLAYHOUSE PRESENTS RED CARPET GALA 3RD ANNIVERSARY RED CARPET GALA",
+        "name": "MEDUSA'S PLAYHOUSE PRESENTS RED CARXPE GALA 3RD ANNIVERSARY RED CARXPE GALA",
         "start": "2026-11-14",
         "end": "2026-11-14",
         "category": "Sex Party",
@@ -1617,7 +1617,7 @@ var EVENTS = [
         "category": "BDSM Party",
         "cost": "Free",
         "when": "Sun, Nov 15 at 9:00 PM",
-        "venue": "RED CARPET INN",
+        "venue": "RED CARXPE INN",
         "city": "Berlin, New Jersey, United States",
         "rsvps": 4,
         "image": null,
